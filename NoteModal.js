@@ -1,0 +1,98 @@
+import React from 'react';
+import {Text, Platform, Modal, View, TextInput} from 'react-native';
+import {
+    Container,
+    Header,
+    Title,
+    Content,
+    Button,
+    Left,
+    Right,
+    Body,
+    Icon,
+    Segment,
+} from 'native-base';
+
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
+import Markdown from 'react-native-simple-markdown'
+
+export default class NoteModal extends React.Component {
+
+    constructor() {
+        super();
+
+        this.state = {
+            text: '- dfdfs',
+            height: 0,
+            isLeftSegmentActive: true,
+        };
+    }
+
+    getNoteComponent() {
+        if (this.state.isLeftSegmentActive) {
+            return <KeyboardAwareScrollView>
+                <View>
+                    <TextInput
+                        style={{
+                            margin: 8,
+                            height: Math.max(35, this.state.height),
+                            borderBottomColor: 'gray',
+                            borderBottomWidth: 1
+                        }}
+                        onChange={(e) => {
+                            this.setState({
+                                text: e.nativeEvent.text,
+                                height: e.nativeEvent.contentSize.height,
+                            });
+                        }}
+                        value={this.state.text}
+                        multiline={true}/>
+                </View>
+            </KeyboardAwareScrollView>;
+        } else {
+            return <Markdown>
+                {this.state.text}
+            </Markdown>
+        }
+    }
+
+    render() {
+        return (
+            <Modal
+                animationType={"slide"}
+                transparent={false}
+                visible={this.props.isNoteOpen}
+                onRequestClose={() => {
+                }}>
+                <Container>
+                    <Header style={Platform.OS === 'android' ? {height: 47} : null}>
+                        <Left style={Platform.OS === 'android' ? {top: 0} : null}>
+                            <Button transparent onPress={() => this.props.setIsOpen(false)}>
+                                <Icon name='close'/>
+                            </Button>
+                        </Left>
+                        <Body style={Platform.OS === 'android' ? {top: 0} : null}>
+                            <Segment>
+                                <Button onPress={() =>{
+                                    this.setState({isLeftSegmentActive: true});
+                                }} first active={this.state.isLeftSegmentActive}><Icon name='create' style={this.state.isLeftSegmentActive? {}:{color: 'blue'}}/></Button>
+                                <Button onPress={() =>{
+                                    this.setState({isLeftSegmentActive: false});
+                                }} last active={!this.state.isLeftSegmentActive}><Icon name='eye' style={this.state.isLeftSegmentActive?{color: 'blue'}: {}}/></Button>
+                            </Segment>
+                        </Body>
+                        <Right style={Platform.OS === 'android' ? {top: 0} : null}>
+                            <Button transparent>
+                                <Icon name='more'/>
+                            </Button>
+                        </Right>
+                    </Header>
+                    <Content>
+                        {this.getNoteComponent()}
+                    </Content>
+                </Container>
+            </Modal>
+        );
+    };
+}
