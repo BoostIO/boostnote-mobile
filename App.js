@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {Text, Platform, Modal, View, TextInput} from 'react-native';
 import {
     Container,
@@ -27,10 +27,22 @@ export default class App extends Component {
         super();
         this.state = {
             isNoteOpen: false,
+            noteList: [],
         };
     }
 
+    makeRandomHex() {
+        var text = "";
+        var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+        for( var i=0; i < 20; i++ )
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+    }
+
     componentWillMount() {
+        console.log(this.makeRandomHex());
         const dirs = RNFetchBlob.fs.dirs;
         this.listFiles(dirs.DocumentDir)
             .then((files) => {
@@ -50,13 +62,15 @@ export default class App extends Component {
                 if (files.length === 0) {
                     // If not, create.
                     // TODO change to correct file name
-                    fs.createFile(`${dirs.DocumentDir}/Boostnote/test.md`, '# Welcome to Boostnote :)\nThis is a markdown note.', 'utf8')
+                    fs.createFile(`${dirs.DocumentDir}/Boostnote/welcome.md`, '# Welcome to Boostnote :)\nThis is a markdown note.', 'utf8')
                         .catch(err => console.log(err));
                 }
                 return this.listFiles(`${dirs.DocumentDir}/Boostnote`);
             })
             .then((files) => {
-                console.log(files);
+                this.setState({
+                    noteList: files
+                });
             })
             .catch((err) => {
                 console.log(err);
@@ -116,15 +130,27 @@ export default class App extends Component {
                         </Right>
                     </Header>
                     <Content>
-
+                        {
+                            this.state.noteList.map((note) => {
+                            return <Card key={note}>
+                                        <CardItem button onPress={() => this.setNoteModalIsOpen(true)}>
+                                            <Body>
+                                                 <Text>
+                                                    {note}
+                                                 </Text>
+                                            </Body>
+                                        </CardItem>
+                                    </Card>;
+                            })
+                        }
                     </Content>
                     <Fab
                         active={true}
-                        containerStyle={{ marginLeft: 10 }}
-                        style={{ backgroundColor: '#5067FF' }}
+                        containerStyle={{marginLeft: 10}}
+                        style={{backgroundColor: '#5067FF'}}
                         position="bottomRight"
                         onPress={() => this.createNewNote()}>
-                        <Icon name="md-add" />
+                        <Icon name="md-add"/>
                     </Fab>
                     <NoteModal setIsOpen={this.setNoteModalIsOpen.bind(this)} isNoteOpen={this.state.isNoteOpen}/>
                 </Container>
