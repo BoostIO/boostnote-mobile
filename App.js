@@ -28,6 +28,8 @@ export default class App extends Component {
         this.state = {
             isNoteOpen: false,
             noteList: [],
+            fileName: '',
+            content: '',
         };
     }
 
@@ -35,14 +37,13 @@ export default class App extends Component {
         var text = "";
         var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-        for( var i=0; i < 20; i++ )
+        for (var i = 0; i < 20; i++)
             text += possible.charAt(Math.floor(Math.random() * possible.length));
 
         return text;
     }
 
     componentWillMount() {
-        console.log(this.makeRandomHex());
         const dirs = RNFetchBlob.fs.dirs;
         this.listFiles(dirs.DocumentDir)
             .then((files) => {
@@ -58,19 +59,14 @@ export default class App extends Component {
             })
             .then((files) => {
                 // Check whether the folder has any files or not.
-
                 if (files.length === 0) {
                     // If not, create.
                     // TODO change to correct file name
                     fs.createFile(`${dirs.DocumentDir}/Boostnote/welcome.md`, '# Welcome to Boostnote :)\nThis is a markdown note.', 'utf8')
                         .catch(err => console.log(err));
                 }
-                return this.listFiles(`${dirs.DocumentDir}/Boostnote`);
-            })
-            .then((files) => {
-                this.setState({
-                    noteList: files
-                });
+                this.listFilesAndSetState(`${dirs.DocumentDir}/Boostnote`);
+
             })
             .catch((err) => {
                 console.log(err);
@@ -81,12 +77,30 @@ export default class App extends Component {
         this._drawer._root.open();
     };
 
-    setNoteModalIsOpen(isOpen) {
-        this.setState({isNoteOpen: isOpen})
+    setNoteModalIsOpen(fileName, isOpen) {
+        console.log(fileName);
+        const dirs = RNFetchBlob.fs.dirs;
+        fs.readFile(`${dirs.DocumentDir}/Boostnote/${fileName}`, 'utf8')
+            .then((content) => {
+                this.setState({
+                    fileName: fileName,
+                    content: content,
+                    isNoteOpen: isOpen
+                });
+            });
     }
 
     listFiles(dir) {
         return RNFetchBlob.fs.ls(dir);
+    }
+
+    listFilesAndSetState(dir) {
+        this.listFiles(dir)
+            .then((files) => {
+                this.setState({
+                    noteList: files
+                });
+            });
     }
 
     createDir() {
@@ -101,8 +115,8 @@ export default class App extends Component {
 
     createNewNote() {
         const dirs = RNFetchBlob.fs.dirs;
-        alert(`${dirs.DocumentDir}/Boostnote`);
-        fs.createFile(`${dirs.DocumentDir}/Boostnote`, '', 'utf8');
+        fs.createFile(`${dirs.DocumentDir}/Boostnote/${this.makeRandomHex()}.md`, '', 'utf8');
+        this.listFilesAndSetState(`${dirs.DocumentDir}/Boostnote`);
     }
 
     render() {
@@ -131,16 +145,16 @@ export default class App extends Component {
                     </Header>
                     <Content>
                         {
-                            this.state.noteList.map((note) => {
-                            return <Card key={note}>
-                                        <CardItem button onPress={() => this.setNoteModalIsOpen(true)}>
-                                            <Body>
-                                                 <Text>
-                                                    {note}
-                                                 </Text>
-                                            </Body>
-                                        </CardItem>
-                                    </Card>;
+                            this.state.noteList.map((fileName) => {
+                                return <Card key={fileName}>
+                                    <CardItem button onPress={() => this.setNoteModalIsOpen(fileName, true)}>
+                                        <Body>
+                                        <Text>
+                                            {fileName}
+                                        </Text>
+                                        </Body>
+                                    </CardItem>
+                                </Card>;
                             })
                         }
                     </Content>
@@ -152,7 +166,10 @@ export default class App extends Component {
                         onPress={() => this.createNewNote()}>
                         <Icon name="md-add"/>
                     </Fab>
-                    <NoteModal setIsOpen={this.setNoteModalIsOpen.bind(this)} isNoteOpen={this.state.isNoteOpen}/>
+                    <NoteModal setIsOpen={this.setNoteModalIsOpen.bind(this)}
+                               isNoteOpen={this.state.isNoteOpen}
+                               fileName={this.state.fileName}
+                               content={this.state.content}/>
                 </Container>
             </Drawer>
         );
