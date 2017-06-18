@@ -23,7 +23,6 @@ export default class NoteModal extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
 
         this.state = {
             fileName: this.props.fileName,
@@ -34,7 +33,6 @@ export default class NoteModal extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log(props);
         this.setState({
             fileName: props.fileName,
             text: props.content,

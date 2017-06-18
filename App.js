@@ -21,6 +21,11 @@ import NoteModal from './NoteModal';
 
 import RNFetchBlob from 'react-native-fetch-blob';
 const fs = RNFetchBlob.fs;
+const dirs = RNFetchBlob.fs.dirs;
+
+const MARKDOWN_NOTE = "MARKDOWN_NOTE";
+const SNIPPET_NOTE = "SNIPPET_NOTE";
+const DEFAULT_FOLDER = "DEFAULT_FOLDER";
 
 export default class App extends Component {
     constructor() {
@@ -44,10 +49,9 @@ export default class App extends Component {
     }
 
     componentWillMount() {
-        const dirs = RNFetchBlob.fs.dirs;
-        this.listFiles(dirs.DocumentDir)
+        this.listDir(dirs.DocumentDir)
             .then((files) => {
-                // Check whether the 'Boostnote' folder be or not.
+                // Check whether the 'Boostnote' folder exist or not.
                 const filteredFiles = files.filter((name) => {
                     return name === 'Boostnote';
                 });
@@ -55,18 +59,33 @@ export default class App extends Component {
                 if (filteredFiles.length === 0) {
                     this.createDir();
                 }
-                return this.listFiles(`${dirs.DocumentDir}/Boostnote`);
+                return this.listFiles();
             })
             .then((files) => {
-                // Check whether the folder has any files or not.
-                if (files.length === 0) {
+                const filteredFiles = files.filter((name) => {
+                    return name === 'boostnote.json';
+                });
+                // Check whether the folder has a setting file or not.
+                if (filteredFiles.length === 0) {
                     // If not, create.
-                    // TODO change to correct file name
-                    fs.createFile(`${dirs.DocumentDir}/Boostnote/welcome.md`, '# Welcome to Boostnote :)\nThis is a markdown note.', 'utf8')
+                    const defaultJson = {
+                        note: []
+                    };
+                    fs.createFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, JSON.stringify(defaultJson), 'utf8')
                         .catch(err => console.log(err));
                 }
-                this.listFilesAndSetState(`${dirs.DocumentDir}/Boostnote`);
-
+                return this.listFiles();
+            })
+            .then((files) => {
+                const filteredFiles = files.filter((name) => {
+                    return name.endsWith('.md');
+                });
+                // Check whether the folder has any note files or not.
+                if (filteredFiles.length === 0) {
+                    // If not, create.
+                    this.createNewNote('welcome.md');
+                }
+                return this.listFilesAndSetState();
             })
             .catch((err) => {
                 console.log(err);
@@ -79,7 +98,6 @@ export default class App extends Component {
 
     setNoteModalIsOpen(fileName, isOpen) {
         console.log(fileName);
-        const dirs = RNFetchBlob.fs.dirs;
         fs.readFile(`${dirs.DocumentDir}/Boostnote/${fileName}`, 'utf8')
             .then((content) => {
                 this.setState({
@@ -90,12 +108,16 @@ export default class App extends Component {
             });
     }
 
-    listFiles(dir) {
-        return RNFetchBlob.fs.ls(dir);
+    listDir() {
+        return RNFetchBlob.fs.ls(`${dirs.DocumentDir}`);
     }
 
-    listFilesAndSetState(dir) {
-        this.listFiles(dir)
+    listFiles() {
+        return RNFetchBlob.fs.ls(`${dirs.DocumentDir}/Boostnote`);
+    }
+
+    listFilesAndSetState() {
+        this.listFiles(`${dirs.DocumentDir}/Boostnote`)
             .then((files) => {
                 this.setState({
                     noteList: files
@@ -113,10 +135,35 @@ export default class App extends Component {
             });
     }
 
-    createNewNote() {
-        const dirs = RNFetchBlob.fs.dirs;
-        fs.createFile(`${dirs.DocumentDir}/Boostnote/${this.makeRandomHex()}.md`, '', 'utf8');
-        this.listFilesAndSetState(`${dirs.DocumentDir}/Boostnote`);
+    createNewNote(fileName) {
+        const newFileName = fileName === '' ? `${this.makeRandomHex()}.md` : fileName;
+
+        // Create a real file
+        fs.createFile(`${dirs.DocumentDir}/Boostnote/${newFileName}`, '', 'utf8')
+            .then((file) => {
+                // Update setting file
+                return fs.readFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, 'utf8')
+            })
+            .then((content) => {
+                let contentObject = JSON.parse(content);
+                const date = new Date();
+                const thisNote = {
+                    "type": MARKDOWN_NOTE,
+                    "folder": DEFAULT_FOLDER,
+                    "title": "",
+                    "name": newFileName,
+                    "isStarred": false,
+                    "createdAt": date,
+                    "updatedAt": date
+                };
+                contentObject.note.push(thisNote);
+                console.table(contentObject.note);
+                fs.createFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, JSON.stringify(contentObject), 'utf8')
+                    .catch(err => console.log(err));
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     render() {
@@ -163,7 +210,11 @@ export default class App extends Component {
                         containerStyle={{marginLeft: 10}}
                         style={{backgroundColor: '#5067FF'}}
                         position="bottomRight"
-                        onPress={() => this.createNewNote()}>
+                        onPress={() => {
+                            this.createNewNote('');
+                            this.listFilesAndSetState();
+                        }
+                        }>
                         <Icon name="md-add"/>
                     </Fab>
                     <NoteModal setIsOpen={this.setNoteModalIsOpen.bind(this)}
