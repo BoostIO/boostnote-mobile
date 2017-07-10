@@ -119,8 +119,11 @@ export default class App extends Component {
     listFilesAndSetState() {
         this.listFiles(`${dirs.DocumentDir}/Boostnote`)
             .then((files) => {
+                const filteredFiles = files.filter((name) => {
+                    return name.endsWith('.md');
+                });
                 this.setState({
-                    noteList: files
+                    noteList: filteredFiles
                 });
             });
     }
