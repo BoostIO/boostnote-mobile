@@ -195,12 +195,12 @@ export default class App extends Component {
                             </Button>
                         </Left>
                         <Body style={Platform.OS === 'android' ? {top: 10} : null}>
-                        <Title>folder_name</Title>
+                        <Title>Boostnote</Title>
                         </Body>
                         <Right style={Platform.OS === 'android' ? {top: 10} : null}>
-                            <Button transparent>
-                                <Icon name='search'/>
-                            </Button>
+                            {/*<Button transparent>*/}
+                                {/*<Icon name='search'/>*/}
+                            {/*</Button>*/}
                         </Right>
                     </Header>
                     <Content>
