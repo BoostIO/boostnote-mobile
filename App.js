@@ -129,7 +129,7 @@ export default class App extends Component {
             const content = await fs.readFile(`${dirs.DocumentDir}/Boostnote/${fileName}`, 'utf8');
             fileList.push({
                 fileName: fileName,
-                content: content.split(/\r\n|\r|\n/)[0]
+                content: content === '' ? 'Tap here and write something!' : content.split(/\r\n|\r|\n/)[0]
             });
         }
 
