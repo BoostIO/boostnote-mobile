@@ -1,3 +1,4 @@
 <resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">byLfL38UaCCfKxo_2kTLHuR190e81a2d16b3-a6fd-494f-8deb-050bb34a68be</string>
     <string name="app_name">boostnotemobile</string>
 </resources>
