@@ -3,7 +3,6 @@ import {Text, Platform, Modal, View, TextInput} from 'react-native';
 import {
     Container,
     Header,
-    Title,
     Content,
     Button,
     Left,
@@ -11,6 +10,7 @@ import {
     Body,
     Icon,
     Segment,
+    ActionSheet,
 } from 'native-base';
 
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -101,7 +101,22 @@ export default class NoteModal extends React.Component {
                         </Segment>
                         </Body>
                         <Right style={Platform.OS === 'android' ? {top: 0} : null}>
-                            <Button transparent>
+                            <Button transparent onPress={() => ActionSheet.show(
+                                {
+                                    options: ["Delete", "Cancel"],
+                                    cancelButtonIndex: 1,
+                                    destructiveButtonIndex: 0,
+                                    title: "Option"
+                                },
+                                buttonIndex => {
+                                    if (buttonIndex === 0) {
+                                        fs.unlink(`${RNFetchBlob.fs.dirs.DocumentDir}/Boostnote/${this.state.fileName}`)
+                                        .then(() => {
+                                            this.props.setIsOpen('', false);
+                                        });
+                                    }
+                                }
+                            )}>
                                 <Icon name='more'/>
                             </Button>
                         </Right>
