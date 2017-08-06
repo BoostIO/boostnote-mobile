@@ -83,7 +83,7 @@ export default class App extends Component {
                 // Check whether the folder has any note files or not.
                 if (filteredFiles.length === 0) {
                     // If not, create.
-                    this.createNewNote('welcome.md');
+                    this.createNewNote(`${this.makeRandomHex()}.md`);
                 }
                 return this.listFilesAndSetState();
             })
@@ -97,7 +97,7 @@ export default class App extends Component {
     };
 
     setNoteModalIsOpen(fileName, isOpen) {
-        console.log(fileName);
+        this.listFilesAndSetState();
         fs.readFile(`${dirs.DocumentDir}/Boostnote/${fileName}`, 'utf8')
             .then((content) => {
                 this.setState({
@@ -116,16 +116,26 @@ export default class App extends Component {
         return RNFetchBlob.fs.ls(`${dirs.DocumentDir}/Boostnote`);
     }
 
-    listFilesAndSetState() {
-        this.listFiles(`${dirs.DocumentDir}/Boostnote`)
-            .then((files) => {
-                const filteredFiles = files.filter((name) => {
-                    return name.endsWith('.md');
-                });
-                this.setState({
-                    noteList: filteredFiles
-                });
+    async listFilesAndSetState() {
+        const files = await this.listFiles(`${dirs.DocumentDir}/Boostnote`);
+        const filteredFiles = files.filter((name) => {
+            return name.endsWith('.md');
+        });
+
+        // Change file name to object of file name and one liner content
+        let fileList = [];
+        for (let i = 0; i < filteredFiles.length; i++) {
+            const fileName = filteredFiles[i];
+            const content = await fs.readFile(`${dirs.DocumentDir}/Boostnote/${fileName}`, 'utf8');
+            fileList.push({
+                fileName: fileName,
+                content: content.split(/\r\n|\r|\n/)[0]
             });
+        }
+
+        this.setState({
+            noteList: fileList,
+        });
     }
 
     createDir() {
@@ -195,12 +205,12 @@ export default class App extends Component {
                     </Header>
                     <Content>
                         {
-                            this.state.noteList.map((fileName) => {
-                                return <Card key={fileName}>
-                                    <CardItem button onPress={() => this.setNoteModalIsOpen(fileName, true)}>
+                            this.state.noteList.map((note) => {
+                                return <Card key={note.fileName}>
+                                    <CardItem button onPress={() => this.setNoteModalIsOpen(note.fileName, true)}>
                                         <Body>
                                         <Text>
-                                            {fileName}
+                                            {note.content}
                                         </Text>
                                         </Body>
                                     </CardItem>
