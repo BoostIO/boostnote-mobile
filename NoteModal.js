@@ -34,6 +34,7 @@ export default class NoteModal extends React.Component {
 
     componentWillReceiveProps(props) {
         this.setState({
+            isLeftSegmentActive: true,
             fileName: props.fileName,
             text: props.content,
         });
