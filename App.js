@@ -207,7 +207,9 @@ export default class App extends Component {
                         {
                             this.state.noteList.map((note) => {
                                 return <Card key={note.fileName}>
-                                    <CardItem button onPress={() => this.setNoteModalIsOpen(note.fileName, true)}>
+                                    <CardItem
+                                        style={{width: '100%'}}
+                                        button onPress={() => this.setNoteModalIsOpen(note.fileName, true)}>
                                         <Body>
                                         <Text>
                                             {note.content}
