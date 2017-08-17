@@ -7,10 +7,10 @@
     "test": "jest"
   },
   "dependencies": {
-    "native-base": "^2.1.3",
+    "native-base": "2.1.4",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
-    "react-native-code-push": "^5.0.0-beta",
+    "react-native-code-push": "2.1.1-beta",
     "react-native-fetch-blob": "^0.10.5",
     "react-native-simple-markdown": "git://github.com/CharlesMangwa/react-native-simple-markdown.git"
   },
