@@ -27,6 +27,38 @@ const MARKDOWN_NOTE = "MARKDOWN_NOTE";
 const SNIPPET_NOTE = "SNIPPET_NOTE";
 const DEFAULT_FOLDER = "DEFAULT_FOLDER";
 
+const styles = {
+    noteList: {
+        width: '100%',
+        height: 65,
+        backgroundColor: '#ffffff',
+    },
+    noteListIconWrap: {
+        backgroundColor: '#eeeeee',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 30,
+        height: 30,
+        borderRadius: 50,
+        overflow: 'hidden'
+    },
+    noteListIcon: {
+        fontSize: 14
+    },
+    noteListText: {
+        color: '#282C34',
+        fontSize: 14,
+        width: '100%'
+    },
+    noteListTextNone: {
+        color: '#adadad'
+    },
+    noteListDate: {
+        alignSelf: 'flex-end',
+    }
+}
+
 export default class App extends Component {
     constructor() {
         super();
@@ -208,12 +240,16 @@ export default class App extends Component {
                             this.state.noteList.map((note) => {
                                 return <Card key={note.fileName}>
                                     <CardItem
-                                        style={{width: '100%'}}
+                                        style={styles.noteList}
                                         button onPress={() => this.setNoteModalIsOpen(note.fileName, true)}>
                                         <Body>
-                                        <Text>
-                                            {note.content}
-                                        </Text>
+                                            <Text numberOfLines={1} style={note.content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>
+                                                <View style={styles.noteListIconWrap}>
+                                                    <Icon name='paper' style={styles.noteListIcon}/>
+                                                </View>
+                                                {note.content}
+                                                <Text style={styles.noteListDate}>Jul 29</Text>
+                                            </Text>
                                         </Body>
                                     </CardItem>
                                 </Card>;
