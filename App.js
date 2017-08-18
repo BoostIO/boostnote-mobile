@@ -54,8 +54,8 @@ const styles = {
     noteListTextNone: {
         color: '#adadad'
     },
-    noteListDate: {
-        alignSelf: 'flex-end',
+    newNoteButton: {
+        backgroundColor: '#D15419',
     }
 }
 
@@ -259,7 +259,7 @@ export default class App extends Component {
                     <Fab
                         active={true}
                         containerStyle={{marginLeft: 10}}
-                        style={{backgroundColor: '#5067FF'}}
+                        style={styles.newNoteButton}
                         position="bottomRight"
                         onPress={() => {
                             this.createNewNote('');
