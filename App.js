@@ -33,6 +33,16 @@ const styles = {
         height: 65,
         backgroundColor: '#ffffff',
     },
+    iosHeader: {
+        backgroundColor: '#1abc9c',
+    },
+    appName: {
+        color: '#ffffff',
+        marginLeft: -160
+    },
+    headerMenuButton: {
+        color: '#ffffff'
+    },
     noteListIconWrap: {
         backgroundColor: '#eeeeee',
         display: 'flex',
@@ -220,19 +230,22 @@ export default class App extends Component {
                 content={<SideBar/>}
                 panOpenMask={.05}>
                 <Container>
-                    <Header style={Platform.OS === 'android' ? {height: 70} : null}>
+                    <Header style={Platform.OS === 'android' ? {height: 70} : styles.iosHeader}>
                         <Left style={Platform.OS === 'android' ? {top: 10} : null}>
                             <Button transparent onPress={this.openDrawer.bind(this)}>
-                                <Icon name='menu'/>
+                                <Icon name='menu' style={styles.headerMenuButton}/>
                             </Button>
                         </Left>
                         <Body style={Platform.OS === 'android' ? {top: 10} : null}>
-                        <Title>Boostnote</Title>
+                        <Title style={styles.appName}>Boostnote</Title>
                         </Body>
                         <Right style={Platform.OS === 'android' ? {top: 10} : null}>
-                            {/*<Button transparent>*/}
-                                {/*<Icon name='search'/>*/}
-                            {/*</Button>*/}
+                            <Button transparent>
+                                <Icon name='star' style={styles.headerMenuButton}/>
+                            </Button>
+                            <Button transparent>
+                                <Icon name='search' style={styles.headerMenuButton}/>
+                            </Button>
                         </Right>
                     </Header>
                     <Content>
