@@ -30,6 +30,10 @@ const SNIPPET_NOTE = "SNIPPET_NOTE";
 const DEFAULT_FOLDER = "DEFAULT_FOLDER";
 
 const styles = {
+    noteListWrap: {
+        marginTop: 0,
+        marginBottom: 0
+    },
     noteList: {
         width: '100%',
         height: 65,
@@ -62,18 +66,29 @@ const styles = {
         width: 30,
         height: 30,
         borderRadius: 50,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        marginTop: 9
     },
     noteListIcon: {
         fontSize: 14
     },
     noteListText: {
+        position: 'absolute',
         color: '#282C34',
+        backgroundColor: 'transparent',
+        top: 15,
         fontSize: 14,
-        width: '100%'
+        width: '75%',
+        marginLeft: 35
     },
     noteListTextNone: {
-        color: '#adadad'
+        position: 'absolute',
+        color: '#adadad',
+        backgroundColor: 'transparent',
+        top: 15,
+        fontSize: 14,
+        width: '75%',
+        marginLeft: 35
     },
     newPostButtonWrap: {
         marginLeft: '43%',
@@ -85,6 +100,14 @@ const styles = {
         shadowColor: '#000',
         shadowOpacity: 0.3,
         shadowRadius: 6
+    },
+    noteListDate: {
+        position: 'absolute',
+        color: 'rgba(40,44,52,0.4)',
+        fontSize: 13,
+        top: 15,
+        right: 0,
+        fontWeight: '600'
     },
     newPostButton: {
         display: 'flex',
@@ -277,18 +300,16 @@ export default class App extends Component {
                     <Content>
                         {
                             this.state.noteList.map((note) => {
-                                return <Card key={note.fileName}>
+                                return <Card transparent key={note.fileName} style={styles.noteListWrap}>
                                     <CardItem
                                         style={styles.noteList}
                                         button onPress={() => this.setNoteModalIsOpen(note.fileName, true)}>
                                         <Body>
-                                            <Text numberOfLines={1} style={note.content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>
-                                                <View style={styles.noteListIconWrap}>
-                                                    <Icon name='paper' style={styles.noteListIcon}/>
-                                                </View>
-                                                {note.content}
-                                                <Text style={styles.noteListDate}>Jul 29</Text>
-                                            </Text>
+                                            <View style={styles.noteListIconWrap}>
+                                                <Icon name='paper' style={styles.noteListIcon}/>
+                                            </View>
+                                            <Text numberOfLines={1} style={note.content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{note.content}</Text>
+                                            <Text style={styles.noteListDate}>Jul 29</Text>
                                         </Body>
                                     </CardItem>
                                 </Card>;
