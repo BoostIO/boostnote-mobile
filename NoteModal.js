@@ -58,9 +58,7 @@ export default class NoteModal extends React.Component {
                     <TextInput
                         style={{
                             margin: 8,
-                            height: Math.max(35, this.state.height),
-                            borderBottomColor: 'gray',
-                            borderBottomWidth: 1
+                            height: Math.max(35, this.state.height)
                         }}
                         onChange={(e) => this.onChangeText(e)}
                         value={this.state.text}
@@ -68,9 +66,11 @@ export default class NoteModal extends React.Component {
                 </View>
             </KeyboardAwareScrollView>;
         } else {
-            return <Markdown>
-                {this.state.text}
-            </Markdown>
+            return <View style={{margin: 15}}>
+                <Markdown>
+                    {this.state.text}
+                </Markdown>
+            </View>
         }
     }
 
@@ -83,10 +83,10 @@ export default class NoteModal extends React.Component {
                 onRequestClose={() => {
                 }}>
                 <Container>
-                    <Header style={Platform.OS === 'android' ? {height: 47} : null}>
+                    <Header style={Platform.OS === 'android' ? {height: 47,backgroundColor: '#F7F7F7'} : {backgroundColor: '#F7F7F7'}}>
                         <Left style={Platform.OS === 'android' ? {top: 0} : null}>
                             <Button transparent onPress={() => this.props.setIsOpen('', false)}>
-                                <Icon name='close'/>
+                                <Icon name='md-close'/>
                             </Button>
                         </Left>
                         <Body style={Platform.OS === 'android' ? {top: 0} : null}>
