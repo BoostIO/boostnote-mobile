@@ -31,7 +31,6 @@ const DEFAULT_FOLDER = "DEFAULT_FOLDER";
 
 const styles = {
     noteListWrap: {
-        top: 40,
         marginTop: 0,
         marginBottom: 0
     },
@@ -303,7 +302,7 @@ export default class App extends Component {
                         </Right>
                     </Header>
                     <Content>
-                        <View style={{flex: 1, flexDirection: 'row'}}>
+                        <View style={{flex: 1, flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
                             <Text style={{backgroundColor: 'transparent', position: 'absolute', left: 10, top:12, color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>All Notes</Text>
                             <Button style={{backgroundColor: 'transparent', position: 'absolute', right: 0, height: 40, width: 130}}>
                                 <Text style={{color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>Data Created  <Icon name='md-flash' style={{color: '#FDC134', fontSize: 14, fontWeight: '600'}} /></Text>
