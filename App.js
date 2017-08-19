@@ -31,6 +31,7 @@ const DEFAULT_FOLDER = "DEFAULT_FOLDER";
 
 const styles = {
     noteListWrap: {
+        top: 40,
         marginTop: 0,
         marginBottom: 0
     },
@@ -291,7 +292,7 @@ export default class App extends Component {
                         <Left style={Platform.OS === 'android' ? {top: 10} : null}>
                             <View style={{flex: 1, flexDirection: 'row'}}>
                                 <Button transparent onPress={this.openDrawer.bind(this)}>
-                                    <Icon name='md-menu' style={styles.headerMenuButton}/>
+                                    <Icon name='md-list' style={styles.headerMenuButton}/>
                                 </Button>
                                 <Title style={styles.appName}>Boostnote</Title>
                             </View>
@@ -302,6 +303,12 @@ export default class App extends Component {
                         </Right>
                     </Header>
                     <Content>
+                        <View style={{flex: 1, flexDirection: 'row'}}>
+                            <Text style={{backgroundColor: 'transparent', position: 'absolute', left: 10, top:12, color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>All Notes</Text>
+                            <Button style={{backgroundColor: 'transparent', position: 'absolute', right: 0, height: 40, width: 130}}>
+                                <Text style={{color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>Data Created  <Icon name='md-flash' style={{color: 'rgba(40,44,52,0.4)', fontSize: 14, fontWeight: '600'}} /></Text>
+                            </Button>
+                        </View>
                         {
                             this.state.noteList.map((note) => {
                                 return <Card transparent key={note.fileName} style={styles.noteListWrap}>
