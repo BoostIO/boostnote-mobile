@@ -32,14 +32,14 @@ const DEFAULT_FOLDER = "DEFAULT_FOLDER";
 const styles = {
     noteListWrap: {
         marginTop: 0,
-        marginBottom: 0
+        marginBottom: 0,
+        borderColor: '#F7F7F7',
+        borderBottomWidth: 1
     },
     noteList: {
         width: '100%',
         height: 65,
         backgroundColor: '#ffffff',
-        borderColor: '#F7F7F7',
-        borderBottomWidth: 1
     },
     iosHeader: {
         backgroundColor: '#239F85',
