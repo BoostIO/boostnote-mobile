@@ -129,7 +129,6 @@ export default class NoteModal extends React.Component {
                                     options: ["Delete", "Cancel"],
                                     cancelButtonIndex: 1,
                                     destructiveButtonIndex: 0,
-                                    title: "Option"
                                 },
                                 buttonIndex => {
                                     if (buttonIndex === 0) {
