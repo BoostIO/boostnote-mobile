@@ -56,7 +56,7 @@ const styles = {
         marginRight: 30
     },
     headerRightMenuButton: {
-        color: 'rgba(255, 255, 255, 0.6)',
+        color: 'rgba(255, 255, 255, 0.4)',
         fontSize: 21,
         marginRight: 20
     },
@@ -94,15 +94,16 @@ const styles = {
         marginLeft: 35
     },
     newPostButtonWrap: {
+        position: 'absolute',
         marginLeft: '43%',
-        marginBottom: 30,
+        bottom: 30,
         shadowOffset:{
             width: 0,
             height: 4,
         },
         shadowColor: '#000',
         shadowOpacity: 0.3,
-        shadowRadius: 6
+        shadowRadius: 6,
     },
     noteListDate: {
         position: 'absolute',
@@ -319,7 +320,8 @@ export default class App extends Component {
                             })
                         }
                     </Content>
-                    <Button transparent 
+
+                    <Button transparent
                         onPress={() => {
                             this.createNewNote('');
                             this.listFilesAndSetState();
@@ -330,6 +332,7 @@ export default class App extends Component {
                             <Icon name='md-add' style={{color: "#fff"}}/>
                         </View>
                     </Button>
+
                     {/*<Fab
                         active={true}
                         containerStyle={{marginLeft: 10}}
