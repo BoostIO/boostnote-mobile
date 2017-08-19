@@ -306,7 +306,7 @@ export default class App extends Component {
                         <View style={{flex: 1, flexDirection: 'row'}}>
                             <Text style={{backgroundColor: 'transparent', position: 'absolute', left: 10, top:12, color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>All Notes</Text>
                             <Button style={{backgroundColor: 'transparent', position: 'absolute', right: 0, height: 40, width: 130}}>
-                                <Text style={{color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>Data Created  <Icon name='md-flash' style={{color: 'rgba(40,44,52,0.4)', fontSize: 14, fontWeight: '600'}} /></Text>
+                                <Text style={{color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>Data Created  <Icon name='md-flash' style={{color: '#FDC134', fontSize: 14, fontWeight: '600'}} /></Text>
                             </Button>
                         </View>
                         {
