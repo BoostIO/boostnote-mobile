@@ -38,6 +38,8 @@ const styles = {
         width: '100%',
         height: 65,
         backgroundColor: '#ffffff',
+        borderColor: '#F7F7F7',
+        borderBottomWidth: 1
     },
     iosHeader: {
         backgroundColor: '#239F85',
@@ -70,11 +72,12 @@ const styles = {
         marginTop: 9
     },
     noteListIcon: {
-        fontSize: 14
+        fontSize: 14,
+        color: '#adadad'
     },
     noteListText: {
         position: 'absolute',
-        color: '#282C34',
+        color: '#3a3941',
         backgroundColor: 'transparent',
         top: 15,
         fontSize: 14,
@@ -306,7 +309,7 @@ export default class App extends Component {
                                         button onPress={() => this.setNoteModalIsOpen(note.fileName, true)}>
                                         <Body>
                                             <View style={styles.noteListIconWrap}>
-                                                <Icon name='paper' style={styles.noteListIcon}/>
+                                                <Icon name='md-code-working' style={styles.noteListIcon}/>
                                             </View>
                                             <Text numberOfLines={1} style={note.content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{note.content}</Text>
                                             <Text style={styles.noteListDate}>Jul 29</Text>
