@@ -16,6 +16,8 @@ import {
     Fab,
 } from 'native-base';
 
+import FontAwesome, { Icons } from 'react-native-fontawesome';
+
 import SideBar from './SideBar.js';
 import NoteModal from './NoteModal';
 
@@ -34,17 +36,23 @@ const styles = {
         backgroundColor: '#ffffff',
     },
     iosHeader: {
-        backgroundColor: '#1abc9c',
+        backgroundColor: '#239F85',
     },
     appName: {
         color: '#ffffff',
-        marginLeft: -180,
-        fontSize: 21
+        fontSize: 24,
+        marginTop: 8,
+        fontWeight: '300'
     },
     headerMenuButton: {
         color: '#ffffff',
+        fontSize: 24,
+        marginRight: 30
+    },
+    headerRightMenuButton: {
+        color: 'rgba(255, 255, 255, 0.6)',
         fontSize: 21,
-        fontWeight: 600
+        marginRight: 20
     },
     noteListIconWrap: {
         backgroundColor: '#eeeeee',
@@ -254,20 +262,16 @@ export default class App extends Component {
                 <Container>
                     <Header style={Platform.OS === 'android' ? {height: 70} : styles.iosHeader}>
                         <Left style={Platform.OS === 'android' ? {top: 10} : null}>
-                            <Button transparent onPress={this.openDrawer.bind(this)}>
-                                <Icon name='menu' style={styles.headerMenuButton}/>
-                            </Button>
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <Button transparent onPress={this.openDrawer.bind(this)}>
+                                    <Icon name='md-menu' style={styles.headerMenuButton}/>
+                                </Button>
+                                <Title style={styles.appName}>Boostnote</Title>
+                            </View>
                         </Left>
-                        <Body style={Platform.OS === 'android' ? {top: 10} : null}>
-                        <Title style={styles.appName}>Boostnote</Title>
-                        </Body>
                         <Right style={Platform.OS === 'android' ? {top: 10} : null}>
-                            <Button transparent>
-                                <Icon name='star' style={styles.headerMenuButton}/>
-                            </Button>
-                            <Button transparent>
-                                <Icon name='search' style={styles.headerMenuButton}/>
-                            </Button>
+                            <Icon name='md-star' style={styles.headerRightMenuButton}/>
+                            <Icon name='md-search' style={styles.headerRightMenuButton}/>
                         </Right>
                     </Header>
                     <Content>
