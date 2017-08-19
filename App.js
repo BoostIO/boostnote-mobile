@@ -38,10 +38,13 @@ const styles = {
     },
     appName: {
         color: '#ffffff',
-        marginLeft: -160
+        marginLeft: -180,
+        fontSize: 21
     },
     headerMenuButton: {
-        color: '#ffffff'
+        color: '#ffffff',
+        fontSize: 21,
+        fontWeight: 600
     },
     noteListIconWrap: {
         backgroundColor: '#eeeeee',
