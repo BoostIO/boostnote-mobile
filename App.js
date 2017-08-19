@@ -64,8 +64,27 @@ const styles = {
     noteListTextNone: {
         color: '#adadad'
     },
-    newNoteButton: {
+    newPostButtonWrap: {
+        marginLeft: '43%',
+        marginBottom: 30,
+        shadowOffset:{
+            width: 0,
+            height: 4,
+        },
+        shadowColor: '#000',
+        shadowOpacity: 0.3,
+        shadowRadius: 6
+    },
+    newPostButton: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: '#D15419',
+        width: 60,
+        height: 60,
+        borderRadius: 50,
+        overflow: 'hidden',
+        position: 'absolute',
     }
 }
 
@@ -269,7 +288,18 @@ export default class App extends Component {
                             })
                         }
                     </Content>
-                    <Fab
+                    <Button transparent 
+                        onPress={() => {
+                            this.createNewNote('');
+                            this.listFilesAndSetState();
+                        }}
+                        style={styles.newPostButtonWrap}
+                    >
+                        <View style={styles.newPostButton}>
+                            <Icon name='md-add' style={{color: "#fff"}}/>
+                        </View>
+                    </Button>
+                    {/*<Fab
                         active={true}
                         containerStyle={{marginLeft: 10}}
                         style={styles.newNoteButton}
@@ -280,7 +310,7 @@ export default class App extends Component {
                         }
                         }>
                         <Icon name="md-add"/>
-                    </Fab>
+                    </Fab>*/}
                     <NoteModal setIsOpen={this.setNoteModalIsOpen.bind(this)}
                                isNoteOpen={this.state.isNoteOpen}
                                fileName={this.state.fileName}
