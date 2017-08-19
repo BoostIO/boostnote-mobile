@@ -19,6 +19,8 @@ import {
 import SideBar from './SideBar.js';
 import NoteModal from './NoteModal';
 
+import AwsMobileAnalyticsConfig from './lib/AwsMobileAnalytics'
+
 import RNFetchBlob from 'react-native-fetch-blob';
 const fs = RNFetchBlob.fs;
 const dirs = RNFetchBlob.fs.dirs;
@@ -105,6 +107,7 @@ export default class App extends Component {
                     content: content,
                     isNoteOpen: isOpen
                 });
+                AwsMobileAnalyticsConfig.recordDynamitCustomEvent('EDIT_NOTE')
             });
     }
 
@@ -173,6 +176,7 @@ export default class App extends Component {
                 console.table(contentObject.note);
                 fs.createFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, JSON.stringify(contentObject), 'utf8')
                     .catch(err => console.log(err));
+                AwsMobileAnalyticsConfig.recordDynamitCustomEvent('CREATE_NOTE')
             })
             .catch((err) => {
                 console.log(err);
