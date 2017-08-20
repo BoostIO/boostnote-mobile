@@ -296,10 +296,10 @@ export default class App extends Component {
                                 <Title style={styles.appName}>Boostnote</Title>
                             </View>
                         </Left>
-                        <Right style={Platform.OS === 'android' ? {top: 10} : null}>
+                        {/*<Right style={Platform.OS === 'android' ? {top: 10} : null}>
                             <Icon name='md-star' style={styles.headerRightMenuButton}/>
                             <Icon name='md-search' style={styles.headerRightMenuButton}/>
-                        </Right>
+                        </Right>*/}
                     </Header>
                     <Content>
                         <View style={{flex: 1, flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
