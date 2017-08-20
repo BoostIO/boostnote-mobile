@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native'
 import {
     Container,
-    List,
-    ListItem,
     Icon
 } from 'native-base';
 
@@ -63,29 +61,7 @@ export default class SideBar extends React.Component {
                             <Text style={styles.hariboteDesc}>Will released in mid of September.</Text>
                         </View>
                     </View>
-                    <List style={{
-                        flex:1,
-                        top: 50,
-                    }}>
-                        {/*<ListItem>
-                            <Text>Boostnote mobile</Text>
-                        </ListItem>
-                        <ListItem>
-                            <Text>All notes</Text>
-                        </ListItem>
-                        <ListItem>
-                            <Text>Starred</Text>
-                        </ListItem>
-                        <ListItem>
-                            <Text>My storage</Text>
-                        </ListItem>
-                        <ListItem>
-                            <Text>Aaaaa</Text>
-                        </ListItem>
-                        <ListItem>
-                            <Text>bbbbb</Text>
-                        </ListItem>*/}
-                    </List>
+
             </Container>
         );
     }
