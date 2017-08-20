@@ -98,10 +98,10 @@ const styles = {
         bottom: 30,
         shadowOffset:{
             width: 0,
-            height: 4,
+            height: 3,
         },
-        shadowColor: '#000',
-        shadowOpacity: 0.3,
+        shadowColor: '#CF5425',
+        shadowOpacity: 0.4,
         shadowRadius: 6,
     },
     noteListDate: {
