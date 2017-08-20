@@ -334,7 +334,7 @@ export default class App extends Component {
                         style={styles.newPostButtonWrap}
                     >
                         <View style={styles.newPostButton}>
-                            <Icon name='md-add' style={{color: "#fff"}}/>
+                            <Icon name='md-create' style={{color: "#fff"}}/>
                         </View>
                     </Button>
 
