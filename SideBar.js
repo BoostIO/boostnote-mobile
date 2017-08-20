@@ -40,6 +40,16 @@ const styles = {
         fontSize: 12,
         fontWeight: '600',
         color: '#89888d'
+    },
+    bottomLink: {
+        position: 'absolute',
+        bottom: 0,
+        marginLeft: 10,
+        paddingBottom: 10
+    },
+    bottomLinkWord: {
+        fontSize: 12,
+        color: '#89888d'
     }
 }
 
@@ -60,6 +70,10 @@ export default class SideBar extends React.Component {
                             <Text style={styles.noteHaribote}><FontAwesome style={{fontSize: 16}}>{Icons.dropbox}</FontAwesome> Dropbox</Text>
                             <Text style={styles.hariboteDesc}>Will released in mid of September.</Text>
                         </View>
+                    </View>
+
+                    <View style={styles.bottomLink}>
+                        <Text style={styles.bottomLinkWord}>You can also download Mac, Windows and Linux app.</Text>
                     </View>
 
             </Container>
