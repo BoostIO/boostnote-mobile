@@ -13,7 +13,6 @@ import {
     Drawer,
     Card,
     CardItem,
-    Fab,
 } from 'native-base';
 
 import FontAwesome, { Icons } from 'react-native-fontawesome';
@@ -339,18 +338,6 @@ export default class App extends Component {
                         </View>
                     </Button>
 
-                    {/*<Fab
-                        active={true}
-                        containerStyle={{marginLeft: 10}}
-                        style={styles.newNoteButton}
-                        position="bottomRight"
-                        onPress={() => {
-                            this.createNewNote('');
-                            this.listFilesAndSetState();
-                        }
-                        }>
-                        <Icon name="md-add"/>
-                    </Fab>*/}
                     <NoteModal setIsOpen={this.setNoteModalIsOpen.bind(this)}
                                isNoteOpen={this.state.isNoteOpen}
                                fileName={this.state.fileName}
