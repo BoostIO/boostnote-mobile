@@ -19,6 +19,22 @@ import Markdown from 'react-native-simple-markdown';
 import RNFetchBlob from 'react-native-fetch-blob';
 const fs = RNFetchBlob.fs;
 
+const styles = {
+    switchButton: {
+        backgroundColor: 'transparent',
+        borderColor: '#E7E4E6'
+    },
+    switchButtonActive: {
+        backgroundColor: '#BCB5B9',
+        borderColor: '#E7E4E6'
+
+    },
+    noteDetailButton: {
+        color: '#BCB5B9',
+        fontSize: 21
+    }
+}
+
 export default class NoteModal extends React.Component {
 
     constructor(props) {
@@ -58,9 +74,7 @@ export default class NoteModal extends React.Component {
                     <TextInput
                         style={{
                             margin: 8,
-                            height: Math.max(35, this.state.height),
-                            borderBottomColor: 'gray',
-                            borderBottomWidth: 1
+                            height: Math.max(35, this.state.height)
                         }}
                         onChange={(e) => this.onChangeText(e)}
                         value={this.state.text}
@@ -68,9 +82,11 @@ export default class NoteModal extends React.Component {
                 </View>
             </KeyboardAwareScrollView>;
         } else {
-            return <Markdown>
-                {this.state.text}
-            </Markdown>
+            return <View style={{margin: 15}}>
+                <Markdown>
+                    {this.state.text}
+                </Markdown>
+            </View>
         }
     }
 
@@ -83,31 +99,36 @@ export default class NoteModal extends React.Component {
                 onRequestClose={() => {
                 }}>
                 <Container>
-                    <Header style={Platform.OS === 'android' ? {height: 47} : null}>
+                    <Header style={Platform.OS === 'android' ? {height: 47,backgroundColor: '#F7F7F7'} : {backgroundColor: '#F7F7F7'}}>
                         <Left style={Platform.OS === 'android' ? {top: 0} : null}>
                             <Button transparent onPress={() => this.props.setIsOpen('', false)}>
-                                <Icon name='close'/>
+                                <Icon name='md-close' style={styles.noteDetailButton}/>
                             </Button>
                         </Left>
+
                         <Body style={Platform.OS === 'android' ? {top: 0} : null}>
-                        <Segment>
-                            <Button onPress={() => {
-                                this.setState({isLeftSegmentActive: true});
-                            }} first active={this.state.isLeftSegmentActive}><Icon name='create'
-                                                                                   style={this.state.isLeftSegmentActive ? {} : {color: 'blue'}}/></Button>
-                            <Button onPress={() => {
-                                this.setState({isLeftSegmentActive: false});
-                            }} last active={!this.state.isLeftSegmentActive}><Icon name='eye'
-                                                                                   style={this.state.isLeftSegmentActive ? {color: 'blue'} : {}}/></Button>
-                        </Segment>
+                            <Segment style={{marginLeft: '47%', position: 'absolute', top: -22}}>
+                                <Button onPress={() => {
+                                    this.setState({isLeftSegmentActive: true});
+                                }} first active={this.state.isLeftSegmentActive}
+                                style={this.state.isLeftSegmentActive ? styles.switchButtonActive : styles.switchButton}>
+                                    <Icon name='create' style={this.state.isLeftSegmentActive ? {} : {color: '#BCB5B9'}}/>
+                                </Button>
+                                <Button onPress={() => {
+                                    this.setState({isLeftSegmentActive: false});
+                                }} last active={!this.state.isLeftSegmentActive}
+                                style={this.state.isLeftSegmentActive ? styles.switchButton : styles.switchButtonActive}>
+                                    <Icon name='eye' style={this.state.isLeftSegmentActive ? {color: '#BCB5B9'} : {}}/>
+                                </Button>
+                            </Segment>
                         </Body>
+
                         <Right style={Platform.OS === 'android' ? {top: 0} : null}>
                             <Button transparent onPress={() => ActionSheet.show(
                                 {
                                     options: ["Delete", "Cancel"],
                                     cancelButtonIndex: 1,
                                     destructiveButtonIndex: 0,
-                                    title: "Option"
                                 },
                                 buttonIndex => {
                                     if (buttonIndex === 0) {
@@ -118,7 +139,7 @@ export default class NoteModal extends React.Component {
                                     }
                                 }
                             )}>
-                                <Icon name='more'/>
+                                <Icon name='md-more' style={styles.noteDetailButton}/>
                             </Button>
                         </Right>
                     </Header>
