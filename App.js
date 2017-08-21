@@ -246,12 +246,16 @@ export default class App extends Component {
             });
     }
 
-    createNewNote(fileName) {
+    createNewNote(fileName, isOpen) {
         const newFileName = fileName === '' ? `${this.makeRandomHex()}.md` : fileName;
 
         // Create a real file
         fs.createFile(`${dirs.DocumentDir}/Boostnote/${newFileName}`, '', 'utf8')
             .then((file) => {
+                this.setState({
+                    isNoteOpen: isOpen,
+                    fileName: newFileName,
+                })
                 // Update setting file
                 return fs.readFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, 'utf8')
             })
