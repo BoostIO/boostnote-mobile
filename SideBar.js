@@ -13,12 +13,12 @@ const styles = {
         marginLeft: 20,
     },
     appName: {
-        fontSize: 24,
+        fontSize: 21,
         color: '#89888d',
         marginBottom: 40
     },
     noteSelector: {
-        fontSize: 18,
+        fontSize: 16,
         color: '#3a3941',
         marginBottom: 40,
         backgroundColor: 'rgba(217, 217, 217, 0.5)',
@@ -32,12 +32,12 @@ const styles = {
         marginBottom: 50
     },
     noteHaribote: {
-        fontSize: 21,
+        fontSize: 16,
         color: '#89888d',
         marginBottom: 5
     },
     hariboteDesc: {
-        fontSize: 12,
+        fontSize: 10,
         fontWeight: '600',
         color: '#89888d'
     },
@@ -48,8 +48,13 @@ const styles = {
         paddingBottom: 10
     },
     bottomLinkWord: {
-        fontSize: 12,
+        fontSize: 10,
         color: '#89888d'
+    },
+    bottomLinkUrl: {
+        fontSize: 10,
+        color: '#89888d',
+        fontWeight: '600'        
     }
 }
 
@@ -61,7 +66,7 @@ export default class SideBar extends React.Component {
             }}>
                     <View style={styles.sideNavWrap}>
                         <Text style={styles.appName}>Boostnote Mobile</Text>
-                        <Text style={styles.noteSelector}><FontAwesome style={{color: '#be3a31', fontSize: 16}}>{Icons.archive}</FontAwesome> All Notes</Text>
+                        <Text style={styles.noteSelector}><FontAwesome style={{color: '#be3a31', fontSize: 14}}>{Icons.archive}</FontAwesome> All Notes</Text>
                         <View style={styles.hariboteWrap}>
                             <Text style={styles.noteHaribote}>Folders</Text>
                             <Text style={styles.hariboteDesc}>Under development.</Text>
@@ -74,6 +79,7 @@ export default class SideBar extends React.Component {
 
                     <View style={styles.bottomLink}>
                         <Text style={styles.bottomLinkWord}>You can also download Mac, Windows and Linux app.</Text>
+                        <Text style={styles.bottomLinkUrl}>https://boostnote.io/</Text>
                     </View>
 
             </Container>
