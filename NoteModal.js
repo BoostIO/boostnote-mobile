@@ -15,7 +15,7 @@ import {
 
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-import Markdown from 'react-native-simple-markdown';
+import Markdown from 'react-native-easy-markdown';
 import RNFetchBlob from 'react-native-fetch-blob';
 const fs = RNFetchBlob.fs;
 
