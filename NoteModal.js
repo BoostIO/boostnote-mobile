@@ -74,7 +74,7 @@ export default class NoteModal extends React.Component {
                     <TextInput
                         style={{
                             margin: 8,
-                            height: Math.max(200, this.state.height)
+                            height: Math.max(300, this.state.height)
                         }}
                         onChange={(e) => this.onChangeText(e)}
                         value={this.state.text}
