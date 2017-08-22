@@ -82,7 +82,7 @@ const styles = {
         backgroundColor: 'transparent',
         top: 15,
         fontSize: 14,
-        width: '86%',
+        width: '90%',
         marginLeft: 40
     },
     noteListTextNone: {
@@ -91,7 +91,7 @@ const styles = {
         backgroundColor: 'transparent',
         top: 15,
         fontSize: 14,
-        width: '86%',
+        width: '90%',
         marginLeft: 40
     },
     newPostButtonWrap: {
@@ -311,9 +311,9 @@ export default class App extends Component {
                     <Content>
                         <View style={{flex: 1, flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
                             <Text style={{backgroundColor: 'transparent', position: 'absolute', left: 10, top:12, color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>All Notes</Text>
-                            <View style={{backgroundColor: 'transparent', position: 'absolute', right: 10, marginTop: 11}}>
+                            {/*<View style={{backgroundColor: 'transparent', position: 'absolute', right: 10, marginTop: 11}}>
                                 <Text style={{color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>Sort by Created  <Icon name='md-flash' style={{color: '#FDC134', fontSize: 14, fontWeight: '600'}} /></Text>
-                            </View>
+                            </View>*/}
                         </View>
                         {
                             this.state.noteList.map((note) => {
