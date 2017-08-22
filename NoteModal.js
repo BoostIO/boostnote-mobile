@@ -1,5 +1,6 @@
 import React from 'react';
-import {Text, Platform, Modal, View, TextInput} from 'react-native';
+import {Keyboard, Dimensions, Text, Platform, Modal, View, TextInput} from 'react-native';
+
 import {
     Container,
     Header,
@@ -12,8 +13,6 @@ import {
     Segment,
     ActionSheet,
 } from 'native-base';
-
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import Markdown from 'react-native-easy-markdown';
 import RNFetchBlob from 'react-native-fetch-blob';
@@ -45,7 +44,10 @@ export default class NoteModal extends React.Component {
             text: this.props.content,
             height: 0,
             isLeftSegmentActive: true,
+            visibleHeight: 230
         };
+        this.keyboardDidShow = this.keyboardDidShow.bind(this);
+        this.keyboardDidHide = this.keyboardDidHide.bind(this);
     }
 
     componentWillReceiveProps(props) {
@@ -67,20 +69,41 @@ export default class NoteModal extends React.Component {
 
     };
 
+  componentWillMount () {
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide);
+  }
+
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  keyboardDidShow(e) {
+    let newSize = Dimensions.get('window').height - e.endCoordinates.height
+    this.setState({
+        visibleHeight: newSize,
+    })
+  }
+
+  keyboardDidHide (e) {
+    this.setState({
+        visibleHeight: Dimensions.get('window').height,
+    })
+  }
+
     getNoteComponent() {
         if (this.state.isLeftSegmentActive) {
-            return <KeyboardAwareScrollView>
-                <View>
+            return <View style={{height: this.state.visibleHeight}}>
                     <TextInput
                         style={{
                             margin: 8,
-                            height: Math.max(300, this.state.height)
                         }}
                         onChange={(e) => this.onChangeText(e)}
                         value={this.state.text}
-                        multiline={true}/>
-                </View>
-            </KeyboardAwareScrollView>;
+                        multiline={true}
+                        onSubmitEditing={Keyboard.dismiss}/>
+                </View>;
         } else {
             return <View style={{margin: 15}}>
                 <Markdown>
