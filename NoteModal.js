@@ -86,7 +86,7 @@ export default class NoteModal extends React.Component {
     })
   }
 
-  keyboardDidHide (e) {
+  keyboardDidHide(e) {
     this.setState({
         visibleHeight: Dimensions.get('window').height,
     })
@@ -94,10 +94,11 @@ export default class NoteModal extends React.Component {
 
     getNoteComponent() {
         if (this.state.isLeftSegmentActive) {
-            return <View style={{height: this.state.visibleHeight}}>
+            return <View>
                     <TextInput
                         style={{
                             margin: 8,
+                            height: this.state.visibleHeight
                         }}
                         onChange={(e) => this.onChangeText(e)}
                         value={this.state.text}
