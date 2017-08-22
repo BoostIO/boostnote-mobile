@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native'
+import { Linking, Text, View } from 'react-native'
 import {
     Container,
     Icon
@@ -14,14 +14,14 @@ const styles = {
     },
     appName: {
         fontSize: 21,
-        color: '#89888d',
+        color: '#CECFCE',
         marginBottom: 40
     },
     noteSelector: {
-        fontSize: 16,
-        color: '#3a3941',
+        fontSize: 18,
+        color: '#ffffff',
         marginBottom: 40,
-        backgroundColor: 'rgba(217, 217, 217, 0.5)',
+        backgroundColor: '#414747',
         width: '90%',
         height: 35,
         borderRadius: 6,
@@ -32,54 +32,50 @@ const styles = {
         marginBottom: 50
     },
     noteHaribote: {
-        fontSize: 16,
-        color: '#89888d',
+        fontSize: 18,
+        color: '#CECFCE',
         marginBottom: 5
     },
     hariboteDesc: {
-        fontSize: 10,
-        fontWeight: '600',
-        color: '#89888d'
+        fontSize: 14,
+        color: 'rgba(206,207,206,0.8)'
     },
     bottomLink: {
         position: 'absolute',
         bottom: 0,
-        marginLeft: 10,
+        marginLeft: 15,
         paddingBottom: 10
     },
     bottomLinkWord: {
-        fontSize: 10,
-        color: '#89888d'
+        fontSize: 14,
+        color: 'rgba(206,207,206,0.8)',
+        fontWeight: '600'
     },
-    bottomLinkUrl: {
-        fontSize: 10,
-        color: '#89888d',
-        fontWeight: '600'        
-    }
 }
 
 export default class SideBar extends React.Component {
     render() {
         return (
             <Container style={{
-                backgroundColor: 'white',
+                backgroundColor: '#2E3235',
             }}>
                     <View style={styles.sideNavWrap}>
                         <Text style={styles.appName}>Boostnote Mobile</Text>
-                        <Text style={styles.noteSelector}><FontAwesome style={{color: '#be3a31', fontSize: 14}}>{Icons.archive}</FontAwesome> All Notes</Text>
+                        <Text style={styles.noteSelector}><Icon name='md-archive' style={{color: '#FDC134', fontSize: 14}}/> All Notes</Text>
                         <View style={styles.hariboteWrap}>
                             <Text style={styles.noteHaribote}>Folders</Text>
                             <Text style={styles.hariboteDesc}>Under development.</Text>
                         </View>
                         <View>
                             <Text style={styles.noteHaribote}><FontAwesome style={{fontSize: 16}}>{Icons.dropbox}</FontAwesome> Dropbox</Text>
-                            <Text style={styles.hariboteDesc}>Will released in mid of September.</Text>
+                            <Text style={styles.hariboteDesc}>Will be released in September.</Text>
                         </View>
                     </View>
 
                     <View style={styles.bottomLink}>
-                        <Text style={styles.bottomLinkWord}>You can also download Mac, Windows and Linux app.</Text>
-                        <Text style={styles.bottomLinkUrl}>https://boostnote.io/</Text>
+                        <Text onPress={() => Linking.openURL('https://boostnote.io/')} style={styles.bottomLinkWord}>
+                            <Icon style={{fontSize: 16,  color: '#89888d'}} name='link'/> Boostnote app for Desktop
+                        </Text>
                     </View>
 
             </Container>

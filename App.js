@@ -40,7 +40,7 @@ const styles = {
     noteList: {
         width: '100%',
         height: 65,
-        backgroundColor: '#ffffff',
+        backgroundColor: 'rgba(244,244,244,0.1)',
     },
     iosHeader: {
         backgroundColor: '#239F85',
