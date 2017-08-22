@@ -82,8 +82,8 @@ const styles = {
         backgroundColor: 'transparent',
         top: 15,
         fontSize: 14,
-        width: '75%',
-        marginLeft: 35
+        width: '86%',
+        marginLeft: 40
     },
     noteListTextNone: {
         position: 'absolute',
@@ -91,8 +91,8 @@ const styles = {
         backgroundColor: 'transparent',
         top: 15,
         fontSize: 14,
-        width: '75%',
-        marginLeft: 35
+        width: '86%',
+        marginLeft: 40
     },
     newPostButtonWrap: {
         position: 'absolute',
@@ -311,9 +311,9 @@ export default class App extends Component {
                     <Content>
                         <View style={{flex: 1, flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
                             <Text style={{backgroundColor: 'transparent', position: 'absolute', left: 10, top:12, color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>All Notes</Text>
-                            <Button style={{backgroundColor: 'transparent', position: 'absolute', right: 0, height: 40}}>
-                                <Text style={{color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>Data Created  <Icon name='md-flash' style={{color: '#FDC134', fontSize: 14, fontWeight: '600'}} /></Text>
-                            </Button>
+                            <View style={{backgroundColor: 'transparent', position: 'absolute', right: 10, marginTop: 11}}>
+                                <Text style={{color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>Sort by Created  <Icon name='md-flash' style={{color: '#FDC134', fontSize: 14, fontWeight: '600'}} /></Text>
+                            </View>
                         </View>
                         {
                             this.state.noteList.map((note) => {
@@ -326,7 +326,6 @@ export default class App extends Component {
                                                 <Icon name='md-code-working' style={styles.noteListIcon}/>
                                             </View>
                                             <Text numberOfLines={1} style={note.content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{note.content}</Text>
-                                            <Text style={styles.noteListDate}>Jul 29</Text>
                                         </Body>
                                     </CardItem>
                                 </Card>;
