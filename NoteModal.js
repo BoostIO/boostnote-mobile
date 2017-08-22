@@ -94,15 +94,15 @@ export default class NoteModal extends React.Component {
 
     getNoteComponent() {
         if (this.state.isLeftSegmentActive) {
-            return <View>
+            return <View style={{height: this.state.visibleHeight, flex: 1}}>
                     <TextInput
                         style={{
                             margin: 8,
-                            height: this.state.visibleHeight
                         }}
                         onChange={(e) => this.onChangeText(e)}
                         value={this.state.text}
                         multiline={true}
+                        autoFocus={true}
                         onSubmitEditing={Keyboard.dismiss}/>
                 </View>;
         } else {
