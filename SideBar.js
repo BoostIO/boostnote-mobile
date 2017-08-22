@@ -24,7 +24,6 @@ const styles = {
         backgroundColor: '#414747',
         width: '90%',
         height: 35,
-        borderRadius: 6,
         paddingTop: 6,
         paddingLeft: 7
     },
