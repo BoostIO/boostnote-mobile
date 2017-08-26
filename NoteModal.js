@@ -101,9 +101,7 @@ export default class NoteModal extends React.Component {
         if (this.state.isLeftSegmentActive) {
             return <View style={{height: this.state.visibleHeight, flex: 1}}>
                     <TextInput
-                        style={{
-                            margin: 8,
-                        }}
+                        style={Platform.OS === 'android' ? {margin: 8,height: '100%'}:{ margin: 8}}
                         onChange={(e) => this.onChangeText(e)}
                         value={this.state.text}
                         multiline={true}
