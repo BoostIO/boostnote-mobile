@@ -14,9 +14,14 @@ import {
     ActionSheet,
 } from 'native-base';
 
-import Markdown from 'react-native-easy-markdown';
 import RNFetchBlob from 'react-native-fetch-blob';
 const fs = RNFetchBlob.fs;
+
+import createMarkdownRenderer from 'rn-markdown'
+
+// pass in `marked` opts, e.g. gfm: true for Github Flavored Markdown
+const Markdown = createMarkdownRenderer({ gfm: true })
+
 
 const styles = {
     switchButton: {
@@ -31,6 +36,12 @@ const styles = {
     noteDetailButton: {
         color: '#BCB5B9',
         fontSize: 21
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
     }
 }
 
@@ -98,6 +109,25 @@ export default class NoteModal extends React.Component {
   }
 
     getNoteComponent() {
+        const markdownStyles = {
+            container: {
+              paddingLeft: 10
+            },
+            heading1: {
+              fontSize: 24,
+              color: 'purple',
+            },
+            link: {
+              color: 'pink',
+            },
+            mail_to: {
+              color: 'orange',
+            },
+            text: {
+              color: '#555555',
+            },
+          }
+          
         if (this.state.isLeftSegmentActive) {
             return <View style={{height: this.state.visibleHeight, flex: 1}}>
                     <TextInput
@@ -110,9 +140,9 @@ export default class NoteModal extends React.Component {
                 </View>;
         } else {
             return <View style={{margin: 15}}>
-                <Markdown>
-                    {this.state.text}
-                </Markdown>
+            <Markdown contentContainerStyle={styles.container} markdownStyles={markdownStyles}>
+                {this.state.text}
+            </Markdown>
             </View>
         }
     }
