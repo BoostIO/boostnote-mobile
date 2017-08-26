@@ -230,16 +230,25 @@ export default class App extends Component {
             return name.endsWith('.md');
         });
 
+        let settingJsonFile = await fs.readFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, 'utf8');
+
         // Change file name to object of file name and one liner content
         let fileList = [];
         for (let i = 0; i < filteredFiles.length; i++) {
             const fileName = filteredFiles[i];
             const content = await fs.readFile(`${dirs.DocumentDir}/Boostnote/${fileName}`, 'utf8');
+            let filteredSettingFile = JSON.parse(settingJsonFile).note.filter(setting => {
+                return setting.name === fileName;
+            })[0];
             fileList.push({
                 fileName: fileName,
-                content: content === '' ? 'Tap here and write something!' : content.split(/\r\n|\r|\n/)[0]
+                content: content === '' ? 'Tap here and write something!' : content.split(/\r\n|\r|\n/)[0],
+                createdAt: filteredSettingFile.createdAt
             });
         }
+        fileList.sort((a, b) => {
+            return a.createdAt < b.createdAt ? 1 : -1;
+        });
 
         this.setState({
             noteList: fileList,
