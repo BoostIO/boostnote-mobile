@@ -17,10 +17,10 @@ import {
 import RNFetchBlob from 'react-native-fetch-blob';
 const fs = RNFetchBlob.fs;
 
-import createMarkdownRenderer from 'rn-markdown'
+import createMarkdownRenderer from 'rn-markdown';
 
 // pass in `marked` opts, e.g. gfm: true for Github Flavored Markdown
-const Markdown = createMarkdownRenderer({ gfm: true })
+const Markdown = createMarkdownRenderer({ gfm: true, tables: true })
 
 
 const styles = {
@@ -115,10 +115,11 @@ export default class NoteModal extends React.Component {
             },
             heading1: {
               fontSize: 24,
-              color: 'purple',
+              fontWeight: '600',
+              color: '#222222',
             },
             link: {
-              color: 'pink',
+              color: 'red',
             },
             mail_to: {
               color: 'orange',
@@ -126,6 +127,15 @@ export default class NoteModal extends React.Component {
             text: {
               color: '#555555',
             },
+            code: {
+                backgroundColor: '#f0f0f0',
+                marginTop: 5,
+                marginBottom: 5
+            },
+            blockquote: {
+                backgroundColor: '#f8f8f8',
+                padding: 5
+            }
           }
           
         if (this.state.isLeftSegmentActive) {
