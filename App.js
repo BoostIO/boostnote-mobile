@@ -197,16 +197,23 @@ export default class App extends Component {
     };
 
     setNoteModalIsOpen(fileName, isOpen) {
-        this.listFilesAndSetState();
-        fs.readFile(`${dirs.DocumentDir}/Boostnote/${fileName}`, 'utf8')
-            .then((content) => {
-                this.setState({
-                    fileName: fileName,
-                    content: content,
-                    isNoteOpen: isOpen
+        if (isOpen) {
+            fs.readFile(`${dirs.DocumentDir}/Boostnote/${fileName}`, 'utf8')
+                .then((content) => {
+                    this.setState({
+                        fileName: fileName,
+                        content: content,
+                        isNoteOpen: true
+                    });
+
                 });
-                AwsMobileAnalyticsConfig.recordDynamitCustomEvent('EDIT_NOTE')
+        } else {
+            AwsMobileAnalyticsConfig.recordDynamitCustomEvent('EDIT_NOTE');
+            this.listFilesAndSetState();
+            this.setState({
+                isNoteOpen: false
             });
+        }
     }
 
     listDir() {
@@ -258,6 +265,7 @@ export default class App extends Component {
                 this.setState({
                     isNoteOpen: isOpen,
                     fileName: newFileName,
+                    content: ''
                 })
                 // Update setting file
                 return fs.readFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, 'utf8')
@@ -276,7 +284,7 @@ export default class App extends Component {
                 };
                 contentObject.note.push(thisNote);
                 console.table(contentObject.note);
-                fs.createFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, JSON.stringify(contentObject), 'utf8')
+                fs.writeFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, JSON.stringify(contentObject), 'utf8')
                     .catch(err => console.log(err));
                 AwsMobileAnalyticsConfig.recordDynamitCustomEvent('CREATE_NOTE')
             })
@@ -335,8 +343,7 @@ export default class App extends Component {
 
                     <Button transparent
                         onPress={() => {
-                            this.createNewNote('');
-                            this.listFilesAndSetState();
+                            this.createNewNote('', true);
                         }}
                         style={styles.newPostButtonWrap}
                     >
