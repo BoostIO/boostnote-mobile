@@ -51,6 +51,12 @@ export default class NoteModal extends React.Component {
     }
 
     componentWillReceiveProps(props) {
+        // if user is opening a same file, set state.
+        if (props.fileName === this.state.fileName) {
+            return;
+        }
+
+        // if user open an another file, set state.
         this.setState({
             isLeftSegmentActive: true,
             fileName: props.fileName,
@@ -65,8 +71,7 @@ export default class NoteModal extends React.Component {
             height: e.nativeEvent.contentSize.height,
         });
         const dirs = RNFetchBlob.fs.dirs;
-        fs.createFile(`${dirs.DocumentDir}/Boostnote/${this.state.fileName}`, text, 'utf8');
-
+        fs.writeFile(`${dirs.DocumentDir}/Boostnote/${this.state.fileName}`, text, 'utf8');
     };
 
   componentWillMount () {
@@ -155,7 +160,9 @@ export default class NoteModal extends React.Component {
                                     destructiveButtonIndex: 0,
                                 },
                                 buttonIndex => {
-                                    if (buttonIndex === 0) {
+                                    // `buttonIndex` is a string in Android, a number in iOS.
+                                    if (Platform.OS === 'android' && buttonIndex === '0'
+                                        || Platform.OS === 'ios' && buttonIndex === 0) {
                                         fs.unlink(`${RNFetchBlob.fs.dirs.DocumentDir}/Boostnote/${this.state.fileName}`)
                                         .then(() => {
                                             this.props.setIsOpen('', false);
