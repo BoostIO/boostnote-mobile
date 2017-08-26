@@ -18,8 +18,6 @@ import RNFetchBlob from 'react-native-fetch-blob';
 const fs = RNFetchBlob.fs;
 
 import createMarkdownRenderer from 'rn-markdown';
-
-// pass in `marked` opts, e.g. gfm: true for Github Flavored Markdown
 const Markdown = createMarkdownRenderer({ gfm: true, tables: true })
 
 
