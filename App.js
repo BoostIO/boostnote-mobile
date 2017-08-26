@@ -17,6 +17,8 @@ import {
 
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 
+import moment from 'moment';
+
 import SideBar from './SideBar.js';
 import NoteModal from './NoteModal';
 
@@ -82,7 +84,7 @@ const styles = {
         backgroundColor: 'transparent',
         top: 15,
         fontSize: 14,
-        width: '90%',
+        width: '73%',
         marginLeft: 40
     },
     noteListTextNone: {
@@ -343,6 +345,7 @@ export default class App extends Component {
                                                 <Icon name='md-code-working' style={styles.noteListIcon}/>
                                             </View>
                                             <Text numberOfLines={1} style={note.content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{note.content}</Text>
+                                            <Text style={styles.noteListDate}>{moment(note.createdAt).format('MMM D')}</Text>
                                         </Body>
                                     </CardItem>
                                 </Card>;
