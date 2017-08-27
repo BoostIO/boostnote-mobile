@@ -173,7 +173,7 @@ export default class NoteModal extends React.Component {
                         </Left>
 
                         <Body style={Platform.OS === 'android' ? {top: 0} : null}>
-                            <Segment style={Platform.OS === 'android' ? {position: 'relative', backgroundColor: 'transparent', borderWidth:1} : {marginLeft: 50, position: 'absolute', top: -22, backgroundColor: 'transparent'}}>
+                            <Segment style={Platform.OS === 'android' ? {paddingRight: 25, position: 'relative', backgroundColor: 'transparent', borderWidth:1} : {marginLeft: 50, position: 'absolute', top: -22, backgroundColor: 'transparent'}}>
                                 <Button onPress={() => {
                                     this.setState({isLeftSegmentActive: true});
                                 }} first active={this.state.isLeftSegmentActive}
