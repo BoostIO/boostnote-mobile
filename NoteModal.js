@@ -20,6 +20,7 @@ const fs = RNFetchBlob.fs;
 import createMarkdownRenderer from 'rn-markdown';
 const Markdown = createMarkdownRenderer({ gfm: true, tables: true })
 
+import MultilineTextInput from './MultilineTextInput'
 
 const styles = {
     switchButton: {
@@ -74,11 +75,9 @@ export default class NoteModal extends React.Component {
         });
     }
 
-    onChangeText(e) {
-        const text = e.nativeEvent.text;
+    onChangeText(text) {
         this.setState({
-            text: text,
-            height: e.nativeEvent.contentSize.height,
+            text: text
         });
         const dirs = RNFetchBlob.fs.dirs;
         fs.writeFile(`${dirs.DocumentDir}/Boostnote/${this.state.fileName}`, text, 'utf8');
@@ -139,13 +138,12 @@ export default class NoteModal extends React.Component {
           
         if (this.state.isLeftSegmentActive) {
             return <View style={{height: this.state.visibleHeight, flex: 1}}>
-                    <TextInput
+                    <MultilineTextInput
                         style={Platform.OS === 'android' ? {margin: 8,height: '100%'}:{ margin: 8}}
-                        onChange={(e) => this.onChangeText(e)}
+                        onChangeText={(e) => this.onChangeText(e)}
                         value={this.state.text}
-                        multiline={true}
                         autoFocus={true}
-                        onSubmitEditing={Keyboard.dismiss}/>
+                        textAlignVertical={'top'}/>
                 </View>;
         } else {
             return <View style={{margin: 15}}>
