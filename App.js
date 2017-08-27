@@ -47,6 +47,10 @@ const styles = {
     iosHeader: {
         backgroundColor: '#239F85',
     },
+    androidHeader: {
+        backgroundColor: '#29BB9C',
+        height: 70
+    },
     appName: {
         color: '#ffffff',
         fontSize: 24,
@@ -100,6 +104,9 @@ const styles = {
         position: 'absolute',
         marginLeft: '43%',
         bottom: 30,
+        width: 60,
+        height: 60,
+        borderRadius: 50,
         shadowOffset:{
             width: 0,
             height: 3,
@@ -313,7 +320,7 @@ export default class App extends Component {
                 content={<SideBar/>}
                 panOpenMask={.05}>
                 <Container>
-                    <Header style={Platform.OS === 'android' ? {height: 70} : styles.iosHeader}>
+                    <Header style={Platform.OS === 'android' ? styles.androidHeader : styles.iosHeader} androidStatusBarColor='#239F85'>
                         <Left style={Platform.OS === 'android' ? {top: 10} : null}>
                             <View style={{flex: 1, flexDirection: 'row'}}>
                                 <Button transparent onPress={this.openDrawer.bind(this)}>
