@@ -14,23 +14,33 @@ import {
     ActionSheet,
 } from 'native-base';
 
-import Markdown from 'react-native-easy-markdown';
 import RNFetchBlob from 'react-native-fetch-blob';
 const fs = RNFetchBlob.fs;
+
+import createMarkdownRenderer from 'rn-markdown';
+const Markdown = createMarkdownRenderer({ gfm: true, tables: true })
+
 
 const styles = {
     switchButton: {
         backgroundColor: 'transparent',
-        borderColor: '#E7E4E6'
+        borderColor: '#EFF1F5',
+        borderWidth: 1
     },
     switchButtonActive: {
-        backgroundColor: '#BCB5B9',
-        borderColor: '#E7E4E6'
-
+        backgroundColor: '#EFF1F5',
+        borderColor: '#EFF1F5',
+        borderWidth: 1
     },
     noteDetailButton: {
-        color: '#BCB5B9',
-        fontSize: 21
+        color: '#EFF1F5',
+        fontSize: 23
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
     }
 }
 
@@ -98,6 +108,35 @@ export default class NoteModal extends React.Component {
   }
 
     getNoteComponent() {
+        const markdownStyles = {
+            container: {
+              paddingLeft: 10
+            },
+            heading1: {
+              fontSize: 24,
+              fontWeight: '600',
+              color: '#222222',
+            },
+            link: {
+              color: 'red',
+            },
+            mail_to: {
+              color: 'orange',
+            },
+            text: {
+              color: '#555555',
+            },
+            code: {
+                backgroundColor: '#f0f0f0',
+                marginTop: 5,
+                marginBottom: 5
+            },
+            blockquote: {
+                backgroundColor: '#f8f8f8',
+                padding: 5
+            }
+          }
+          
         if (this.state.isLeftSegmentActive) {
             return <View style={{height: this.state.visibleHeight, flex: 1}}>
                     <TextInput
@@ -110,9 +149,9 @@ export default class NoteModal extends React.Component {
                 </View>;
         } else {
             return <View style={{margin: 15}}>
-                <Markdown>
-                    {this.state.text}
-                </Markdown>
+            <Markdown contentContainerStyle={styles.container} markdownStyles={markdownStyles}>
+                {this.state.text}
+            </Markdown>
             </View>
         }
     }
@@ -126,26 +165,26 @@ export default class NoteModal extends React.Component {
                 onRequestClose={() => {
                 }}>
                 <Container>
-                    <Header style={Platform.OS === 'android' ? {height: 47,backgroundColor: '#F7F7F7'} : {backgroundColor: '#F7F7F7'}}>
+                    <Header style={Platform.OS === 'android' ? {height: 47,backgroundColor: '#6C81A6'} : {backgroundColor: '#6C81A6'}} androidStatusBarColor='#239F85'>
                         <Left style={Platform.OS === 'android' ? {top: 0} : null}>
                             <Button transparent onPress={() => this.props.setIsOpen('', false)}>
-                                <Icon name='md-close' style={styles.noteDetailButton}/>
+                                <Text><Icon name='md-close' style={styles.noteDetailButton}/></Text>
                             </Button>
                         </Left>
 
                         <Body style={Platform.OS === 'android' ? {top: 0} : null}>
-                            <Segment style={{marginLeft: '47%', position: 'absolute', top: -22}}>
+                            <Segment style={Platform.OS === 'android' ? {position: 'relative', backgroundColor: 'transparent', borderWidth:1} : {marginLeft: 50, position: 'absolute', top: -22, backgroundColor: 'transparent'}}>
                                 <Button onPress={() => {
                                     this.setState({isLeftSegmentActive: true});
                                 }} first active={this.state.isLeftSegmentActive}
                                 style={this.state.isLeftSegmentActive ? styles.switchButtonActive : styles.switchButton}>
-                                    <Icon name='create' style={this.state.isLeftSegmentActive ? {} : {color: '#BCB5B9'}}/>
+                                    <Text><Icon name='create' style={this.state.isLeftSegmentActive ? {color: '#6C81A6'} : {}}/></Text>
                                 </Button>
                                 <Button onPress={() => {
                                     this.setState({isLeftSegmentActive: false});
                                 }} last active={!this.state.isLeftSegmentActive}
                                 style={this.state.isLeftSegmentActive ? styles.switchButton : styles.switchButtonActive}>
-                                    <Icon name='eye' style={this.state.isLeftSegmentActive ? {color: '#BCB5B9'} : {}}/>
+                                    <Text><Icon name='eye' style={this.state.isLeftSegmentActive ? {color: '#EFF1F5'} : {color: '#6C81A6'}}/></Text>
                                 </Button>
                             </Segment>
                         </Body>
@@ -168,7 +207,7 @@ export default class NoteModal extends React.Component {
                                     }
                                 }
                             )}>
-                                <Icon name='md-more' style={styles.noteDetailButton}/>
+                                <Text><Icon name='md-more' style={styles.noteDetailButton}/></Text>
                             </Button>
                         </Right>
                     </Header>

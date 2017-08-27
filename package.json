@@ -14,10 +14,9 @@
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-native-code-push": "2.1.1-beta",
-    "react-native-easy-markdown": "^1.1.8",
     "react-native-fetch-blob": "^0.10.5",
     "react-native-fontawesome": "^5.7.0",
-    "react-native-simple-markdown": "git://github.com/CharlesMangwa/react-native-simple-markdown.git"
+    "rn-markdown": "^1.1.1"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",
