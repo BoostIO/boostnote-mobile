@@ -1,7 +1,8 @@
 ![Boostnote app screenshot](./resources/repository/top.png)
 
-<h4 align="center">The markdown note-pad for programmers. </h4>
-<h5 align="center">Apps available for [Android](https://play.google.com/store/apps/details?id=io.boostnote) and [iOS](https://itunes.apple.com/us/app/boostnote/id1273066636?mt=8)! Both apps are built with React Native.</h5>
+### The markdown note-pad for programmers.
+
+Apps available for [Android](https://play.google.com/store/apps/details?id=io.boostnote) and [iOS](https://itunes.apple.com/us/app/boostnote/id1273066636?mt=8)! Both apps are built with React Native.
 
 ## Authors & Maintainers
 - [Kohei TAKATA](https://github.com/kohei-takata)
