@@ -91,13 +91,13 @@ android {
         applicationId "io.boostnote"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 3
-        versionName "1.0"
+        versionCode 5
+        versionName "1.0.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
     }
-    signingConfigs {
+   signingConfigs {
         release {
             if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
                 storeFile file(MYAPP_RELEASE_STORE_FILE)
