@@ -19,6 +19,8 @@ After you have downloaded or cloned this repository, run `npm install` or `yarn`
 - iOS `react-native run-ios`
 - Android `react-native run-android`
 
+## Dependencies
+[MultilineTextInput.js](https://gist.github.com/catchin/47afe706256604959c13dc25e7bb9383)
 
 ## Authors & Maintainers
 - [Kohei TAKATA](https://github.com/kohei-takata)
