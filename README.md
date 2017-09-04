@@ -28,7 +28,7 @@ After you have downloaded or cloned this repository, run `npm install` or `yarn`
 - [Kazu Yokomizo](https://github.com/kazup01)
 
 ## Contributors
-[Great contributors](https://github.com/BoostIO/Boostnote-mobile/graphs/contributors) :tada:
+[Great contributors](https://github.com/BoostIO/boostnote-mobile/graphs/contributors) :tada:
 
 ## More Information
 * [Website](https://boostnote.io) : Mac, Windows and Linux apps are available 💻
