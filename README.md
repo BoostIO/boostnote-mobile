@@ -28,7 +28,7 @@ After you have downloaded or cloned this repository, run `npm install` or `yarn`
 - [Kazu Yokomizo](https://github.com/kazup01)
 
 ## Contributors
-[Great contributors](https://github.com/BoostIO/Boostnote/graphs/contributors) :tada:
+[Great contributors](https://github.com/BoostIO/boostnote-mobile/graphs/contributors) :tada:
 
 ## More Information
 * [Website](https://boostnote.io) : Mac, Windows and Linux apps are available 💻
@@ -37,7 +37,7 @@ After you have downloaded or cloned this repository, run `npm install` or `yarn`
 * Copyright (C) 2017 Maisin&Co.
 
 ## License
-[MIT](https://github.com/Boostnote/boostnote-mobile/blob/master/LICENSE).
+[MIT](https://github.com/BoostIO/boostnote-mobile/blob/master/LICENSE).
 
 
 ### Want to contribute or need to see some improvements?
