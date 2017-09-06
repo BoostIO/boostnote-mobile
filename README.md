@@ -1,4 +1,4 @@
-## [Boostnote](https://boostnote.io/) for iOS and Android app that build with React Native.
+## [Boostnote](https://github.com/BoostIO/Boostnote) for iOS and Android that build with React Native.
 
 [![App Store](http://imgur.com/y8PTxr9.png "App Store")](https://itunes.apple.com/us/app/boostnote/id1273066636?mt=8)　
 [![Play Store](http://imgur.com/utWa1co.png "Play Store")](https://play.google.com/store/apps/details?id=io.boostnote)
