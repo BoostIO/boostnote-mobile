@@ -43,6 +43,7 @@ export default class MultilineTextInput extends PureComponent {
         onSelectionChange={event => this.setState({selection: event.nativeEvent.selection})}
         onChangeText={this.props.onChangeText}
         onSubmitEditing={this.onSubmitEditing}
+        autoCorrect={false}
         {...this.props}
       />
     );
