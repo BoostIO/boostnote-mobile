@@ -1,6 +1,13 @@
-import React from 'react';
-import {Keyboard, Dimensions, Text, Platform, Modal, View, TextInput} from 'react-native';
-
+import React from 'react'
+import {
+    Keyboard,
+    Dimensions,
+    Text,
+    Platform,
+    Modal,
+    View,
+    TextInput
+} from 'react-native'
 import {
     Container,
     Header,
@@ -12,43 +19,43 @@ import {
     Icon,
     Segment,
     ActionSheet,
-} from 'native-base';
+} from 'native-base'
 
-import RNFetchBlob from 'react-native-fetch-blob';
-const fs = RNFetchBlob.fs;
+import RNFetchBlob from 'react-native-fetch-blob'
+const fs = RNFetchBlob.fs
 
-import createMarkdownRenderer from 'rn-markdown';
+import createMarkdownRenderer from 'rn-markdown'
 const Markdown = createMarkdownRenderer({ gfm: true, tables: true })
 
-import MultilineTextInput from './MultilineTextInput'
+import MultilineTextInput from '../components/MultilineTextInput'
 
 const styles = {
-    switchButton: {
-        backgroundColor: 'transparent',
-        borderColor: '#EFF1F5',
-        borderWidth: 1
-    },
-    switchButtonActive: {
-        backgroundColor: '#EFF1F5',
-        borderColor: '#EFF1F5',
-        borderWidth: 1
-    },
-    noteDetailButton: {
-        color: '#EFF1F5',
-        fontSize: 23
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    }
+   switchButton: {
+       backgroundColor: 'transparent',
+       borderColor: '#EFF1F5',
+       borderWidth: 1
+   },
+   switchButtonActive: {
+       backgroundColor: '#EFF1F5',
+       borderColor: '#EFF1F5',
+       borderWidth: 1
+   },
+   noteDetailButton: {
+       color: '#EFF1F5',
+       fontSize: 23
+   },
+   container: {
+       flex: 1,
+       justifyContent: 'center',
+       alignItems: 'center',
+       backgroundColor: '#F5FCFF',
+   }
 }
 
 export default class NoteModal extends React.Component {
 
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             fileName: this.props.fileName,
@@ -56,15 +63,15 @@ export default class NoteModal extends React.Component {
             height: 0,
             isLeftSegmentActive: true,
             visibleHeight: 230
-        };
-        this.keyboardDidShow = this.keyboardDidShow.bind(this);
-        this.keyboardDidHide = this.keyboardDidHide.bind(this);
+        }
+        this.keyboardDidShow = this.keyboardDidShow.bind(this)
+        this.keyboardDidHide = this.keyboardDidHide.bind(this)
     }
 
     componentWillReceiveProps(props) {
         // if user is opening a same file, set state.
         if (props.fileName === this.state.fileName) {
-            return;
+            return
         }
 
         // if user open an another file, set state.
@@ -72,58 +79,58 @@ export default class NoteModal extends React.Component {
             isLeftSegmentActive: true,
             fileName: props.fileName,
             text: props.content,
-        });
+        })
     }
 
     onChangeText(text) {
         this.setState({
             text: text
-        });
-        const dirs = RNFetchBlob.fs.dirs;
-        fs.writeFile(`${dirs.DocumentDir}/Boostnote/${this.state.fileName}`, text, 'utf8');
-    };
+        })
+        const dirs = RNFetchBlob.fs.dirs
+        fs.writeFile(`${dirs.DocumentDir}/Boostnote/${this.state.fileName}`, text, 'utf8')
+    }
 
-  componentWillMount () {
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide);
-  }
+    componentWillMount () {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
+    }
 
-  componentWillUnmount () {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
-  }
+    componentWillUnmount () {
+        this.keyboardDidShowListener.remove()
+        this.keyboardDidHideListener.remove()
+    }
 
-  keyboardDidShow(e) {
-    let newSize = Dimensions.get('window').height - e.endCoordinates.height
-    this.setState({
-        visibleHeight: newSize,
-    })
-  }
+    keyboardDidShow(e) {
+        let newSize = Dimensions.get('window').height - e.endCoordinates.height
+        this.setState({
+            visibleHeight: newSize,
+        })
+    }
 
-  keyboardDidHide(e) {
-    this.setState({
-        visibleHeight: Dimensions.get('window').height,
-    })
-  }
+    keyboardDidHide(e) {
+        this.setState({
+            visibleHeight: Dimensions.get('window').height,
+        })
+    }
 
     getNoteComponent() {
         const markdownStyles = {
             container: {
-              paddingLeft: 10
+                paddingLeft: 10
             },
             heading1: {
-              fontSize: 24,
-              fontWeight: '600',
-              color: '#222222',
+                fontSize: 24,
+                fontWeight: '600',
+                color: '#222222',
             },
             link: {
-              color: 'red',
+                color: 'red',
             },
             mail_to: {
-              color: 'orange',
+                color: 'orange',
             },
             text: {
-              color: '#555555',
+                color: '#555555',
             },
             code: {
                 backgroundColor: '#f0f0f0',
@@ -134,8 +141,8 @@ export default class NoteModal extends React.Component {
                 backgroundColor: '#f8f8f8',
                 padding: 5
             }
-          }
-          
+            }
+
         if (this.state.isLeftSegmentActive) {
             return <View style={{height: this.state.visibleHeight, flex: 1}}>
                     <MultilineTextInput
@@ -144,7 +151,7 @@ export default class NoteModal extends React.Component {
                         value={this.state.text}
                         autoFocus={true}
                         textAlignVertical={'top'}/>
-                </View>;
+                </View>
         } else {
             return <View style={{margin: 15}}>
             <Markdown contentContainerStyle={styles.container} markdownStyles={markdownStyles}>
@@ -173,13 +180,13 @@ export default class NoteModal extends React.Component {
                         <Body style={Platform.OS === 'android' ? {top: 0} : null}>
                             <Segment style={Platform.OS === 'android' ? {paddingRight: 25, position: 'relative', backgroundColor: 'transparent', borderWidth:1} : {marginLeft: 50, position: 'absolute', top: -22, backgroundColor: 'transparent'}}>
                                 <Button onPress={() => {
-                                    this.setState({isLeftSegmentActive: true});
+                                    this.setState({isLeftSegmentActive: true})
                                 }} first active={this.state.isLeftSegmentActive}
                                 style={this.state.isLeftSegmentActive ? styles.switchButtonActive : styles.switchButton}>
                                     <Text><Icon name='create' style={this.state.isLeftSegmentActive ? {color: '#6C81A6'} : {}}/></Text>
                                 </Button>
                                 <Button onPress={() => {
-                                    this.setState({isLeftSegmentActive: false});
+                                    this.setState({isLeftSegmentActive: false})
                                 }} last active={!this.state.isLeftSegmentActive}
                                 style={this.state.isLeftSegmentActive ? styles.switchButton : styles.switchButtonActive}>
                                     <Text><Icon name='eye' style={this.state.isLeftSegmentActive ? {color: '#EFF1F5'} : {color: '#6C81A6'}}/></Text>
@@ -200,8 +207,8 @@ export default class NoteModal extends React.Component {
                                         || Platform.OS === 'ios' && buttonIndex === 0) {
                                         fs.unlink(`${RNFetchBlob.fs.dirs.DocumentDir}/Boostnote/${this.state.fileName}`)
                                         .then(() => {
-                                            this.props.setIsOpen('', false);
-                                        });
+                                            this.props.setIsOpen('', false)
+                                        })
                                     }
                                 }
                             )}>
@@ -214,6 +221,6 @@ export default class NoteModal extends React.Component {
                     </Content>
                 </Container>
             </Modal>
-        );
-    };
+        )
+    }
 }

@@ -5,7 +5,7 @@
  */
 
 import React, {Component} from 'react';
-import App from './App';
+import App from './app/App';
 import {
     AppRegistry,
 } from 'react-native';

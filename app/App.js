@@ -1,5 +1,11 @@
-import React, {Component} from 'react';
-import {Text, Platform, Modal, View, TextInput} from 'react-native';
+import React, {Component} from 'react'
+import {
+    Text,
+    Platform,
+    Modal,
+    View,
+    TextInput
+} from 'react-native'
 import {
     Container,
     Header,
@@ -13,24 +19,25 @@ import {
     Drawer,
     Card,
     CardItem,
-} from 'native-base';
+} from 'native-base'
 
-import FontAwesome, { Icons } from 'react-native-fontawesome';
+import FontAwesome, { Icons } from 'react-native-fontawesome'
 
-import moment from 'moment';
+import moment from 'moment'
 
-import SideBar from './SideBar.js';
-import NoteModal from './NoteModal';
+import SideBar from './components/SideBar'
+import NoteModal from './views/NoteModal'
 
 import AwsMobileAnalyticsConfig from './lib/AwsMobileAnalytics'
+import { makeRandomHex } from './lib/Strings'
 
-import RNFetchBlob from 'react-native-fetch-blob';
-const fs = RNFetchBlob.fs;
-const dirs = RNFetchBlob.fs.dirs;
+import RNFetchBlob from 'react-native-fetch-blob'
+const fs = RNFetchBlob.fs
+const dirs = RNFetchBlob.fs.dirs
 
-const MARKDOWN_NOTE = "MARKDOWN_NOTE";
-const SNIPPET_NOTE = "SNIPPET_NOTE";
-const DEFAULT_FOLDER = "DEFAULT_FOLDER";
+const MARKDOWN_NOTE = "MARKDOWN_NOTE"
+const SNIPPET_NOTE = "SNIPPET_NOTE"
+const DEFAULT_FOLDER = "DEFAULT_FOLDER"
 
 const styles = {
     noteListWrap: {
@@ -138,23 +145,13 @@ const styles = {
 
 export default class App extends Component {
     constructor() {
-        super();
+        super()
         this.state = {
             isNoteOpen: false,
             noteList: [],
             fileName: '',
             content: '',
-        };
-    }
-
-    makeRandomHex() {
-        var text = "";
-        var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
-
-        for (var i = 0; i < 20; i++)
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-        return text;
+        }
     }
 
     componentWillMount() {
@@ -162,48 +159,48 @@ export default class App extends Component {
             .then((files) => {
                 // Check whether the 'Boostnote' folder exist or not.
                 const filteredFiles = files.filter((name) => {
-                    return name === 'Boostnote';
-                });
+                    return name === 'Boostnote'
+                })
                 // If not, create.
                 if (filteredFiles.length === 0) {
-                    this.createDir();
+                    this.createDir()
                 }
-                return this.listFiles();
+                return this.listFiles()
             })
             .then((files) => {
                 const filteredFiles = files.filter((name) => {
-                    return name === 'boostnote.json';
-                });
+                    return name === 'boostnote.json'
+                })
                 // Check whether the folder has a setting file or not.
                 if (filteredFiles.length === 0) {
                     // If not, create.
                     const defaultJson = {
                         note: []
-                    };
+                    }
                     fs.createFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, JSON.stringify(defaultJson), 'utf8')
-                        .catch(err => console.log(err));
+                        .catch(err => console.log(err))
                 }
-                return this.listFiles();
+                return this.listFiles()
             })
             .then((files) => {
                 const filteredFiles = files.filter((name) => {
-                    return name.endsWith('.md');
-                });
+                    return name.endsWith('.md')
+                })
                 // Check whether the folder has any note files or not.
                 if (filteredFiles.length === 0) {
                     // If not, create.
-                    this.createNewNote(`${this.makeRandomHex()}.md`);
+                    this.createNewNote(`${makeRandomHex()}.md`)
                 }
-                return this.listFilesAndSetState();
+                return this.listFilesAndSetState()
             })
             .catch((err) => {
-                console.log(err);
-            });
+                console.log(err)
+            })
     }
 
     openDrawer = () => {
-        this._drawer._root.open();
-    };
+        this._drawer._root.open()
+    }
 
     setNoteModalIsOpen(fileName, isOpen) {
         if (isOpen) {
@@ -213,69 +210,69 @@ export default class App extends Component {
                         fileName: fileName,
                         content: content,
                         isNoteOpen: true
-                    });
+                    })
 
-                });
+                })
         } else {
-            AwsMobileAnalyticsConfig.recordDynamitCustomEvent('EDIT_NOTE');
-            this.listFilesAndSetState();
+            AwsMobileAnalyticsConfig.recordDynamitCustomEvent('EDIT_NOTE')
+            this.listFilesAndSetState()
             this.setState({
                 isNoteOpen: false
-            });
+            })
         }
     }
 
     listDir() {
-        return RNFetchBlob.fs.ls(`${dirs.DocumentDir}`);
+        return RNFetchBlob.fs.ls(`${dirs.DocumentDir}`)
     }
 
     listFiles() {
-        return RNFetchBlob.fs.ls(`${dirs.DocumentDir}/Boostnote`);
+        return RNFetchBlob.fs.ls(`${dirs.DocumentDir}/Boostnote`)
     }
 
     async listFilesAndSetState() {
-        const files = await this.listFiles(`${dirs.DocumentDir}/Boostnote`);
+        const files = await this.listFiles(`${dirs.DocumentDir}/Boostnote`)
         const filteredFiles = files.filter((name) => {
-            return name.endsWith('.md');
-        });
+            return name.endsWith('.md')
+        })
 
-        let settingJsonFile = await fs.readFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, 'utf8');
+        let settingJsonFile = await fs.readFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, 'utf8')
 
         // Change file name to object of file name and one liner content
-        let fileList = [];
+        let fileList = []
         for (let i = 0; i < filteredFiles.length; i++) {
-            const fileName = filteredFiles[i];
-            const content = await fs.readFile(`${dirs.DocumentDir}/Boostnote/${fileName}`, 'utf8');
+            const fileName = filteredFiles[i]
+            const content = await fs.readFile(`${dirs.DocumentDir}/Boostnote/${fileName}`, 'utf8')
             let filteredSettingFile = JSON.parse(settingJsonFile).note.filter(setting => {
-                return setting.name === fileName;
-            })[0];
+                return setting.name === fileName
+            })[0]
             fileList.push({
                 fileName: fileName,
                 content: content === '' ? 'Tap here and write something!' : content.split(/\r\n|\r|\n/)[0],
                 createdAt: filteredSettingFile.createdAt
-            });
+            })
         }
         fileList.sort((a, b) => {
-            return a.createdAt < b.createdAt ? 1 : -1;
-        });
+            return a.createdAt < b.createdAt ? 1 : -1
+        })
 
         this.setState({
             noteList: fileList,
-        });
+        })
     }
 
     createDir() {
         RNFetchBlob.fs.mkdir(`${dirs.DocumentDir}/Boostnote`)
             .then(() => {
-                console.log('OK');
+                console.log('OK')
             })
             .catch((err) => {
-                console.log('NG');
-            });
+                console.log('NG')
+            })
     }
 
     createNewNote(fileName, isOpen) {
-        const newFileName = fileName === '' ? `${this.makeRandomHex()}.md` : fileName;
+        const newFileName = fileName === '' ? `${makeRandomHex()}.md` : fileName
 
         // Create a real file
         fs.createFile(`${dirs.DocumentDir}/Boostnote/${newFileName}`, '', 'utf8')
@@ -289,8 +286,8 @@ export default class App extends Component {
                 return fs.readFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, 'utf8')
             })
             .then((content) => {
-                let contentObject = JSON.parse(content);
-                const date = new Date();
+                let contentObject = JSON.parse(content)
+                const date = new Date()
                 const thisNote = {
                     "type": MARKDOWN_NOTE,
                     "folder": DEFAULT_FOLDER,
@@ -299,23 +296,23 @@ export default class App extends Component {
                     "isStarred": false,
                     "createdAt": date,
                     "updatedAt": date
-                };
-                contentObject.note.push(thisNote);
-                console.table(contentObject.note);
+                }
+                contentObject.note.push(thisNote)
+                console.table(contentObject.note)
                 fs.writeFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, JSON.stringify(contentObject), 'utf8')
-                    .catch(err => console.log(err));
+                    .catch(err => console.log(err))
                 AwsMobileAnalyticsConfig.recordDynamitCustomEvent('CREATE_NOTE')
             })
             .catch((err) => {
-                console.log(err);
-            });
+                console.log(err)
+            })
     }
 
     render() {
         return (
             <Drawer
                 ref={(ref) => {
-                    this._drawer = ref;
+                    this._drawer = ref
                 }}
                 content={<SideBar/>}
                 panOpenMask={.05}>
@@ -355,14 +352,14 @@ export default class App extends Component {
                                             <Text style={styles.noteListDate}>{moment(note.createdAt).format('MMM D')}</Text>
                                         </Body>
                                     </CardItem>
-                                </Card>;
+                                </Card>
                             })
                         }
                     </Content>
 
                     <Button transparent
                         onPress={() => {
-                            this.createNewNote('', true);
+                            this.createNewNote('', true)
                         }}
                         style={styles.newPostButtonWrap}
                     >
@@ -377,6 +374,6 @@ export default class App extends Component {
                                content={this.state.content}/>
                 </Container>
             </Drawer>
-        );
+        )
     }
 }
