@@ -6,7 +6,10 @@ import {
     Platform,
     Modal,
     View,
-    TextInput
+    TextInput,
+    TouchableHighlight,
+    Clipboard,
+    ScrollView
 } from 'react-native'
 import {
     Container,
@@ -62,7 +65,8 @@ export default class NoteModal extends React.Component {
             text: this.props.content,
             height: 0,
             isLeftSegmentActive: true,
-            visibleHeight: 230
+            visibleHeight: 230,
+            endOfSelection: 0,
         }
         this.keyboardDidShow = this.keyboardDidShow.bind(this)
         this.keyboardDidHide = this.keyboardDidHide.bind(this)
@@ -145,12 +149,62 @@ export default class NoteModal extends React.Component {
 
         if (this.state.isLeftSegmentActive) {
             return <View style={{height: this.state.visibleHeight, flex: 1}}>
+                <ScrollView keyboardShouldPersistTaps='always'
+                            style={{height: 100}}>
                     <MultilineTextInput
-                        style={Platform.OS === 'android' ? {margin: 8,height: '100%'}:{ margin: 8}}
+                        ref="TextInput"
+                        style={Platform.OS === 'android' ? {margin: 8}:{ margin: 8}}
                         onChangeText={(e) => this.onChangeText(e)}
                         value={this.state.text}
+                        selectionChange={(e) => {
+                            this.setState({endOfSelection: e.nativeEvent.selection.end})
+                        }}
                         autoFocus={true}
-                        textAlignVertical={'top'}/>
+                        textAlignVertical={'top'}>
+                    </MultilineTextInput>
+                    <View style={{flexDirection: 'row'}}>
+                        <TouchableHighlight
+                            onPress={()=> {
+                                this.insertMarkdownBetween('# ')
+                            }}
+                            style={{paddingLeft: 15, paddingBottom: 10}} >
+                            <Text>#</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            onPress={()=> {
+                                this.insertMarkdownBetween('*')
+                            }}
+                            style={{paddingLeft: 15, paddingBottom: 10}} >
+                            <Text>*</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            onPress={()=> {
+                                this.insertMarkdownBetween('```\n')
+                            }}
+                            style={{paddingLeft: 15, paddingBottom: 10}} >
+                            <Text>code block</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            onPress={()=> {
+                                this.insertMarkdownBetween('- ')
+                            }}
+                            style={{paddingLeft: 15, paddingBottom: 10}} >
+                            <Text>-</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            onPress={()=> {
+                                this.insertMarkdownBetween('> ')
+                            }}
+                            style={{paddingLeft: 15, paddingBottom: 10}} >
+                            <Text>&gt;</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            onPress={this.pasteContent.bind(this)}
+                            style={{paddingLeft: 15, paddingBottom: 10}} >
+                            <Text>paste</Text>
+                        </TouchableHighlight>
+                    </View>
+                </ScrollView>
                 </View>
         } else {
             return <View style={{margin: 15}}>
@@ -159,6 +213,31 @@ export default class NoteModal extends React.Component {
             </Markdown>
             </View>
         }
+    }
+
+    /**
+     * Insert markdown characters to the text of selected place.
+     * @param Markdown character
+     */
+    insertMarkdownBetween(character) {
+        const beforeText = this.state.text.substring(0, this.state.endOfSelection)
+        const afterText = this.state.text.substring(this.state.endOfSelection, this.state.text.length)
+
+        this.setState({
+            text: beforeText + character + afterText
+        })
+    }
+
+    /**
+     * Paste from clipboard to the text
+     */
+    async pasteContent() {
+        const beforeText = this.state.text.substring(0, this.state.endOfSelection)
+        const afterText = this.state.text.substring(this.state.endOfSelection, this.state.text.length)
+
+        this.setState({
+            text: beforeText + await Clipboard.getString() + '\n' + afterText
+        })
     }
 
     render() {
@@ -216,7 +295,7 @@ export default class NoteModal extends React.Component {
                             </Button>
                         </Right>
                     </Header>
-                    <Content>
+                    <Content keyboardShouldPersistTaps='always'>
                         {this.getNoteComponent()}
                     </Content>
                 </Container>

@@ -40,7 +40,10 @@ export default class MultilineTextInput extends PureComponent {
                 blurOnSubmit={false}
                 selection={this.state.selection}
                 value={this.props.value}
-                onSelectionChange={event => this.setState({selection: event.nativeEvent.selection})}
+                onSelectionChange={event => {
+                    this.props.selectionChange(event)
+                    this.setState({selection: event.nativeEvent.selection})
+                }}
                 onChangeText={this.props.onChangeText}
                 onSubmitEditing={this.onSubmitEditing}
                 autoCorrect={false}
@@ -53,4 +56,5 @@ export default class MultilineTextInput extends PureComponent {
 MultilineTextInput.propTypes = {
     value: PropTypes.string.isRequired,
     onChangeText: PropTypes.func.isRequired,
+    selectionChange: PropTypes.func.isRequired,
 }
