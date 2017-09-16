@@ -105,7 +105,7 @@ export default class NoteModal extends React.Component {
     }
 
     keyboardDidShow(e) {
-        let newSize = Dimensions.get('window').height - e.endCoordinates.height
+        let newSize = Dimensions.get('window').height - e.endCoordinates.height - 100
         this.setState({
             visibleHeight: newSize,
         })
@@ -113,7 +113,7 @@ export default class NoteModal extends React.Component {
 
     keyboardDidHide(e) {
         this.setState({
-            visibleHeight: Dimensions.get('window').height,
+            visibleHeight: Dimensions.get('window').height - 100,
         })
     }
 
@@ -148,12 +148,11 @@ export default class NoteModal extends React.Component {
             }
 
         if (this.state.isLeftSegmentActive) {
-            return <View style={{height: this.state.visibleHeight, flex: 1}}>
-                <ScrollView keyboardShouldPersistTaps='always'
-                            style={{height: 100}}>
+            return <View style={{flex: 1}}>
+                <ScrollView keyboardShouldPersistTaps='always'>
                     <MultilineTextInput
                         ref="TextInput"
-                        style={Platform.OS === 'android' ? {margin: 8}:{ margin: 8}}
+                        style={Platform.OS === 'android' ? { margin: 8, height: this.state.visibleHeight - 100}:{ margin: 8, height: this.state.visibleHeight}}
                         onChangeText={(e) => this.onChangeText(e)}
                         value={this.state.text}
                         selectionChange={(e) => {
@@ -162,7 +161,7 @@ export default class NoteModal extends React.Component {
                         autoFocus={true}
                         textAlignVertical={'top'}>
                     </MultilineTextInput>
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={{flexDirection: 'row', height: 100}}>
                         <TouchableHighlight
                             onPress={()=> {
                                 this.insertMarkdownBetween('# ')
