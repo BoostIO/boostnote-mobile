@@ -142,32 +142,32 @@ export default class NoteModal extends React.Component {
 
     getNoteComponent() {
         const markdownStyles = {
-            container: {
-                paddingLeft: 10
-            },
-            heading1: {
-                fontSize: 24,
-                fontWeight: '600',
-                color: '#222222',
-            },
-            link: {
-                color: 'red',
-            },
-            mail_to: {
-                color: 'orange',
-            },
-            text: {
-                color: '#555555',
-            },
-            code: {
-                backgroundColor: '#f0f0f0',
-                marginTop: 5,
-                marginBottom: 5
-            },
-            blockquote: {
-                backgroundColor: '#f8f8f8',
-                padding: 5
-            }
+                container: {
+                    paddingLeft: 10
+                },
+                heading1: {
+                    fontSize: 24,
+                    fontWeight: '600',
+                    color: '#222222',
+                },
+                link: {
+                    color: 'red',
+                },
+                mail_to: {
+                    color: 'orange',
+                },
+                text: {
+                    color: '#555555',
+                },
+                code: {
+                    backgroundColor: '#f0f0f0',
+                    marginTop: 5,
+                    marginBottom: 5
+                },
+                blockquote: {
+                    backgroundColor: '#f8f8f8',
+                    padding: 5
+                }
             }
 
         if (this.state.isLeftSegmentActive) {
@@ -175,7 +175,7 @@ export default class NoteModal extends React.Component {
                 <ScrollView keyboardShouldPersistTaps='always'>
                     <MultilineTextInput
                         ref="TextInput"
-                        style={Platform.OS === 'android' ? { margin: 8, height: this.state.visibleHeight - 100} : { margin: 8, height: this.state.visibleHeight}}
+                        style={Platform.OS === 'android' ? { margin: 8, height: this.state.visibleHeight - 30} : { margin: 8, height: this.state.visibleHeight}}
                         onChangeText={(e) => this.onChangeText(e)}
                         value={this.state.text}
                         selectionChange={(e) => {
@@ -189,7 +189,7 @@ export default class NoteModal extends React.Component {
                             onPress={()=> {
                                 this.insertMarkdownBetween('# ')
                             }}
-                            style={Platform.OS === 'android' ? '' : styles.inputElementsStyle} >
+                            style={styles.inputElementsStyle} >
                             <View>
                                 <Text style={styles.supportMain}>#</Text>
                                 <Text style={styles.supportSub}>Head</Text>
@@ -199,7 +199,7 @@ export default class NoteModal extends React.Component {
                             onPress={()=> {
                                 this.insertMarkdownBetween('- ')
                             }}
-                            style={Platform.OS === 'android' ? '' : styles.inputElementsStyle} >
+                            style={styles.inputElementsStyle} >
                             <View>
                                 <Text style={styles.supportMain}>-</Text>
                                 <Text style={styles.supportSub}>List</Text>
@@ -207,19 +207,9 @@ export default class NoteModal extends React.Component {
                         </TouchableHighlight>
                         <TouchableHighlight
                             onPress={()=> {
-                                this.insertMarkdownBetween('*')
-                            }}
-                            style={Platform.OS === 'android' ? '' : styles.inputElementsStyle} >
-                            <View>
-                                <Text style={styles.supportMain}>*</Text>
-                                <Text style={styles.supportSub}>Emph</Text>
-                            </View>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            onPress={()=> {
                                 this.insertMarkdownBetween('```\n')
                             }}
-                            style={Platform.OS === 'android' ? '' : styles.inputElementsStyle} >
+                            style={styles.inputElementsStyle} >
                             <View>
                                 <Text style={styles.supportMain}>```</Text>
                                 <Text style={styles.supportSub}>Code</Text>
@@ -227,9 +217,29 @@ export default class NoteModal extends React.Component {
                         </TouchableHighlight>
                         <TouchableHighlight
                             onPress={()=> {
+                                this.insertMarkdownBetween('**')
+                            }}
+                            style={styles.inputElementsStyle} >
+                            <View>
+                                <Text style={styles.supportMain}>**</Text>
+                                <Text style={styles.supportSub}>Bold</Text>
+                            </View>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            onPress={()=> {
+                                this.insertMarkdownBetween('_')
+                            }}
+                            style={styles.inputElementsStyle} >
+                            <View>
+                                <Text style={styles.supportMain}>_</Text>
+                                <Text style={styles.supportSub}>itali</Text>
+                            </View>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            onPress={()=> {
                                 this.insertMarkdownBetween('> ')
                             }}
-                            style={Platform.OS === 'android' ? '' : styles.inputElementsStyle} >
+                            style={styles.inputElementsStyle} >
                             <View>
                                 <Text style={styles.supportMain}>&gt;</Text>
                                 <Text style={styles.supportSub}>Quote</Text>
@@ -239,7 +249,7 @@ export default class NoteModal extends React.Component {
                             onPress={()=> {
                                 this.insertMarkdownBetween('~~')
                             }}
-                            style={Platform.OS === 'android' ? '' : styles.inputElementsStyle} >
+                            style={styles.inputElementsStyle} >
                             <View>
                                 <Text style={styles.supportMain}>~~</Text>
                                 <Text style={styles.supportSub}>Stri</Text>
@@ -247,7 +257,7 @@ export default class NoteModal extends React.Component {
                         </TouchableHighlight> */}
                         <TouchableHighlight
                             onPress={this.pasteContent.bind(this)}
-                            style={Platform.OS === 'android' ? '' : styles.inputElementsStyle} >
+                            style={styles.inputElementsStyle} >
                             <Text style={{paddingTop: 6, marginLeft: 3, marginRight: 3, fontSize: 12, color: '#828282'}}>Paste</Text>
                         </TouchableHighlight>
                     </View>
