@@ -128,9 +128,8 @@ export default class NoteModal extends React.Component {
     }
 
     keyboardDidShow(e) {
-        let newSize = Dimensions.get('window').height - e.endCoordinates.height - 100
         this.setState({
-            visibleHeight: newSize,
+            visibleHeight: Dimensions.get('window').height - e.endCoordinates.height - 100,
         })
     }
 
@@ -175,7 +174,7 @@ export default class NoteModal extends React.Component {
                 <ScrollView keyboardShouldPersistTaps='always'>
                     <MultilineTextInput
                         ref="TextInput"
-                        style={Platform.OS === 'android' ? { margin: 8, height: this.state.visibleHeight - 30} : { margin: 8, height: this.state.visibleHeight}}
+                        style={Platform.OS === 'android' ? { margin: 8, height: this.state.visibleHeight - 30} : { margin: 8, height: this.state.visibleHeight - 15}}
                         onChangeText={(e) => this.onChangeText(e)}
                         value={this.state.text}
                         selectionChange={(e) => {
