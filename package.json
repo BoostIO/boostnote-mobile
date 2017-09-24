@@ -17,6 +17,7 @@
     "react-native-code-push": "2.1.1-beta",
     "react-native-fetch-blob": "^0.10.5",
     "react-native-fontawesome": "^5.7.0",
+    "remove-markdown-and-html": "^0.1.0",
     "rn-markdown": "^1.1.1"
   },
   "devDependencies": {
