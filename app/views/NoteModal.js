@@ -186,7 +186,7 @@ export default class NoteModal extends React.Component {
                     <View style={{flexDirection: 'row', backgroundColor: 'rgba(0, 0, 0, 0.05)', paddingLeft: 5, paddingRight: 5}}>
                         <TouchableHighlight
                             onPress={()=> {
-                                this.insertMarkdownBetween('# ')
+                                this.insertMarkdownBetween('#')
                             }}
                             style={styles.inputElementsStyle} >
                             <View>
