@@ -4,6 +4,8 @@ import {
     Text,
     View,
     AsyncStorage,
+    ActivityIndicator,
+    Linking,
 } from 'react-native'
 
 import {
@@ -19,7 +21,7 @@ import moment from 'moment'
 import DropboxLinkModal from './DropboxLinkModal'
 import ReadOnlyNoteModal from './ReadOnlyNoteModal'
 
-const coffee = require('coffeescript/lib/coffeescript/browser')
+import CoffeeScript from 'coffeescript/lib/coffeescript/browser'
 
 const DROPBOX_ACCESS_TOKEN = 'DROPBOX:ACCESS_TOKEN'
 
@@ -172,6 +174,7 @@ export default class DropboxNoteList extends Component {
 
     getDropboxNoteData(token) {
         this.setState({
+            noteList: [],
             isLoading: true
         })
         fetch('https://api.dropboxapi.com/2/files/list_folder', {
@@ -191,7 +194,6 @@ export default class DropboxNoteList extends Component {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson)
                 let noteList = [];
 
                 if (!responseJson.entries) {
@@ -223,7 +225,7 @@ export default class DropboxNoteList extends Component {
                                 isLoading: false,
                             })
 
-                            const response = coffee.eval(responseCson)
+                            const response = CoffeeScript.eval(responseCson)
                             if (response.type !== 'MARKDOWN_NOTE' || response.isTrashed) {
                                 // Do nothing
                                 // Parse not trashed markdown only now
@@ -275,9 +277,24 @@ export default class DropboxNoteList extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{flex: 1}}>
                 {
-                    !this.state.isConnectedToDropbox && !this.state.isLoading && this.state.noteList.length === 0 ?
+                    // Show refresh button when not loading.
+                    this.state.isLoading ? null:
+                    <Button
+                        transparent
+                        onPress={() => this.getToken()}>
+                        <View style={styles.newPostButton}>
+                            <Icon name='md-refresh' style={{color: "#fff"}}/>
+                        </View>
+                    </Button>
+                }
+                <ActivityIndicator animating={this.state.isLoading}/>
+                {
+                    // Show Dropbox connect button when...
+                    // 1. Not connected to Dropbox.
+                    // 2. Not loading.
+                    !this.state.isConnectedToDropbox && !this.state.isLoading ?
                         <Button onPress={() => this.setIsWebViewOpen(true)}>
                             <Text>Tap here to sign in Dropbox!</Text>
                         </Button>
