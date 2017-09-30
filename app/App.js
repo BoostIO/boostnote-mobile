@@ -25,6 +25,8 @@ import FontAwesome, { Icons } from 'react-native-fontawesome'
 
 import moment from 'moment'
 
+import DropboxNoteList from './views/DropboxNoteList'
+
 import SideBar from './components/SideBar'
 import NoteModal from './views/NoteModal'
 
@@ -148,6 +150,7 @@ export default class App extends Component {
         super()
         this.state = {
             isNoteOpen: false,
+            mode: 0, // 0: 'AllNote', 1: 'Dropbox'
             noteList: [],
             fileName: '',
             content: '',
@@ -200,6 +203,10 @@ export default class App extends Component {
 
     openDrawer = () => {
         this._drawer._root.open()
+    }
+
+    closeDrawer = () => {
+        this._drawer._root.close()
     }
 
     setNoteModalIsOpen(fileName, isOpen) {
@@ -308,13 +315,23 @@ export default class App extends Component {
             })
     }
 
+    changeMode(mode) {
+        this.setState({
+            mode: mode
+        })
+    }
+
     render() {
         return (
             <Drawer
                 ref={(ref) => {
                     this._drawer = ref
                 }}
-                content={<SideBar/>}
+                content={
+                    <SideBar
+                        changeMode={this.changeMode.bind(this)}
+                        onClose={() => this.closeDrawer()}/>
+                }
                 panOpenMask={.05}>
                 <Container>
                     <Header style={Platform.OS === 'android' ? styles.androidHeader : styles.iosHeader} androidStatusBarColor='#239F85'>
@@ -333,13 +350,19 @@ export default class App extends Component {
                     </Header>
                     <Content>
                         <View style={{flex: 1, flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
-                            <Text style={{backgroundColor: 'transparent', position: 'absolute', left: 10, top:12, color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>All Notes</Text>
+                            <Text style={{backgroundColor: 'transparent', position: 'absolute', left: 10, top:12, color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>
+                                {
+                                    this.state.mode === 0
+                                        ? 'All Notes'
+                                        : 'Dropbox'
+                                }
+                            </Text>
                             {/*<View style={{backgroundColor: 'transparent', position: 'absolute', right: 10, marginTop: 11}}>
                                 <Text style={{color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>Sort by Created  <Icon name='md-flash' style={{color: '#FDC134', fontSize: 14, fontWeight: '600'}} /></Text>
                             </View>*/}
                         </View>
                         {
-                            this.state.noteList.map((note) => {
+                            this.state.mode === 0 ? this.state.noteList.map((note) => {
                                 return <Card transparent key={note.fileName} style={styles.noteListWrap}>
                                     <CardItem
                                         style={styles.noteList}
@@ -353,25 +376,27 @@ export default class App extends Component {
                                         </Body>
                                     </CardItem>
                                 </Card>
-                            })
+                            }) : <DropboxNoteList/>
                         }
                     </Content>
-
-                    <Button transparent
-                        onPress={() => {
-                            this.createNewNote('', true)
-                        }}
-                        style={styles.newPostButtonWrap}
-                    >
-                        <View style={styles.newPostButton}>
-                            <Icon name='md-create' style={{color: "#fff"}}/>
-                        </View>
-                    </Button>
-
-                    <NoteModal setIsOpen={this.setNoteModalIsOpen.bind(this)}
-                               isNoteOpen={this.state.isNoteOpen}
-                               fileName={this.state.fileName}
-                               content={this.state.content}/>
+                    {
+                        this.state.mode === 0 ?
+                            <View>
+                                <Button
+                                    transparent
+                                    onPress={() => this.createNewNote('', true)}
+                                    style={styles.newPostButtonWrap}>
+                                    <View style={styles.newPostButton}>
+                                        <Icon name='md-create' style={{color: "#fff"}}/>
+                                    </View>
+                                </Button>
+                                <NoteModal setIsOpen={this.setNoteModalIsOpen.bind(this)}
+                                       isNoteOpen={this.state.isNoteOpen}
+                                       fileName={this.state.fileName}
+                                       content={this.state.content}/>
+                            </View>
+                        : null
+                    }
                 </Container>
             </Drawer>
         )
