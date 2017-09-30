@@ -235,6 +235,11 @@ export default class DropboxNoteList extends Component {
                                 content: response.content,
                                 createdAt: response.createdAt,
                             })
+
+                            noteList.sort((a, b) => {
+                                return a.createdAt < b.createdAt ? 1 : -1
+                            })
+
                             this.setState({
                                 noteList: noteList
                             })
