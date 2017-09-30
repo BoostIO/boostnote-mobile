@@ -140,6 +140,7 @@ export default class DropboxNoteList extends Component {
             isNoteOpen: false,
             isLoading: false,
             isConnectedToDropbox: false,
+            isNotConnectedToBoostnote: false
         }
     }
 
@@ -196,7 +197,12 @@ export default class DropboxNoteList extends Component {
             .then((responseJson) => {
                 let noteList = [];
 
-                if (!responseJson.entries) {
+                if (responseJson.error_summary && responseJson.error_summary.startsWith('path/not_found/')) {
+                    this.setState({
+                        isNotConnectedToBoostnote: true
+                    })
+                }
+                if (!responseJson.entries || responseJson.entries.length === 0) {
                     this.setState({
                         isLoading: false,
                     })
@@ -279,15 +285,19 @@ export default class DropboxNoteList extends Component {
         return (
             <View style={{flex: 1}}>
                 {
-                    // Show refresh button when not loading.
-                    this.state.isLoading ? null:
-                    <Button
-                        transparent
-                        onPress={() => this.getToken()}>
-                        <View style={styles.newPostButton}>
-                            <Icon name='md-refresh' style={{color: "#fff"}}/>
-                        </View>
-                    </Button>
+                    // Show refresh button when not loading when...
+                    // 1. Connected to Dropbox.
+                    // 2. Connected to Boostnote.
+                    // 3. Not loading.
+                    this.state.isConnectedToDropbox && !this.state.isNotConnectedToBoostnote && !this.state.isLoading ?
+                        <Button
+                            transparent
+                            onPress={() => this.getToken()}>
+                            <View style={styles.newPostButton}>
+                                <Icon name='md-refresh' style={{color: "#fff"}}/>
+                            </View>
+                        </Button>
+                        : null
                 }
                 <ActivityIndicator animating={this.state.isLoading}/>
                 {
@@ -298,6 +308,17 @@ export default class DropboxNoteList extends Component {
                         <Button onPress={() => this.setIsWebViewOpen(true)}>
                             <Text>Tap here to sign in Dropbox!</Text>
                         </Button>
+                        : null
+                }
+                {
+                    // Show link of how to blog post when...
+                    // 1. Connected to Dropbox.
+                    // 2. Not connected to Boostnote.
+                    // 3. Not loading.
+                    this.state.isConnectedToDropbox && this.state.isNotConnectedToBoostnote && !this.state.isLoading ?
+                        <Text onPress={() => Linking.openURL('https://boostnote.io/')} style={styles.bottomLinkWord}>
+                            <Icon style={{fontSize: 16,  color: '#89888d'}} name='link'/> Create note in Boostnote Desktop!
+                        </Text>
                         : null
                 }
                 {
