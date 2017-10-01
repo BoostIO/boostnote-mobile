@@ -325,7 +325,7 @@ export default class DropboxNoteList extends Component {
                     !this.state.isConnectedToDropbox && !this.state.isLoading ?
                         <View style={styles.dropboxLinkButtonWrap}>
                             <Button style={styles.dropboxLinkButton} onPress={() => this.setIsWebViewOpen(true)}>
-                                <Text style={styles.dropboxLinkButtonText}><FontAwesome style={{color: '#2BA6FA', fontSize: 14}}>{Icons.dropbox}</FontAwesome> Sign in Dropbox!</Text>
+                                <Text style={styles.dropboxLinkButtonText}><FontAwesome style={{color: '#2BA6FA', fontSize: 14}}>{Icons.dropbox}</FontAwesome> Sign in to Dropbox!</Text>
                             </Button>
                         </View>
                         : null
@@ -336,9 +336,14 @@ export default class DropboxNoteList extends Component {
                     // 2. Not connected to Boostnote.
                     // 3. Not loading.
                     this.state.isConnectedToDropbox && this.state.isNotConnectedToBoostnote && !this.state.isLoading ?
-                        <Text onPress={() => Linking.openURL('https://boostnote.io/')} style={styles.bottomLinkWord}>
-                            <Icon style={{fontSize: 16,  color: '#89888d'}} name='link'/> Create note in Boostnote Desktop!
-                        </Text>
+                        <View style={{alignItems:'center', justifyContent:'center'}}>
+                            <Text style={styles.bottomLinkWord}>Connect with Desktop app and create a note!</Text>
+                            <View style={{marginTop: 20, backgroundColor: '#F3F4F4', height: 30, width: 150, alignItems:'center', justifyContent:'center'}}>
+                                <Text onPress={() => Linking.openURL('https://boostnote.io/')}>
+                                    <Icon style={{fontSize: 16,  color: '#89888d', paddingLeft: 20}} name='link'/> How to connect?
+                                </Text>
+                            </View>
+                        </View>
                         : null
                 }
                 {

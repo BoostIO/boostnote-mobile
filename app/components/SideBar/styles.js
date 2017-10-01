@@ -44,6 +44,6 @@ export default StyleSheet.create({
     bottomLinkWord: {
         fontSize: 14,
         color: 'rgba(206,207,206,0.8)',
-        fontWeight: '600'
+        fontWeight: '600',
     },
 })
