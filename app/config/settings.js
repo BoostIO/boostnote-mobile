@@ -5,6 +5,9 @@ export const settings = {
 	awsIdentityPoolId: 'us-east-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
 	awsAppId: 'xxxxxxxxxxxxxxxxxx',
 	awsTitle: 'xxxxxxxxxxxxx',
+	dropboxClientId: 'xxxxxxxx',
+	dropboxClientSecret: 'xxxxxxxx',
+
 }
 
 export default settings

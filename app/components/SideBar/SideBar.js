@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import {
     Linking,
     Text,
+    TextInput,
     View
 } from 'react-native'
 import {
     Container,
-    Icon
+    Icon,
+    Button,
 } from 'native-base'
 
 import FontAwesome, { Icons } from 'react-native-fontawesome'
@@ -21,14 +23,24 @@ export default class SideBar extends React.Component {
             }}>
                     <View style={styles.sideNavWrap}>
                         <Text style={styles.appName}>Boostnote Mobile</Text>
-                        <Text style={styles.noteSelector}><Icon name='md-archive' style={{color: '#FDC134', fontSize: 14}}/> All Notes</Text>
+                        <Button onPress={() => {
+                            this.props.changeMode(0)
+                            this.props.onClose()
+                        }}>
+                            <Text style={styles.noteSelector}><Icon name='md-archive' style={{color: '#FDC134', fontSize: 14}}/> All Notes</Text>
+                        </Button>
                         <View style={styles.hariboteWrap}>
-                            <Text style={styles.noteHaribote}>Folders</Text>
-                            <Text style={styles.hariboteDesc}>Under development.</Text>
+                        <Text style={styles.noteHaribote}>Folders</Text>
+                        <Text style={styles.hariboteDesc}>Under development.</Text>
                         </View>
                         <View>
-                            <Text style={styles.noteHaribote}><FontAwesome style={{fontSize: 16}}>{Icons.dropbox}</FontAwesome> Dropbox</Text>
-                            <Text style={styles.hariboteDesc}>Will be released in September.</Text>
+                            <Button onPress={() => {
+                                this.props.changeMode(1)
+                                this.props.onClose()
+                            }}>
+                                <FontAwesome style={{fontSize: 16}}>{Icons.dropbox}</FontAwesome>
+                                <Text>Dropbox</Text>
+                            </Button>
                         </View>
                     </View>
 
@@ -37,7 +49,6 @@ export default class SideBar extends React.Component {
                             <Icon style={{fontSize: 16,  color: '#89888d'}} name='link'/> Boostnote app for Desktop
                         </Text>
                     </View>
-
             </Container>
         )
     }
