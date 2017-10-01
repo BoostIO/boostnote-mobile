@@ -18,8 +18,7 @@ import {
     View,
 } from 'native-base'
 
-const client_id = 'xxxxxxxxxx';
-const client_secret = 'xxxxxxxxxx';
+import settings from '../config/settings'
 
 const DROPBOX_ACCESS_TOKEN = 'DROPBOX:ACCESS_TOKEN'
 
@@ -50,7 +49,7 @@ export default class WebViewModal extends React.Component {
                     </Header>
                     <Content contentContainerStyle={{flex: 1}}>
                         <WebView
-                            source={{uri: `https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=${client_id}`}}
+                            source={{uri: `https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=${settings.dropboxClientId}`}}
                             injectedJavaScript={`document.getElementById('auth-code')?document.getElementById('auth-code').childNodes[0].removeAttribute('readonly'):''`}
                             style={{marginTop: 20}}
                             startInLoadingState={true}
@@ -64,7 +63,7 @@ export default class WebViewModal extends React.Component {
                             <Button
                                 style={{flex:1}}
                                 onPress={() => {
-                                    fetch(`https://api.dropboxapi.com/oauth2/token?code=${this.state.code}&grant_type=authorization_code&client_id=${client_id}&client_secret=${client_secret}`, {
+                                    fetch(`https://api.dropboxapi.com/oauth2/token?code=${this.state.code}&grant_type=authorization_code&client_id=${settings.dropboxClientId}&client_secret=${settings.dropboxClientSecret}`, {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/x-www-form-urlencoded',
