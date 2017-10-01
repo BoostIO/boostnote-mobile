@@ -14,6 +14,8 @@ import {
     Icon,
     CardItem,
     Button,
+    Container,
+    Content
 } from 'native-base'
 
 import moment from 'moment'
@@ -95,10 +97,10 @@ const styles = {
         width: '90%',
         marginLeft: 40
     },
-    newPostButtonWrap: {
+    refreshButtonWrap: {
         position: 'absolute',
         marginLeft: '43%',
-        bottom: 30,
+        bottom: 120,
         width: 60,
         height: 60,
         borderRadius: 50,
@@ -110,15 +112,7 @@ const styles = {
         shadowOpacity: 0.4,
         shadowRadius: 6,
     },
-    noteListDate: {
-        position: 'absolute',
-        color: 'rgba(40,44,52,0.4)',
-        fontSize: 13,
-        top: 15,
-        right: 0,
-        fontWeight: '600'
-    },
-    newPostButton: {
+    refreshButton: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -128,6 +122,14 @@ const styles = {
         borderRadius: 50,
         overflow: 'hidden',
         position: 'absolute',
+    },
+    noteListDate: {
+        position: 'absolute',
+        color: 'rgba(40,44,52,0.4)',
+        fontSize: 13,
+        top: 15,
+        right: 0,
+        fontWeight: '600'
     },
     dropboxLinkButtonWrap: {
         flex:1,
@@ -301,78 +303,83 @@ export default class DropboxNoteList extends Component {
 
     render() {
         return (
-            <View style={{flex: 1}}>
-                {
-                    // Show refresh button when not loading when...
-                    // 1. Connected to Dropbox.
-                    // 2. Connected to Boostnote.
-                    // 3. Not loading.
-                    this.state.isConnectedToDropbox && !this.state.isNotConnectedToBoostnote && !this.state.isLoading ?
-                        <Button
-                            transparent
-                            onPress={() => this.getToken()}>
-                            <View style={styles.newPostButton}>
-                                <Icon name='md-refresh' style={{color: "#fff"}}/>
+            <Container>
+                <Content>
+                    <ActivityIndicator animating={this.state.isLoading}/>
+                    {
+                        // Show Dropbox connect button when...
+                        // 1. Not connected to Dropbox.
+                        // 2. Not loading.
+                        !this.state.isConnectedToDropbox && !this.state.isLoading ?
+                            <View style={styles.dropboxLinkButtonWrap}>
+                                <Button style={styles.dropboxLinkButton} onPress={() => this.setIsWebViewOpen(true)}>
+                                    <Text style={styles.dropboxLinkButtonText}><FontAwesome style={{color: '#2BA6FA', fontSize: 14}}>{Icons.dropbox}</FontAwesome> Sign in to Dropbox!</Text>
+                                </Button>
                             </View>
-                        </Button>
-                        : null
-                }
-                <ActivityIndicator animating={this.state.isLoading}/>
-                {
-                    // Show Dropbox connect button when...
-                    // 1. Not connected to Dropbox.
-                    // 2. Not loading.
-                    !this.state.isConnectedToDropbox && !this.state.isLoading ?
-                        <View style={styles.dropboxLinkButtonWrap}>
-                            <Button style={styles.dropboxLinkButton} onPress={() => this.setIsWebViewOpen(true)}>
-                                <Text style={styles.dropboxLinkButtonText}><FontAwesome style={{color: '#2BA6FA', fontSize: 14}}>{Icons.dropbox}</FontAwesome> Sign in to Dropbox!</Text>
-                            </Button>
-                        </View>
-                        : null
-                }
-                {
-                    // Show link of how to blog post when...
-                    // 1. Connected to Dropbox.
-                    // 2. Not connected to Boostnote.
-                    // 3. Not loading.
-                    this.state.isConnectedToDropbox && this.state.isNotConnectedToBoostnote && !this.state.isLoading ?
-                        <View style={{alignItems:'center', justifyContent:'center'}}>
-                            <Text style={styles.bottomLinkWord}>Connect with Desktop app and create a note!</Text>
-                            <View style={{marginTop: 20, backgroundColor: '#F3F4F4', height: 30, width: 150, alignItems:'center', justifyContent:'center'}}>
-                                <Text onPress={() => Linking.openURL('https://boostnote.io/')}>
-                                    <Icon style={{fontSize: 16,  color: '#89888d', paddingLeft: 20}} name='link'/> How to connect?
-                                </Text>
-                            </View>
-                        </View>
-                        : null
-                }
-                {
-                    this.state.noteList.map((note) => {
-                        return <Card transparent key={note.fileName} style={styles.noteListWrap}>
-                            <CardItem
-                                style={styles.noteList}
-                                button onPress={() => this.setNoteModalOpen(note.content)}>
-                                <Body>
-                                <View style={styles.noteListIconWrap}>
-                                    <Icon name='md-code-working' style={styles.noteListIcon}/>
+                            : null
+                    }
+                    {
+                        // Show link of how to blog post when...
+                        // 1. Connected to Dropbox.
+                        // 2. Not connected to Boostnote.
+                        // 3. Not loading.
+                        this.state.isConnectedToDropbox && this.state.isNotConnectedToBoostnote && !this.state.isLoading ?
+                            <View style={{alignItems:'center', justifyContent:'center'}}>
+                                <Text style={styles.bottomLinkWord}>Connect with Desktop app and create a note!</Text>
+                                <View style={{marginTop: 20, backgroundColor: '#F3F4F4', height: 30, width: 150, alignItems:'center', justifyContent:'center'}}>
+                                    <Text onPress={() => Linking.openURL('https://boostnote.io/')}>
+                                        <Icon style={{fontSize: 16,  color: '#89888d', paddingLeft: 20}} name='link'/> How to connect?
+                                    </Text>
                                 </View>
-                                <Text numberOfLines={1}
-                                      style={styles.noteListText}>{note.content}</Text>
-                                <Text style={styles.noteListDate}>{moment(note.createdAt).format('MMM D')}</Text>
-                                </Body>
-                            </CardItem>
-                        </Card>
-                    })
+                            </View>
+                            : null
+                    }
+                    {
+                        this.state.noteList.map((note) => {
+                            return <Card transparent key={note.fileName} style={styles.noteListWrap}>
+                                <CardItem
+                                    style={styles.noteList}
+                                    button onPress={() => this.setNoteModalOpen(note.content)}>
+                                    <Body>
+                                    <View style={styles.noteListIconWrap}>
+                                        <Icon name='md-code-working' style={styles.noteListIcon}/>
+                                    </View>
+                                    <Text numberOfLines={1}
+                                        style={styles.noteListText}>{note.content}</Text>
+                                    <Text style={styles.noteListDate}>{moment(note.createdAt).format('MMM D')}</Text>
+                                    </Body>
+                                </CardItem>
+                            </Card>
+                        })
+                    }
+                    <DropboxLinkModal
+                        isWebViewOpen={this.state.isWebViewOpen}
+                        setIsWebViewOpen={this.setIsWebViewOpen.bind(this)}
+                        onGetTokenSuccess={this.getToken.bind(this)}
+                    />
+                    <ReadOnlyNoteModal setNoteModalClose={this.setNoteModalClose.bind(this)}
+                                    isNoteOpen={this.state.isNoteOpen}
+                                    content={this.state.content}/>
+                </Content>
+                {
+                        // Show refresh button when not loading when...
+                        // 1. Connected to Dropbox.
+                        // 2. Connected to Boostnote.
+                        // 3. Not loading.
+                        this.state.isConnectedToDropbox && !this.state.isNotConnectedToBoostnote && !this.state.isLoading ?
+                            <View>
+                                <Button
+                                    transparent
+                                    style={styles.refreshButtonWrap}
+                                    onPress={() => this.getToken()}>
+                                    <View style={styles.refreshButton}>
+                                        <Icon name='md-refresh' style={{color: "#fff"}}/>
+                                    </View>
+                                </Button>
+                            </View>
+                            : null
                 }
-                <DropboxLinkModal
-                    isWebViewOpen={this.state.isWebViewOpen}
-                    setIsWebViewOpen={this.setIsWebViewOpen.bind(this)}
-                    onGetTokenSuccess={this.getToken.bind(this)}
-                />
-                <ReadOnlyNoteModal setNoteModalClose={this.setNoteModalClose.bind(this)}
-                                   isNoteOpen={this.state.isNoteOpen}
-                                   content={this.state.content}/>
-            </View>
+            </Container>
         )
     }
 }
