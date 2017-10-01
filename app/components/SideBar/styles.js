@@ -10,12 +10,15 @@ export default StyleSheet.create({
         color: '#CECFCE',
         marginBottom: 40
     },
+    noteSelectorWrap: {
+        marginBottom: 10,
+    },
     noteSelector: {
         fontSize: 18,
         color: '#ffffff',
         marginBottom: 40,
-        backgroundColor: '#414747',
-        width: '90%',
+        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        width: '96%',
         height: 35,
         paddingTop: 6,
         paddingLeft: 7
@@ -41,6 +44,6 @@ export default StyleSheet.create({
     bottomLinkWord: {
         fontSize: 14,
         color: 'rgba(206,207,206,0.8)',
-        fontWeight: '600'
+        fontWeight: '600',
     },
 })

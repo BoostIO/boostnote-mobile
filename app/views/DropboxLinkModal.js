@@ -54,14 +54,14 @@ export default class WebViewModal extends React.Component {
                             style={{marginTop: 20}}
                             startInLoadingState={true}
                         />
-                        <View style={{height: 50, flexDirection: 'row'}}>
+                        <View style={{height: 50, marginLeft: 20, marginRight: 20, flexDirection: 'row'}}>
                             <TextInput
-                                style={{flex:5}}
-                                placeholder={'Sign in and input code here!'}
+                                style={{flex:5, height: 35, marginRight: 10, paddingLeft: 5, borderColor: '#F3F4F4', borderWidth: 1}}
+                                placeholder={'Input code here!'}
                                 onChangeText={(text) => this.setState({code: text})}
                             />
                             <Button
-                                style={{flex:1}}
+                                style={{flex:1, backgroundColor: '#F3F4F4', height: 35, width: 35,}}
                                 onPress={() => {
                                     fetch(`https://api.dropboxapi.com/oauth2/token?code=${this.state.code}&grant_type=authorization_code&client_id=${settings.dropboxClientId}&client_secret=${settings.dropboxClientSecret}`, {
                                         method: 'POST',
