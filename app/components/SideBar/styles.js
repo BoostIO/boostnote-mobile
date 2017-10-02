@@ -23,6 +23,10 @@ export default StyleSheet.create({
         paddingTop: 6,
         paddingLeft: 7
     },
+    noteSelectorAndroid: {
+        fontSize: 18,
+        color: '#ffffff',
+    },
     hariboteWrap: {
         marginBottom: 50
     },

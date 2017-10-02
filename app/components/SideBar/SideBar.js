@@ -3,7 +3,8 @@ import {
     Linking,
     Text,
     TextInput,
-    View
+    View,
+    Platform,
 } from 'react-native'
 import {
     Container,
@@ -22,24 +23,24 @@ export default class SideBar extends React.Component {
                     <View style={styles.sideNavWrap}>
                         <View style={styles.noteSelectorWrap}>
                             <Text style={styles.appName}>Boostnote Mobile</Text>
-                            <Button style={{backgroundColor: 'transparent', paddingLeft: 0}}
+                            <Button style={Platform.OS === 'android' ? {backgroundColor: 'transparent', paddingLeft: 0, marginBottom: 20, backgroundColor: 'rgba(255, 255, 255, 0.05)', width: '96%', height: 35, paddingTop: 6, paddingLeft: 7} : {backgroundColor: 'transparent', paddingLeft: 0}}
                                 onPress={() => {
                                     this.props.changeMode(0)
                                     this.props.onClose()
                                 }}
                             >
-                                <Text style={styles.noteSelector}><Icon name='md-archive' style={{color: '#FDC134', fontSize: 14}}/> All Notes</Text>
+                                <Text style={Platform.OS === 'android' ? styles.noteSelectorAndroid : styles.noteSelector}><Icon name='md-archive' style={{color: '#FDC134', fontSize: 14}}/> All Notes</Text>
                             </Button>
                         </View>
 
                         <View style={styles.noteSelectorWrap}>
-                            <Button style={{backgroundColor: 'transparent', paddingLeft: 0}}
+                            <Button style={Platform.OS === 'android' ? {backgroundColor: 'transparent', paddingLeft: 0, marginBottom: 20, backgroundColor: 'rgba(255, 255, 255, 0.05)', width: '96%', height: 35, paddingTop: 6, paddingLeft: 7} : {backgroundColor: 'transparent', paddingLeft: 0}}
                                 onPress={() => {
                                     this.props.changeMode(1)
                                     this.props.onClose()
                                 }}
                             >
-                                <Text style={styles.noteSelector}><FontAwesome style={{color: '#2BA6FA', fontSize: 14}}>{Icons.dropbox}</FontAwesome> Dropbox</Text>
+                                <Text  style={Platform.OS === 'android' ? styles.noteSelectorAndroid : styles.noteSelector}><FontAwesome style={{color: '#2BA6FA', fontSize: 14}}>{Icons.dropbox}</FontAwesome> Dropbox</Text>
                             </Button>
                         </View>
 
