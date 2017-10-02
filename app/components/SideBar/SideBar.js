@@ -23,7 +23,7 @@ export default class SideBar extends React.Component {
                     <View style={styles.sideNavWrap}>
                         <View style={styles.noteSelectorWrap}>
                             <Text style={styles.appName}>Boostnote Mobile</Text>
-                            <Button style={Platform.OS === 'android' ? {backgroundColor: 'transparent', paddingLeft: 0, marginBottom: 20, backgroundColor: 'rgba(255, 255, 255, 0.05)', width: '96%', height: 35, paddingTop: 6, paddingLeft: 7} : {backgroundColor: 'transparent', paddingLeft: 0}}
+                            <Button style={Platform.OS === 'android' ? {marginBottom: 20, backgroundColor: 'rgba(255, 255, 255, 0.05)', width: '96%', height: 35, paddingTop: 6, paddingLeft: 7} : {backgroundColor: 'transparent', paddingLeft: 0}}
                                 onPress={() => {
                                     this.props.changeMode(0)
                                     this.props.onClose()
@@ -34,7 +34,7 @@ export default class SideBar extends React.Component {
                         </View>
 
                         <View style={styles.noteSelectorWrap}>
-                            <Button style={Platform.OS === 'android' ? {backgroundColor: 'transparent', paddingLeft: 0, marginBottom: 20, backgroundColor: 'rgba(255, 255, 255, 0.05)', width: '96%', height: 35, paddingTop: 6, paddingLeft: 7} : {backgroundColor: 'transparent', paddingLeft: 0}}
+                            <Button style={Platform.OS === 'android' ? {marginBottom: 20, backgroundColor: 'rgba(255, 255, 255, 0.05)', width: '96%', height: 35, paddingTop: 6, paddingLeft: 7} : {backgroundColor: 'transparent', paddingLeft: 0}}
                                 onPress={() => {
                                     this.props.changeMode(1)
                                     this.props.onClose()
