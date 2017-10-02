@@ -25,7 +25,7 @@ import FontAwesome, { Icons } from 'react-native-fontawesome'
 import DropboxLinkModal from './DropboxLinkModal'
 import ReadOnlyNoteModal from './ReadOnlyNoteModal'
 
-import CoffeeScript from 'coffeescript/lib/coffeescript/browser'
+import CoffeeScript from '../lib/CofeeScriptEval'
 
 const DROPBOX_ACCESS_TOKEN = 'DROPBOX:ACCESS_TOKEN'
 
