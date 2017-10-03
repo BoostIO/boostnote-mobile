@@ -327,7 +327,7 @@ export default class DropboxNoteList extends Component {
                             <View style={{alignItems:'center', justifyContent:'center'}}>
                                 <Text style={styles.bottomLinkWord}>Connect with Desktop app and create a note!</Text>
                                 <View style={{marginTop: 20, backgroundColor: '#F3F4F4', height: 30, width: 150, alignItems:'center', justifyContent:'center'}}>
-                                    <Text onPress={() => Linking.openURL('https://boostnote.io/')}>
+                                    <Text onPress={() => Linking.openURL('https://medium.com/boostnote/boostnote-mobile-how-to-synchronize-with-dropbox-95d845581eea')}>
                                         <Icon style={{fontSize: 16,  color: '#89888d', paddingLeft: 20}} name='link'/> How to connect?
                                     </Text>
                                 </View>
