@@ -21,8 +21,6 @@ import {
     CardItem,
 } from 'native-base'
 
-import FontAwesome, { Icons } from 'react-native-fontawesome'
-
 import moment from 'moment'
 import removeMd from 'remove-markdown-and-html'
 

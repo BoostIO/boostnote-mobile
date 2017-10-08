@@ -20,8 +20,6 @@ import {
 
 import moment from 'moment'
 
-import FontAwesome, { Icons } from 'react-native-fontawesome'
-
 import DropboxLinkModal from './DropboxLinkModal'
 import ReadOnlyNoteModal from './ReadOnlyNoteModal'
 
@@ -139,13 +137,14 @@ const styles = {
     },
     dropboxLinkButton: {
         backgroundColor: '#F3F4F4',
-        height: 35,
+        height: 40,
         width: 180,
     },
     dropboxLinkButtonText: {
         color: '#262626',
         fontWeight: '600',
-        fontSize: 14
+        fontSize: 14,
+        textAlignVertical: 'center'
     }
 }
 
@@ -313,7 +312,9 @@ export default class DropboxNoteList extends Component {
                         !this.state.isConnectedToDropbox && !this.state.isLoading ?
                             <View style={styles.dropboxLinkButtonWrap}>
                                 <Button style={styles.dropboxLinkButton} onPress={() => this.setIsWebViewOpen(true)}>
-                                    <Text style={styles.dropboxLinkButtonText}><FontAwesome style={{color: '#2BA6FA', fontSize: 14}}>{Icons.dropbox}</FontAwesome> Sign in to Dropbox!</Text>
+                                    <Text style={styles.dropboxLinkButtonText}>
+                                        <Icon name='logo-dropbox' style={{color: '#2BA6FA', fontSize: 16, textAlignVertical: 'center'}}/> Sign in to Dropbox!
+                                    </Text>
                                 </Button>
                             </View>
                             : null

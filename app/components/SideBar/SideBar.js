@@ -12,8 +12,6 @@ import {
     Button,
 } from 'native-base'
 
-import FontAwesome, { Icons } from 'react-native-fontawesome'
-
 import styles from './styles'
 
 export default class SideBar extends React.Component {
@@ -40,7 +38,7 @@ export default class SideBar extends React.Component {
                                     this.props.onClose()
                                 }}
                             >
-                                <Text  style={Platform.OS === 'android' ? styles.noteSelectorAndroid : styles.noteSelector}><FontAwesome style={{color: '#2BA6FA', fontSize: 14}}>{Icons.dropbox}</FontAwesome> Dropbox</Text>
+                                <Text  style={Platform.OS === 'android' ? styles.noteSelectorAndroid : styles.noteSelector}><Icon name='logo-dropbox' style={{color: '#2BA6FA', fontSize: 18}}/> Dropbox</Text>
                             </Button>
                         </View>
 
