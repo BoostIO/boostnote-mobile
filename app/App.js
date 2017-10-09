@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {
     Text,
     Platform,
-    Modal,
     View,
     TextInput
 } from 'react-native'
