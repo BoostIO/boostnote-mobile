@@ -1,7 +1,6 @@
 import React from 'react'
 import {
     Platform,
-    Modal,
     Text,
     TextInput,
     WebView,
@@ -18,6 +17,8 @@ import {
     View,
 } from 'native-base'
 
+import Modal from 'react-native-modalbox'
+
 import settings from '../config/settings'
 
 const DROPBOX_ACCESS_TOKEN = 'DROPBOX:ACCESS_TOKEN'
@@ -33,12 +34,11 @@ export default class WebViewModal extends React.Component {
 
     render() {
         return (
-            <Modal
-                animationType={"slide"}
-                transparent={false}
-                visible={this.props.isWebViewOpen}
-                onRequestClose={() => {
-                }}>
+          <Modal
+            coverScreen={true}
+            isOpen={this.props.isWebViewOpen}
+            position={'top'}
+            onClosed={() => this.props.setIsWebViewOpen(false)}>
                 <Container>
                     <Header style={Platform.OS === 'android' ? {height: 47,backgroundColor: '#6C81A6'} : {backgroundColor: '#6C81A6'}} androidStatusBarColor='#239F85'>
                         <Left style={Platform.OS === 'android' ? {top: 0} : null}>

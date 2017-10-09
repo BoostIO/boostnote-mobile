@@ -4,7 +4,6 @@ import {
     Dimensions,
     Text,
     Platform,
-    Modal,
     View,
     TextInput,
     TouchableHighlight,
@@ -19,6 +18,8 @@ import {
     Left,
     Icon,
 } from 'native-base'
+
+import Modal from 'react-native-modalbox'
 
 import createMarkdownRenderer from 'rn-markdown'
 const Markdown = createMarkdownRenderer({gfm: true, tables: true})
@@ -124,12 +125,11 @@ export default class NoteModal extends React.Component {
 
     render() {
         return (
-            <Modal
-                animationType={"slide"}
-                transparent={false}
-                visible={this.props.isNoteOpen}
-                onRequestClose={() => {
-                }}>
+          <Modal
+            coverScreen={true}
+            isOpen={this.props.isNoteOpen}
+            position={'top'}
+            onClosed={() => this.props.setNoteModalClose()}>
                 <Container>
                     <Header style={Platform.OS === 'android' ? {
                         height: 47,

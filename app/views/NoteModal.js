@@ -4,7 +4,6 @@ import {
     Dimensions,
     Text,
     Platform,
-    Modal,
     View,
     TextInput,
     TouchableHighlight,
@@ -23,6 +22,8 @@ import {
     Segment,
     ActionSheet,
 } from 'native-base'
+
+import Modal from 'react-native-modalbox'
 
 import RNFetchBlob from 'react-native-fetch-blob'
 const fs = RNFetchBlob.fs
@@ -299,11 +300,10 @@ export default class NoteModal extends React.Component {
     render() {
         return (
             <Modal
-                animationType={"slide"}
-                transparent={false}
-                visible={this.props.isNoteOpen}
-                onRequestClose={() => {
-                }}>
+                coverScreen={true}
+                isOpen={this.props.isNoteOpen}
+                position={'top'}
+                onClosed={() => this.props.setIsOpen('', false)}>
                 <Container>
                     <Header style={Platform.OS === 'android' ? {height: 47,backgroundColor: '#6C81A6'} : {backgroundColor: '#6C81A6'}} androidStatusBarColor='#239F85'>
                         <Left style={Platform.OS === 'android' ? {top: 0} : null}>
