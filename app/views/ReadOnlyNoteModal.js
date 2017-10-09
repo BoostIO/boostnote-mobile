@@ -127,7 +127,9 @@ export default class NoteModal extends React.Component {
         return (
           <Modal
             coverScreen={true}
-            isOpen={this.props.isNoteOpen}>
+            isOpen={this.props.isNoteOpen}
+            position={'top'}
+            onClosed={() => this.props.setNoteModalClose()}>
                 <Container>
                     <Header style={Platform.OS === 'android' ? {
                         height: 47,

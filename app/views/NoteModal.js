@@ -301,7 +301,9 @@ export default class NoteModal extends React.Component {
         return (
             <Modal
                 coverScreen={true}
-                isOpen={this.props.isNoteOpen}>
+                isOpen={this.props.isNoteOpen}
+                position={'top'}
+                onClosed={() => this.props.setIsOpen('', false)}>
                 <Container>
                     <Header style={Platform.OS === 'android' ? {height: 47,backgroundColor: '#6C81A6'} : {backgroundColor: '#6C81A6'}} androidStatusBarColor='#239F85'>
                         <Left style={Platform.OS === 'android' ? {top: 0} : null}>
