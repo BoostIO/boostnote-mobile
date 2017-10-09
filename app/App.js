@@ -13,20 +13,15 @@ import {
     Button,
     Left,
     Right,
-    Body,
     Icon,
     Drawer,
-    Card,
-    CardItem,
 } from 'native-base'
-
-import moment from 'moment'
-import removeMd from 'remove-markdown-and-html'
 
 import DropboxNoteList from './views/DropboxNoteList'
 
 import SideBar from './components/SideBar'
 import NoteModal from './views/NoteModal'
+import NoteListItem from './components/NoteList/NoteListItem'
 
 import AwsMobileAnalyticsConfig from './lib/AwsMobileAnalytics'
 import { makeRandomHex } from './lib/Strings'
@@ -40,17 +35,6 @@ const SNIPPET_NOTE = "SNIPPET_NOTE"
 const DEFAULT_FOLDER = "DEFAULT_FOLDER"
 
 const styles = {
-    noteListWrap: {
-        marginTop: 0,
-        marginBottom: 0,
-        borderColor: '#F7F7F7',
-        borderBottomWidth: 1
-    },
-    noteList: {
-        width: '100%',
-        height: 65,
-        backgroundColor: 'rgba(244,244,244,0.1)',
-    },
     iosHeader: {
         backgroundColor: '#239F85',
     },
@@ -74,39 +58,6 @@ const styles = {
         fontSize: 21,
         marginRight: 20
     },
-    noteListIconWrap: {
-        backgroundColor: '#eeeeee',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 30,
-        height: 30,
-        borderRadius: 50,
-        overflow: 'hidden',
-        marginTop: 9
-    },
-    noteListIcon: {
-        fontSize: 14,
-        color: '#adadad'
-    },
-    noteListText: {
-        position: 'absolute',
-        color: '#3a3941',
-        backgroundColor: 'transparent',
-        top: 15,
-        fontSize: 14,
-        width: '73%',
-        marginLeft: 40
-    },
-    noteListTextNone: {
-        position: 'absolute',
-        color: '#adadad',
-        backgroundColor: 'transparent',
-        top: 15,
-        fontSize: 14,
-        width: '90%',
-        marginLeft: 40
-    },
     newPostButtonWrap: {
         position: 'absolute',
         marginLeft: '43%',
@@ -121,14 +72,6 @@ const styles = {
         shadowColor: '#CF5425',
         shadowOpacity: 0.4,
         shadowRadius: 6,
-    },
-    noteListDate: {
-        position: 'absolute',
-        color: 'rgba(40,44,52,0.4)',
-        fontSize: 13,
-        top: 15,
-        right: 0,
-        fontWeight: '600'
     },
     newPostButton: {
         display: 'flex',
@@ -346,8 +289,8 @@ export default class App extends Component {
                             <Icon name='md-search' style={styles.headerRightMenuButton}/>
                         </Right>*/}
                     </Header>
-                    <Content>
-                        <View style={{flex: 1, flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
+                    <Content contentContainerStyle={{ flex: 1 }}>
+                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
                             <Text style={{backgroundColor: 'transparent', position: 'absolute', left: 10, top:12, color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>
                                 {
                                     this.state.mode === 0
@@ -361,19 +304,7 @@ export default class App extends Component {
                         </View>
                         {
                             this.state.mode === 0 ? this.state.noteList.map((note) => {
-                                return <Card transparent key={note.fileName} style={styles.noteListWrap}>
-                                    <CardItem
-                                        style={styles.noteList}
-                                        button onPress={() => this.setNoteModalIsOpen(note.fileName, true)}>
-                                        <Body>
-                                            <View style={styles.noteListIconWrap}>
-                                                <Icon name='md-code-working' style={styles.noteListIcon}/>
-                                            </View>
-                                            <Text numberOfLines={1} style={note.content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{removeMd(note.content)}</Text>
-                                            <Text style={styles.noteListDate}>{moment(note.createdAt).format('MMM D')}</Text>
-                                        </Body>
-                                    </CardItem>
-                                </Card>
+                                return <NoteListItem note={note} onPressHandler={this.setNoteModalIsOpen.bind(this)} key={note.fileName} />
                             }) : <DropboxNoteList/>
                         }
                     </Content>
