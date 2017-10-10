@@ -67,7 +67,6 @@ const styles = {
 		flexDirection: 'row',
 		justifyContent: 'flex-start',
 		alignItems: 'center',
-		backgroundColor: 'red',
 		flex: 1,
 	},
 	noteItemSectionRight: {
@@ -80,27 +79,26 @@ const styles = {
 }
 
 class NoteListItem extends Component {
-
 	render() {
-		const { note, onPressHandler } = this.props
-		const { fileName, content, createdAt, isStarred } = note
+		const { note, onItemPress, onStarPress } = this.props || {}
+		const { fileName, content, createdAt, isStarred } = note || {}
 		return (
 			<Card transparent style={styles.noteListWrap}>
 				<TouchableOpacity
 					style={styles.noteList}
-					onPress={() => onPressHandler(fileName, true)}>
+					onPress={() => onItemPress(fileName, true)}>
 					<View style={styles.noteItemSectionLeft}>
 						<View style={styles.noteListIconWrap}>
 							<Icon name='md-code-working' style={styles.noteListIcon}/>
 						</View>
 						<Text style={content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{removeMd(content)}</Text>
 					</View>
-						<Right>
-							<View style={styles.noteItemSectionRight}>
-							<Text style={styles.noteListDate}>{moment(createdAt).format('MMM D')}</Text>
+					<View style={styles.noteItemSectionRight}>
+						<Text style={styles.noteListDate}>{moment(createdAt).format('MMM D')}</Text>
+						<TouchableOpacity onPress={() => onStarPress(fileName)}>
 							<Icon name={isStarred ? "md-star" : "md-star-outline"} style={styles.noteStarIcon}/>
-						</View>
-						</Right>
+						</TouchableOpacity>
+					</View>
 				</TouchableOpacity>
 			</Card>
 		)

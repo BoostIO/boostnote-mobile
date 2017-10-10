@@ -96,6 +96,16 @@ export default class App extends Component {
             fileName: '',
             content: '',
         }
+        this.openDrawer = this.openDrawer.bind(this)
+        this.closeDrawer = this.closeDrawer.bind(this)
+        this.setNoteModalIsOpen = this.setNoteModalIsOpen.bind(this)
+        this.onStarPress = this.onStarPress.bind(this)
+        this.listDir = this.listDir.bind(this)
+        this.listFiles = this.listFiles.bind(this)
+        this.listFilesAndSetState = this.listFilesAndSetState.bind(this)
+        this.createDir = this.createDir.bind(this)
+        this.createNewNote = this.createNewNote.bind(this)
+        this.changeMode = this.changeMode.bind(this)
     }
 
     componentWillMount() {
@@ -170,18 +180,41 @@ export default class App extends Component {
         }
     }
 
+    onStarPress(fileName) {
+        fs.readFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, 'utf8')
+            .then((content) => {
+                let contentObject = JSON.parse(content)
+                const newNotes = []
+                for (i in contentObject.note) {
+                    const newNote = {...contentObject.note[i]}
+                    if (newNote.name === fileName) {
+                        newNote.isStarred = !newNote.isStarred
+                    }
+                    newNotes.push(newNote)
+                }
+                contentObject.note = newNotes
+                fs.writeFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, JSON.stringify(contentObject), 'utf8')
+                    .then(this.listFilesAndSetState)
+                    .catch(err => console.log(err))
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
     listDir() {
         return RNFetchBlob.fs.ls(`${dirs.DocumentDir}`)
     }
 
     listFiles() {
-        return RNFetchBlob.fs.ls(`${dirs.DocumentDir}/Boostnote`)
+        return RNFetchBlob.fs.ls(`${dirs.DocumentDir}/Boostnote`) // TODO: unsused param passed in
     }
 
     async listFilesAndSetState() {
         const files = await this.listFiles(`${dirs.DocumentDir}/Boostnote`)
         const filteredFiles = files.filter((name) => {
             return name.endsWith('.md')
+            //filter by starred files here?
         })
 
         let settingJsonFile = await fs.readFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, 'utf8')
@@ -197,7 +230,8 @@ export default class App extends Component {
             fileList.push({
                 fileName: fileName,
                 content: content === '' ? 'Tap here and write something!' : content.split(/\r\n|\r|\n/)[0],
-                createdAt: filteredSettingFile.createdAt
+                createdAt: filteredSettingFile.createdAt,
+                isStarred: filteredSettingFile.isStarred
             })
         }
         fileList.sort((a, b) => {
@@ -270,7 +304,7 @@ export default class App extends Component {
                 }}
                 content={
                     <SideBar
-                        changeMode={this.changeMode.bind(this)}
+                        changeMode={this.changeMode}
                         onClose={() => this.closeDrawer()}/>
                 }
                 panOpenMask={.05}>
@@ -278,7 +312,7 @@ export default class App extends Component {
                     <Header style={Platform.OS === 'android' ? styles.androidHeader : styles.iosHeader} androidStatusBarColor='#239F85'>
                         <Left style={Platform.OS === 'android' ? {top: 10} : null}>
                             <View style={{flex: 1, flexDirection: 'row'}}>
-                                <Button transparent onPress={this.openDrawer.bind(this)}>
+                                <Button transparent onPress={this.openDrawer}>
                                     <Icon name='md-list' style={styles.headerMenuButton}/>
                                 </Button>
                                 <Title style={styles.appName}>Boostnote</Title>
@@ -289,7 +323,7 @@ export default class App extends Component {
                             <Icon name='md-search' style={styles.headerRightMenuButton}/>
                         </Right>*/}
                     </Header>
-                    <Content contentContainerStyle={{ flex: 1 }}>
+                    <Content contentContainerStyle={{ display: 'flex' }}>
                         <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
                             <Text style={{backgroundColor: 'transparent', position: 'absolute', left: 10, top:12, color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>
                                 {
@@ -304,7 +338,7 @@ export default class App extends Component {
                         </View>
                         {
                             this.state.mode === 0 ? this.state.noteList.map((note) => {
-                                return <NoteListItem note={note} onPressHandler={this.setNoteModalIsOpen.bind(this)} key={note.fileName} />
+                                return <NoteListItem note={note} onStarPress={this.onStarPress} onPressHandler={this.setNoteModalIsOpen} key={note.fileName} />
                             }) : <DropboxNoteList/>
                         }
                     </Content>
@@ -319,7 +353,7 @@ export default class App extends Component {
                                         <Icon name='md-create' style={{color: "#fff"}}/>
                                     </View>
                                 </Button>
-                                <NoteModal setIsOpen={this.setNoteModalIsOpen.bind(this)}
+                                <NoteModal setIsOpen={this.setNoteModalIsOpen}
                                        isNoteOpen={this.state.isNoteOpen}
                                        fileName={this.state.fileName}
                                        content={this.state.content}/>
