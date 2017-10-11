@@ -141,7 +141,7 @@ const styles = {
     dropboxLinkButton: {
         backgroundColor: '#F3F4F4',
         height: 40,
-        width: 180,
+        width: 300,
     },
     dropboxLinkButtonText: {
         color: '#262626',
@@ -360,7 +360,7 @@ export default class DropboxNoteList extends Component {
                                                 color: '#2BA6FA',
                                                 fontSize: 16,
                                                 textAlignVertical: 'center'
-                                            }}/> Tap here to {"\n"}sign in to Dropbox!
+                                            }}/> Tap here to sign in to Dropbox!
                                         </Text>
                                     </Button>
                                 </View>
