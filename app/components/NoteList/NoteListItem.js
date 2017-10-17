@@ -64,7 +64,7 @@ const styles = {
 		flexDirection: 'row',
 		justifyContent: 'flex-start',
 		alignItems: 'center',
-		flex: 1,
+		flex: 2,
 	},
 	noteItemSectionRight: {
 		flex: 1,

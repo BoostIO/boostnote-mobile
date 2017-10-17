@@ -3,7 +3,8 @@ import {
     Text,
     Platform,
     View,
-    TextInput
+    TextInput,
+    TouchableOpacity,
 } from 'react-native'
 import {
     Container,
@@ -95,6 +96,7 @@ export default class App extends Component {
             noteList: [],
             fileName: '',
             content: '',
+            filterFavorites: false,
         }
         this.openDrawer = this.openDrawer.bind(this)
         this.closeDrawer = this.closeDrawer.bind(this)
@@ -106,6 +108,7 @@ export default class App extends Component {
         this.createDir = this.createDir.bind(this)
         this.createNewNote = this.createNewNote.bind(this)
         this.changeMode = this.changeMode.bind(this)
+        this.onFilterFavorites = this.onFilterFavorites.bind(this)
     }
 
     componentWillMount() {
@@ -200,6 +203,12 @@ export default class App extends Component {
             .catch((err) => {
                 console.log(err)
             })
+    }
+
+    onFilterFavorites() {
+        this.setState((prevState, props) => {
+            return {filterFavorites: !prevState.filterFavorites}
+        })
     }
 
     listDir() {
@@ -297,6 +306,7 @@ export default class App extends Component {
     }
 
     render() {
+        const { noteList, mode, filterFavorites, isNoteOpen, fileName, content } = this.state
         return (
             <Drawer
                 ref={(ref) => {
@@ -318,10 +328,12 @@ export default class App extends Component {
                                 <Title style={styles.appName}>Boostnote</Title>
                             </View>
                         </Left>
-                        {/*<Right style={Platform.OS === 'android' ? {top: 10} : null}>
-                            <Icon name='md-star' style={styles.headerRightMenuButton}/>
-                            <Icon name='md-search' style={styles.headerRightMenuButton}/>
-                        </Right>*/}
+                        <Right style={Platform.OS === 'android' ? {top: 10} : null}>
+                            <TouchableOpacity onPress={this.onFilterFavorites}>
+                                <Icon name= {filterFavorites ? 'md-star' : 'md-star-outline'} style={styles.headerRightMenuButton}/>
+                            </TouchableOpacity>
+                            {/* <Icon name='md-search' style={styles.headerRightMenuButton}/> */}
+                        </Right>
                     </Header>
                     <Content contentContainerStyle={{ display: 'flex' }}>
                         <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
@@ -337,13 +349,14 @@ export default class App extends Component {
                             </View>*/}
                         </View>
                         {
-                            this.state.mode === 0 ? this.state.noteList.map((note) => {
+                            mode === 0 ? noteList.map((note) => {
+                                if (filterFavorites &&  !note.isStarred) return null
                                 return <NoteListItem note={note} onStarPress={this.onStarPress} onNotePress={this.setNoteModalIsOpen} key={note.fileName} />
                             }) : <DropboxNoteList/>
                         }
                     </Content>
                     {
-                        this.state.mode === 0 ?
+                        mode === 0 ?
                             <View>
                                 <Button
                                     transparent
@@ -354,9 +367,9 @@ export default class App extends Component {
                                     </View>
                                 </Button>
                                 <NoteModal setIsOpen={this.setNoteModalIsOpen}
-                                       isNoteOpen={this.state.isNoteOpen}
-                                       fileName={this.state.fileName}
-                                       content={this.state.content}/>
+                                       isNoteOpen={isNoteOpen}
+                                       fileName={fileName}
+                                       content={content}/>
                             </View>
                         : null
                     }
