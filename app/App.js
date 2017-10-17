@@ -338,7 +338,7 @@ export default class App extends Component {
                         </View>
                         {
                             this.state.mode === 0 ? this.state.noteList.map((note) => {
-                                return <NoteListItem note={note} onStarPress={this.onStarPress} onPressHandler={this.setNoteModalIsOpen} key={note.fileName} />
+                                return <NoteListItem note={note} onStarPress={this.onStarPress} onNotePress={this.setNoteModalIsOpen} key={note.fileName} />
                             }) : <DropboxNoteList/>
                         }
                     </Content>
