@@ -216,11 +216,11 @@ export default class App extends Component {
     }
 
     listFiles() {
-        return RNFetchBlob.fs.ls(`${dirs.DocumentDir}/Boostnote`) // TODO: unsused param passed in
+        return RNFetchBlob.fs.ls(`${dirs.DocumentDir}/Boostnote`)
     }
 
     async listFilesAndSetState() {
-        const files = await this.listFiles(`${dirs.DocumentDir}/Boostnote`)
+        const files = await this.listFiles()
         const filteredFiles = files.filter((name) => {
             return name.endsWith('.md')
             //filter by starred files here?
