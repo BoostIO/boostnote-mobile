@@ -2,7 +2,9 @@ import React, {Component} from 'react'
 
 import {
     Text,
+    TextInput,
     View,
+    Alert,
     AsyncStorage,
     ActivityIndicator,
     Linking,
@@ -20,10 +22,11 @@ import {
 
 import moment from 'moment'
 
-import DropboxLinkModal from './DropboxLinkModal'
 import ReadOnlyNoteModal from './ReadOnlyNoteModal'
 
 import CoffeeScript from '../lib/CofeeScriptEval'
+
+import settings from '../config/settings'
 
 const DROPBOX_ACCESS_TOKEN = 'DROPBOX:ACCESS_TOKEN'
 
@@ -102,7 +105,7 @@ const styles = {
         width: 60,
         height: 60,
         borderRadius: 50,
-        shadowOffset:{
+        shadowOffset: {
             width: 0,
             height: 3,
         },
@@ -130,15 +133,15 @@ const styles = {
         fontWeight: '600'
     },
     dropboxLinkButtonWrap: {
-        flex:1,
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'center'
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     dropboxLinkButton: {
         backgroundColor: '#F3F4F4',
         height: 40,
-        width: 180,
+        width: 300,
     },
     dropboxLinkButtonText: {
         color: '#262626',
@@ -155,11 +158,11 @@ export default class DropboxNoteList extends Component {
         this.state = {
             noteList: [],
             note: '',
-            isWebViewOpen: false,
             isNoteOpen: false,
             isLoading: false,
             isConnectedToDropbox: false,
-            isNotConnectedToBoostnote: false
+            isNotConnectedToBoostnote: false,
+            code: '',
         }
     }
 
@@ -167,18 +170,13 @@ export default class DropboxNoteList extends Component {
         this.getToken()
     }
 
-    setIsWebViewOpen(isOpen) {
-        this.setState({
-            isWebViewOpen: isOpen
-        })
-    }
-
     getToken() {
         AsyncStorage.getItem(DROPBOX_ACCESS_TOKEN)
             .then((value) => {
-                if (value == null) {
-                    // open webview to sign in Dropbox
-                    this.setIsWebViewOpen(true)
+                if (value === null) {
+                    this.setState({
+                        isConnectedToDropbox: false
+                    })
                 } else {
                     this.setState({
                         isConnectedToDropbox: true
@@ -187,8 +185,9 @@ export default class DropboxNoteList extends Component {
                 }
             })
             .catch((e) => {
-                // open webview to sign in Dropbox
-                this.setIsWebViewOpen(true)
+                this.setState({
+                    isConnectedToDropbox: false
+                })
             })
     }
 
@@ -241,7 +240,8 @@ export default class DropboxNoteList extends Component {
                         headers: {
                             'Authorization': `Bearer ${token}`,
                             'Dropbox-API-Arg': `{"path":  "${entry.path_display}"}`,
-                        }})
+                        }
+                    })
                         .then((response) => {
                             return response.text()
                         })
@@ -287,6 +287,47 @@ export default class DropboxNoteList extends Component {
             })
     }
 
+    getAccessToken() {
+        fetch(`https://api.dropboxapi.com/oauth2/token?code=${this.state.code}&grant_type=authorization_code&client_id=${settings.dropboxClientId}&client_secret=${settings.dropboxClientSecret}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error()
+                }
+                return response.json()
+            })
+            .then((response) => {
+                AsyncStorage.setItem(DROPBOX_ACCESS_TOKEN, response.access_token)
+                    .then((values) => {
+                        this.getToken()
+                    })
+                    .catch((e) => {
+                        Alert.alert(
+                            'Something wrong',
+                            'Please retry',
+                            [
+                                {text: 'OK'},
+                            ],
+                            {cancelable: false}
+                        )
+                    })
+            })
+            .catch((e) => {
+                Alert.alert(
+                    'Cannot authorize',
+                    'Please input a valid token',
+                    [
+                        {text: 'OK'},
+                    ],
+                    {cancelable: false}
+                )
+            })
+    }
+
     setNoteModalOpen(content) {
         this.setState({
             content: content,
@@ -310,12 +351,38 @@ export default class DropboxNoteList extends Component {
                         // 1. Not connected to Dropbox.
                         // 2. Not loading.
                         !this.state.isConnectedToDropbox && !this.state.isLoading ?
-                            <View style={styles.dropboxLinkButtonWrap}>
-                                <Button style={styles.dropboxLinkButton} onPress={() => this.setIsWebViewOpen(true)}>
-                                    <Text style={styles.dropboxLinkButtonText}>
-                                        <Icon name='logo-dropbox' style={{color: '#2BA6FA', fontSize: 16, textAlignVertical: 'center'}}/> Sign in to Dropbox!
-                                    </Text>
-                                </Button>
+                            <View>
+                                <View style={styles.dropboxLinkButtonWrap}>
+                                    <Button style={styles.dropboxLinkButton}
+                                            onPress={() => Linking.openURL(`https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=${settings.dropboxClientId}`)}>
+                                        <Text style={styles.dropboxLinkButtonText}>
+                                            <Icon name='logo-dropbox' style={{
+                                                color: '#2BA6FA',
+                                                fontSize: 16,
+                                                textAlignVertical: 'center'
+                                            }}/> Tap here to sign in to Dropbox!
+                                        </Text>
+                                    </Button>
+                                </View>
+                                <View style={{height: 50, marginTop: 20, marginLeft: 20, marginRight: 20, flexDirection: 'row'}}>
+                                    <TextInput
+                                        style={{
+                                            flex: 5,
+                                            height: 35,
+                                            marginRight: 10,
+                                            paddingLeft: 5,
+                                            borderColor: '#F3F4F4',
+                                            borderWidth: 1
+                                        }}
+                                        placeholder={'Input code here!'}
+                                        onChangeText={(text) => this.setState({code: text})}
+                                    />
+                                    <Button
+                                        style={{flex: 1, backgroundColor: '#F3F4F4', height: 35, width: 35,}}
+                                        onPress={this.getAccessToken.bind(this)}>
+                                        <Text>Send!</Text>
+                                    </Button>
+                                </View>
                             </View>
                             : null
                     }
@@ -325,11 +392,20 @@ export default class DropboxNoteList extends Component {
                         // 2. Not connected to Boostnote.
                         // 3. Not loading.
                         this.state.isConnectedToDropbox && this.state.isNotConnectedToBoostnote && !this.state.isLoading ?
-                            <View style={{alignItems:'center', justifyContent:'center'}}>
+                            <View style={{alignItems: 'center', justifyContent: 'center'}}>
                                 <Text style={styles.bottomLinkWord}>Connect with Desktop app and create a note!</Text>
-                                <View style={{marginTop: 20, backgroundColor: '#F3F4F4', height: 30, width: 150, alignItems:'center', justifyContent:'center'}}>
-                                    <Text onPress={() => Linking.openURL('https://medium.com/boostnote/boostnote-mobile-how-to-synchronize-with-dropbox-95d845581eea')}>
-                                        <Icon style={{fontSize: 16,  color: '#89888d', paddingLeft: 20}} name='link'/> How to connect?
+                                <View style={{
+                                    marginTop: 20,
+                                    backgroundColor: '#F3F4F4',
+                                    height: 30,
+                                    width: 150,
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
+                                    <Text
+                                        onPress={() => Linking.openURL('https://medium.com/boostnote/boostnote-mobile-how-to-synchronize-with-dropbox-95d845581eea')}>
+                                        <Icon style={{fontSize: 16, color: '#89888d', paddingLeft: 20}} name='link'/>
+                                        How to connect?
                                     </Text>
                                 </View>
                             </View>
@@ -346,39 +422,34 @@ export default class DropboxNoteList extends Component {
                                         <Icon name='md-code-working' style={styles.noteListIcon}/>
                                     </View>
                                     <Text numberOfLines={1}
-                                        style={styles.noteListText}>{note.content}</Text>
+                                          style={styles.noteListText}>{note.content}</Text>
                                     <Text style={styles.noteListDate}>{moment(note.createdAt).format('MMM D')}</Text>
                                     </Body>
                                 </CardItem>
                             </Card>
                         })
                     }
-                    <DropboxLinkModal
-                        isWebViewOpen={this.state.isWebViewOpen}
-                        setIsWebViewOpen={this.setIsWebViewOpen.bind(this)}
-                        onGetTokenSuccess={this.getToken.bind(this)}
-                    />
                     <ReadOnlyNoteModal setNoteModalClose={this.setNoteModalClose.bind(this)}
-                                    isNoteOpen={this.state.isNoteOpen}
-                                    content={this.state.content}/>
+                                       isNoteOpen={this.state.isNoteOpen}
+                                       content={this.state.content}/>
                 </Content>
                 {
-                        // Show refresh button when not loading when...
-                        // 1. Connected to Dropbox.
-                        // 2. Connected to Boostnote.
-                        // 3. Not loading.
-                        this.state.isConnectedToDropbox && !this.state.isNotConnectedToBoostnote && !this.state.isLoading ?
-                            <View>
-                                <Button
-                                    transparent
-                                    style={styles.refreshButtonWrap}
-                                    onPress={() => this.getToken()}>
-                                    <View style={styles.refreshButton}>
-                                        <Icon name='md-refresh' style={{color: "#fff"}}/>
-                                    </View>
-                                </Button>
-                            </View>
-                            : null
+                    // Show refresh button when not loading when...
+                    // 1. Connected to Dropbox.
+                    // 2. Connected to Boostnote.
+                    // 3. Not loading.
+                    this.state.isConnectedToDropbox && !this.state.isNotConnectedToBoostnote && !this.state.isLoading ?
+                        <View>
+                            <Button
+                                transparent
+                                style={styles.refreshButtonWrap}
+                                onPress={() => this.getToken()}>
+                                <View style={styles.refreshButton}>
+                                    <Icon name='md-refresh' style={{color: "#fff"}}/>
+                                </View>
+                            </Button>
+                        </View>
+                        : null
                 }
             </Container>
         )
