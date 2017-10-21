@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {
 	Text,
-    View,
+	View,
 	TouchableOpacity,
 } from 'react-native'
-import { Icon, Card, Left, Right } from 'native-base'
+import { Icon } from 'native-base'
 import moment from 'moment'
 import removeMd from 'remove-markdown-and-html'
 
@@ -84,7 +84,7 @@ class NoteListItem extends Component {
 	onNotePress() {
 		const { note, onNotePress } = this.props || {}
 		const { fileName } = note || {}
-		console.log(this.props);
+
 		onNotePress(fileName, true);
 	}
 
@@ -97,7 +97,7 @@ class NoteListItem extends Component {
 
 	render() {
 		const { note } = this.props || {}
-		const { fileName, content, createdAt, isStarred } = note || {}
+		const { content, createdAt, isStarred } = note || {}
 		return (
 			<TouchableOpacity
 				style={styles.noteList}
