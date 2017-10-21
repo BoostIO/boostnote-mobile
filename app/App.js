@@ -3,7 +3,8 @@ import {
     Text,
     Platform,
     View,
-    TextInput
+    TextInput,
+    TouchableOpacity,
 } from 'react-native'
 import {
     Container,
@@ -13,20 +14,15 @@ import {
     Button,
     Left,
     Right,
-    Body,
     Icon,
     Drawer,
-    Card,
-    CardItem,
 } from 'native-base'
-
-import moment from 'moment'
-import removeMd from 'remove-markdown-and-html'
 
 import DropboxNoteList from './views/DropboxNoteList'
 
 import SideBar from './components/SideBar'
 import NoteModal from './views/NoteModal'
+import NoteListItem from './components/NoteList/NoteListItem'
 
 import AwsMobileAnalyticsConfig from './lib/AwsMobileAnalytics'
 import { makeRandomHex } from './lib/Strings'
@@ -40,17 +36,6 @@ const SNIPPET_NOTE = "SNIPPET_NOTE"
 const DEFAULT_FOLDER = "DEFAULT_FOLDER"
 
 const styles = {
-    noteListWrap: {
-        marginTop: 0,
-        marginBottom: 0,
-        borderColor: '#F7F7F7',
-        borderBottomWidth: 1
-    },
-    noteList: {
-        width: '100%',
-        height: 65,
-        backgroundColor: 'rgba(244,244,244,0.1)',
-    },
     iosHeader: {
         backgroundColor: '#239F85',
     },
@@ -74,39 +59,6 @@ const styles = {
         fontSize: 21,
         marginRight: 20
     },
-    noteListIconWrap: {
-        backgroundColor: '#eeeeee',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 30,
-        height: 30,
-        borderRadius: 50,
-        overflow: 'hidden',
-        marginTop: 9
-    },
-    noteListIcon: {
-        fontSize: 14,
-        color: '#adadad'
-    },
-    noteListText: {
-        position: 'absolute',
-        color: '#3a3941',
-        backgroundColor: 'transparent',
-        top: 15,
-        fontSize: 14,
-        width: '73%',
-        marginLeft: 40
-    },
-    noteListTextNone: {
-        position: 'absolute',
-        color: '#adadad',
-        backgroundColor: 'transparent',
-        top: 15,
-        fontSize: 14,
-        width: '90%',
-        marginLeft: 40
-    },
     newPostButtonWrap: {
         position: 'absolute',
         marginLeft: '43%',
@@ -121,14 +73,6 @@ const styles = {
         shadowColor: '#CF5425',
         shadowOpacity: 0.4,
         shadowRadius: 6,
-    },
-    noteListDate: {
-        position: 'absolute',
-        color: 'rgba(40,44,52,0.4)',
-        fontSize: 13,
-        top: 15,
-        right: 0,
-        fontWeight: '600'
     },
     newPostButton: {
         display: 'flex',
@@ -152,7 +96,19 @@ export default class App extends Component {
             noteList: [],
             fileName: '',
             content: '',
+            filterFavorites: false,
         }
+        this.openDrawer = this.openDrawer.bind(this)
+        this.closeDrawer = this.closeDrawer.bind(this)
+        this.setNoteModalIsOpen = this.setNoteModalIsOpen.bind(this)
+        this.onStarPress = this.onStarPress.bind(this)
+        this.listDir = this.listDir.bind(this)
+        this.listFiles = this.listFiles.bind(this)
+        this.listFilesAndSetState = this.listFilesAndSetState.bind(this)
+        this.createDir = this.createDir.bind(this)
+        this.createNewNote = this.createNewNote.bind(this)
+        this.changeMode = this.changeMode.bind(this)
+        this.onFilterFavorites = this.onFilterFavorites.bind(this)
     }
 
     componentWillMount() {
@@ -227,6 +183,34 @@ export default class App extends Component {
         }
     }
 
+    onStarPress(fileName) {
+        fs.readFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, 'utf8')
+            .then((content) => {
+                let contentObject = JSON.parse(content)
+                const newNotes = []
+                for (i in contentObject.note) {
+                    const newNote = {...contentObject.note[i]}
+                    if (newNote.name === fileName) {
+                        newNote.isStarred = !newNote.isStarred
+                    }
+                    newNotes.push(newNote)
+                }
+                contentObject.note = newNotes
+                fs.writeFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, JSON.stringify(contentObject), 'utf8')
+                    .then(this.listFilesAndSetState)
+                    .catch(err => console.log(err))
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    onFilterFavorites() {
+        this.setState((prevState, props) => {
+            return {filterFavorites: !prevState.filterFavorites}
+        })
+    }
+
     listDir() {
         return RNFetchBlob.fs.ls(`${dirs.DocumentDir}`)
     }
@@ -236,9 +220,10 @@ export default class App extends Component {
     }
 
     async listFilesAndSetState() {
-        const files = await this.listFiles(`${dirs.DocumentDir}/Boostnote`)
+        const files = await this.listFiles()
         const filteredFiles = files.filter((name) => {
             return name.endsWith('.md')
+            //filter by starred files here?
         })
 
         let settingJsonFile = await fs.readFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, 'utf8')
@@ -254,7 +239,8 @@ export default class App extends Component {
             fileList.push({
                 fileName: fileName,
                 content: content === '' ? 'Tap here and write something!' : content.split(/\r\n|\r|\n/)[0],
-                createdAt: filteredSettingFile.createdAt
+                createdAt: filteredSettingFile.createdAt,
+                isStarred: filteredSettingFile.isStarred
             })
         }
         fileList.sort((a, b) => {
@@ -320,6 +306,7 @@ export default class App extends Component {
     }
 
     render() {
+        const { noteList, mode, filterFavorites, isNoteOpen, fileName, content } = this.state
         return (
             <Drawer
                 ref={(ref) => {
@@ -327,7 +314,7 @@ export default class App extends Component {
                 }}
                 content={
                     <SideBar
-                        changeMode={this.changeMode.bind(this)}
+                        changeMode={this.changeMode}
                         onClose={() => this.closeDrawer()}/>
                 }
                 panOpenMask={.05}>
@@ -335,19 +322,21 @@ export default class App extends Component {
                     <Header style={Platform.OS === 'android' ? styles.androidHeader : styles.iosHeader} androidStatusBarColor='#239F85'>
                         <Left style={Platform.OS === 'android' ? {top: 10} : null}>
                             <View style={{flex: 1, flexDirection: 'row'}}>
-                                <Button transparent onPress={this.openDrawer.bind(this)}>
+                                <Button transparent onPress={this.openDrawer}>
                                     <Icon name='md-list' style={styles.headerMenuButton}/>
                                 </Button>
                                 <Title style={styles.appName}>Boostnote</Title>
                             </View>
                         </Left>
-                        {/*<Right style={Platform.OS === 'android' ? {top: 10} : null}>
-                            <Icon name='md-star' style={styles.headerRightMenuButton}/>
-                            <Icon name='md-search' style={styles.headerRightMenuButton}/>
-                        </Right>*/}
+                        <Right style={Platform.OS === 'android' ? {top: 10} : null}>
+                            <TouchableOpacity onPress={this.onFilterFavorites}>
+                                <Icon name= {filterFavorites ? 'md-star' : 'md-star-outline'} style={styles.headerRightMenuButton}/>
+                            </TouchableOpacity>
+                            {/* <Icon name='md-search' style={styles.headerRightMenuButton}/> */}
+                        </Right>
                     </Header>
-                    <Content>
-                        <View style={{flex: 1, flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
+                    <Content contentContainerStyle={{ display: 'flex' }}>
+                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
                             <Text style={{backgroundColor: 'transparent', position: 'absolute', left: 10, top:12, color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>
                                 {
                                     this.state.mode === 0
@@ -360,25 +349,14 @@ export default class App extends Component {
                             </View>*/}
                         </View>
                         {
-                            this.state.mode === 0 ? this.state.noteList.map((note) => {
-                                return <Card transparent key={note.fileName} style={styles.noteListWrap}>
-                                    <CardItem
-                                        style={styles.noteList}
-                                        button onPress={() => this.setNoteModalIsOpen(note.fileName, true)}>
-                                        <Body>
-                                            <View style={styles.noteListIconWrap}>
-                                                <Icon name='md-code-working' style={styles.noteListIcon}/>
-                                            </View>
-                                            <Text numberOfLines={1} style={note.content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{removeMd(note.content)}</Text>
-                                            <Text style={styles.noteListDate}>{moment(note.createdAt).format('MMM D')}</Text>
-                                        </Body>
-                                    </CardItem>
-                                </Card>
+                            mode === 0 ? noteList.map((note) => {
+                                if (filterFavorites &&  !note.isStarred) return null
+                                return <NoteListItem note={note} onStarPress={this.onStarPress} onNotePress={this.setNoteModalIsOpen} key={note.fileName} />
                             }) : <DropboxNoteList/>
                         }
                     </Content>
                     {
-                        this.state.mode === 0 ?
+                        mode === 0 ?
                             <View>
                                 <Button
                                     transparent
@@ -388,10 +366,10 @@ export default class App extends Component {
                                         <Icon name='md-create' style={{color: "#fff"}}/>
                                     </View>
                                 </Button>
-                                <NoteModal setIsOpen={this.setNoteModalIsOpen.bind(this)}
-                                       isNoteOpen={this.state.isNoteOpen}
-                                       fileName={this.state.fileName}
-                                       content={this.state.content}/>
+                                <NoteModal setIsOpen={this.setNoteModalIsOpen}
+                                       isNoteOpen={isNoteOpen}
+                                       fileName={fileName}
+                                       content={content}/>
                             </View>
                         : null
                     }
