@@ -27,7 +27,7 @@ export default class SideBar extends React.Component {
                                     this.props.onClose()
                                 }}
                             >
-                                <Text style={Platform.OS === 'android' ? styles.noteSelectorAndroid : styles.noteSelector}><Icon name='md-archive' style={{color: '#FDC134', fontSize: 14}}/> All Notes</Text>
+                                <Text style={Platform.OS === 'android' ? styles.noteSelectorAndroid : styles.noteSelector}><Icon name='md-archive' style={{color: '#FDC134', fontSize: 14, backgroundColor: 'transparent'}}/> All Notes</Text>
                             </Button>
                         </View>
 
@@ -38,20 +38,20 @@ export default class SideBar extends React.Component {
                                     this.props.onClose()
                                 }}
                             >
-                                <Text  style={Platform.OS === 'android' ? styles.noteSelectorAndroid : styles.noteSelector}><Icon name='logo-dropbox' style={{color: '#2BA6FA', fontSize: 18}}/> Dropbox</Text>
+                                <Text  style={Platform.OS === 'android' ? styles.noteSelectorAndroid : styles.noteSelector}><Icon name='logo-dropbox' style={{color: '#2BA6FA', fontSize: 18, backgroundColor: 'transparent'}}/> Dropbox</Text>
                             </Button>
                         </View>
 
-                        <View style={styles.hariboteWrap}>
+                        {/* <View style={styles.hariboteWrap}>
                             <Text style={styles.noteHaribote}>Folders</Text>
                             <Text style={styles.hariboteDesc}>Under development.</Text>
-                        </View>
+                        </View> */}
 
                     </View>
 
                     <View style={styles.bottomLink}>
-                        <Text onPress={() => Linking.openURL('https://boostnote.io/')} style={styles.bottomLinkWord}>
-                            <Icon style={{fontSize: 16,  color: '#89888d'}} name='link'/> Boostnote app for Desktop
+                        <Text onPress={() => Linking.openURL('https://github.com/BoostIO/Boostnote-mobile')} style={styles.bottomLinkWord}>
+                            <Icon style={{fontSize: 16,  color: '#89888d'}} name='logo-github'/> Boostnote Mobile is Open Source
                         </Text>
                     </View>
             </Container>
