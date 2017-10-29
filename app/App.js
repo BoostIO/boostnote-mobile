@@ -179,7 +179,7 @@ export default class App extends Component {
 
                 })
         } else {
-            AwsMobileAnalyticsConfig.recordDynamitCustomEvent('EDIT_NOTE')
+            AwsMobileAnalyticsConfig.recordDynamicCustomEvent('EDIT_NOTE')
             this.listFilesAndSetState()
             this.setState({
                 isNoteOpen: false
@@ -295,7 +295,7 @@ export default class App extends Component {
                 console.table(contentObject.note)
                 fs.writeFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, JSON.stringify(contentObject), 'utf8')
                     .catch(err => console.log(err))
-                AwsMobileAnalyticsConfig.recordDynamitCustomEvent('CREATE_NOTE')
+                AwsMobileAnalyticsConfig.recordDynamicCustomEvent('CREATE_NOTE')
             })
             .catch((err) => {
                 console.log(err)
