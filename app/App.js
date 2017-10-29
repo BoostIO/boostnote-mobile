@@ -98,6 +98,10 @@ export default class App extends Component {
             content: '',
             filterFavorites: false,
         }
+
+        // Init AwsMobileAnalytics
+        AwsMobileAnalyticsConfig.initAwsMobileAnalytics();
+
         this.openDrawer = this.openDrawer.bind(this)
         this.closeDrawer = this.closeDrawer.bind(this)
         this.setNoteModalIsOpen = this.setNoteModalIsOpen.bind(this)

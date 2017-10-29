@@ -16,6 +16,7 @@
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-native-code-push": "2.1.1-beta",
+    "react-native-device-info": "^0.12.1",
     "react-native-fetch-blob": "^0.10.5",
     "react-native-modalbox": "^1.4.2",
     "remove-markdown-and-html": "^0.1.0",
