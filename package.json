@@ -11,6 +11,7 @@
     "aws-sdk-mobile-analytics": "^0.9.2",
     "coffeescript": "^2.0.0",
     "debounce": "^1.0.2",
+    "js2coffee": "^2.2.0",
     "moment": "^2.18.1",
     "native-base": "2.1.4",
     "react": "16.0.0-alpha.6",
