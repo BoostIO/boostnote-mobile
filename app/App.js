@@ -21,7 +21,7 @@ import {
 import DropboxNoteList from './views/DropboxNoteList'
 
 import SideBar from './components/SideBar'
-import NoteModal from './views/NoteModal'
+import NoteModal from './views/note/NoteModal'
 import NoteListItem from './components/NoteList/NoteListItem'
 
 import AwsMobileAnalyticsConfig from './lib/AwsMobileAnalytics'

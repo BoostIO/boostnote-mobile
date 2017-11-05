@@ -5,7 +5,6 @@ import {
     Text,
     Platform,
     View,
-    TextInput,
     TouchableHighlight,
     Clipboard,
     ScrollView
@@ -28,10 +27,8 @@ import Modal from 'react-native-modalbox'
 import RNFetchBlob from 'react-native-fetch-blob'
 const fs = RNFetchBlob.fs
 
-import createMarkdownRenderer from 'rn-markdown'
-const Markdown = createMarkdownRenderer({ gfm: true, tables: true })
-
-import MultilineTextInput from '../components/MultilineTextInput'
+import MultilineTextInput from '../../components/MultilineTextInput'
+import NotePreview from './preview/NotePreviewComponent'
 
 const styles = {
    switchButton: {
@@ -47,12 +44,6 @@ const styles = {
    noteDetailButton: {
        color: '#EFF1F5',
        fontSize: 23
-   },
-   container: {
-       flex: 1,
-       justifyContent: 'center',
-       alignItems: 'center',
-       backgroundColor: '#F5FCFF',
    },
    inputElementsStyle: {
     paddingLeft: 10,
@@ -141,35 +132,6 @@ export default class NoteModal extends React.Component {
     }
 
     getNoteComponent() {
-        const markdownStyles = {
-                container: {
-                    paddingLeft: 10
-                },
-                heading1: {
-                    fontSize: 24,
-                    fontWeight: '600',
-                    color: '#222222',
-                },
-                link: {
-                    color: 'red',
-                },
-                mail_to: {
-                    color: 'orange',
-                },
-                text: {
-                    color: '#555555',
-                },
-                code: {
-                    backgroundColor: '#f0f0f0',
-                    marginTop: 5,
-                    marginBottom: 5
-                },
-                blockquote: {
-                    backgroundColor: '#f8f8f8',
-                    padding: 5
-                }
-            }
-
         if (this.state.isLeftSegmentActive) {
             return <View style={{flex: 1}}>
                 <ScrollView keyboardShouldPersistTaps='always'>
@@ -264,11 +226,7 @@ export default class NoteModal extends React.Component {
                 </ScrollView>
                 </View>
         } else {
-            return <View style={{margin: 15}}>
-            <Markdown contentContainerStyle={styles.container} markdownStyles={markdownStyles}>
-                {this.state.text}
-            </Markdown>
-            </View>
+            return <NotePreview text={this.state.text}/>
         }
     }
 

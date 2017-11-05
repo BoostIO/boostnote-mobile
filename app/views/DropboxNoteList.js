@@ -22,7 +22,7 @@ import {
 
 import moment from 'moment'
 
-import ReadOnlyNoteModal from './ReadOnlyNoteModal'
+import ReadOnlyNoteModal from './note/ReadOnlyNoteModal'
 
 import CoffeeScript from '../lib/CofeeScriptEval'
 
