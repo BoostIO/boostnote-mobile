@@ -22,11 +22,11 @@ import {
 
 import moment from 'moment'
 
-import ReadOnlyNoteModal from './note/ReadOnlyNoteModal'
-
 import CoffeeScript from '../lib/CofeeScriptEval'
 
 import settings from '../config/settings'
+
+import DropboxNoteModal from './note/DropboxNoteModal'
 
 const DROPBOX_ACCESS_TOKEN = 'DROPBOX:ACCESS_TOKEN'
 
@@ -260,6 +260,7 @@ export default class DropboxNoteList extends Component {
                             noteList.push({
                                 fileName: entry.name,
                                 content: response.content,
+                                path: entry.path_display,
                                 createdAt: response.createdAt,
                             })
 
@@ -328,9 +329,9 @@ export default class DropboxNoteList extends Component {
             })
     }
 
-    setNoteModalOpen(content) {
+    setNoteModalOpen(path) {
         this.setState({
-            content: content,
+            path: path,
             isNoteOpen: true,
         })
     }
@@ -416,7 +417,7 @@ export default class DropboxNoteList extends Component {
                             return <Card transparent key={note.fileName} style={styles.noteListWrap}>
                                 <CardItem
                                     style={styles.noteList}
-                                    button onPress={() => this.setNoteModalOpen(note.content)}>
+                                    button onPress={() => this.setNoteModalOpen(note.path)}>
                                     <Body>
                                     <View style={styles.noteListIconWrap}>
                                         <Icon name='md-code-working' style={styles.noteListIcon}/>
@@ -429,9 +430,9 @@ export default class DropboxNoteList extends Component {
                             </Card>
                         })
                     }
-                    <ReadOnlyNoteModal setNoteModalClose={this.setNoteModalClose.bind(this)}
+                    <DropboxNoteModal setNoteModalClose={this.setNoteModalClose.bind(this)}
                                        isNoteOpen={this.state.isNoteOpen}
-                                       content={this.state.content}/>
+                                       path={this.state.path}/>
                 </Content>
                 {
                     // Show refresh button when not loading when...
