@@ -1,14 +1,7 @@
 import React from 'react'
 import {
-    Keyboard,
-    Dimensions,
     Text,
     Platform,
-    View,
-    TextInput,
-    TouchableHighlight,
-    Clipboard,
-    ScrollView
 } from 'react-native'
 import {
     Container,
@@ -20,9 +13,7 @@ import {
 } from 'native-base'
 
 import Modal from 'react-native-modalbox'
-
-import createMarkdownRenderer from 'rn-markdown'
-const Markdown = createMarkdownRenderer({gfm: true, tables: true})
+import NotePreview from './preview/NotePreviewComponent'
 
 const styles = {
     switchButton: {
@@ -38,12 +29,6 @@ const styles = {
     noteDetailButton: {
         color: '#EFF1F5',
         fontSize: 23
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
     },
     inputElementsStyle: {
         paddingLeft: 10,
@@ -70,7 +55,7 @@ const styles = {
     }
 }
 
-export default class NoteModal extends React.Component {
+export default class ReadOnlyNoteModal extends React.Component {
 
     constructor(props) {
         super(props)
@@ -84,43 +69,6 @@ export default class NoteModal extends React.Component {
         this.setState({
             text: props.content,
         })
-    }
-
-    getNoteComponent() {
-        const markdownStyles = {
-            container: {
-                paddingLeft: 10
-            },
-            heading1: {
-                fontSize: 24,
-                fontWeight: '600',
-                color: '#222222',
-            },
-            link: {
-                color: 'red',
-            },
-            mail_to: {
-                color: 'orange',
-            },
-            text: {
-                color: '#555555',
-            },
-            code: {
-                backgroundColor: '#f0f0f0',
-                marginTop: 5,
-                marginBottom: 5
-            },
-            blockquote: {
-                backgroundColor: '#f8f8f8',
-                padding: 5
-            }
-        }
-
-        return <View style={{margin: 15}}>
-            <Markdown contentContainerStyle={styles.container} markdownStyles={markdownStyles}>
-                {this.state.text}
-            </Markdown>
-        </View>
     }
 
     render() {
@@ -142,7 +90,7 @@ export default class NoteModal extends React.Component {
                         </Left>
                     </Header>
                     <Content keyboardShouldPersistTaps='always'>
-                        {this.getNoteComponent()}
+                        <NotePreview text={this.state.text}/>
                     </Content>
                 </Container>
             </Modal>

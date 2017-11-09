@@ -4,11 +4,10 @@ import android.app.Application;
 
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.facebook.react.ReactApplication;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.microsoft.codepush.react.CodePush;
 
 import java.util.Arrays;
@@ -31,7 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
+          new MyMainReactPackage(),
           new RNDeviceInfo(),
           new RNFetchBlobPackage(),
           new CodePush("byLfL38UaCCfKxo_2kTLHuR190e81a2d16b3-a6fd-494f-8deb-050bb34a68be", MainApplication.this, BuildConfig.DEBUG)

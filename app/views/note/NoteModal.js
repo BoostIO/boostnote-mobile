@@ -5,8 +5,6 @@ import {
     Text,
     Platform,
     View,
-    TextInput,
-    TouchableHighlight,
     Clipboard,
     ScrollView
 } from 'react-native'
@@ -28,10 +26,9 @@ import Modal from 'react-native-modalbox'
 import RNFetchBlob from 'react-native-fetch-blob'
 const fs = RNFetchBlob.fs
 
-import createMarkdownRenderer from 'rn-markdown'
-const Markdown = createMarkdownRenderer({ gfm: true, tables: true })
-
-import MultilineTextInput from '../components/MultilineTextInput'
+import MultilineTextInput from '../../components/MultilineTextInput'
+import NotePreview from './preview/NotePreviewComponent'
+import NoteInputSupport from './inputSupport/NoteInputSupport'
 
 const styles = {
    switchButton: {
@@ -48,35 +45,6 @@ const styles = {
        color: '#EFF1F5',
        fontSize: 23
    },
-   container: {
-       flex: 1,
-       justifyContent: 'center',
-       alignItems: 'center',
-       backgroundColor: '#F5FCFF',
-   },
-   inputElementsStyle: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 1,
-    paddingBottom: 1,
-    marginLeft: 2,
-    marginRight: 2,
-    marginTop: 4,
-    marginBottom: 4,
-    borderRadius: 3,
-    borderWidth: 0,
-    backgroundColor: 'rgba(255, 255, 255, 1)',
-   },
-   supportMain: {
-    fontSize: 12,
-    textAlign: 'center',
-    color: '#333333'
-   },
-   supportSub: {
-    fontSize: 10,
-    textAlign: 'center',
-    color: '#828282'
-   }
 }
 
 export default class NoteModal extends React.Component {
@@ -141,35 +109,6 @@ export default class NoteModal extends React.Component {
     }
 
     getNoteComponent() {
-        const markdownStyles = {
-                container: {
-                    paddingLeft: 10
-                },
-                heading1: {
-                    fontSize: 24,
-                    fontWeight: '600',
-                    color: '#222222',
-                },
-                link: {
-                    color: 'red',
-                },
-                mail_to: {
-                    color: 'orange',
-                },
-                text: {
-                    color: '#555555',
-                },
-                code: {
-                    backgroundColor: '#f0f0f0',
-                    marginTop: 5,
-                    marginBottom: 5
-                },
-                blockquote: {
-                    backgroundColor: '#f8f8f8',
-                    padding: 5
-                }
-            }
-
         if (this.state.isLeftSegmentActive) {
             return <View style={{flex: 1}}>
                 <ScrollView keyboardShouldPersistTaps='always'>
@@ -184,97 +123,20 @@ export default class NoteModal extends React.Component {
                         autoFocus={true}
                         textAlignVertical={'top'}>
                     </MultilineTextInput>
-                    <View style={{flexDirection: 'row', backgroundColor: 'rgba(0, 0, 0, 0.05)', paddingLeft: 5, paddingRight: 5}}>
-                        <TouchableHighlight
-                            onPress={()=> {
-                                this.insertMarkdownBetween('#')
-                            }}
-                            style={styles.inputElementsStyle} >
-                            <View>
-                                <Text style={styles.supportMain}>#</Text>
-                                <Text style={styles.supportSub}>Head</Text>
-                            </View>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            onPress={()=> {
-                                this.insertMarkdownBetween('- ')
-                            }}
-                            style={styles.inputElementsStyle} >
-                            <View>
-                                <Text style={styles.supportMain}>-</Text>
-                                <Text style={styles.supportSub}>List</Text>
-                            </View>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            onPress={()=> {
-                                this.insertMarkdownBetween('```\n')
-                            }}
-                            style={styles.inputElementsStyle} >
-                            <View>
-                                <Text style={styles.supportMain}>```</Text>
-                                <Text style={styles.supportSub}>Code</Text>
-                            </View>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            onPress={()=> {
-                                this.insertMarkdownBetween('**')
-                            }}
-                            style={styles.inputElementsStyle} >
-                            <View>
-                                <Text style={styles.supportMain}>**</Text>
-                                <Text style={styles.supportSub}>Bold</Text>
-                            </View>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            onPress={()=> {
-                                this.insertMarkdownBetween('_')
-                            }}
-                            style={styles.inputElementsStyle} >
-                            <View>
-                                <Text style={styles.supportMain}>_</Text>
-                                <Text style={styles.supportSub}>itali</Text>
-                            </View>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            onPress={()=> {
-                                this.insertMarkdownBetween('> ')
-                            }}
-                            style={styles.inputElementsStyle} >
-                            <View>
-                                <Text style={styles.supportMain}>&gt;</Text>
-                                <Text style={styles.supportSub}>Quote</Text>
-                            </View>
-                        </TouchableHighlight>
-                        {/* <TouchableHighlight
-                            onPress={()=> {
-                                this.insertMarkdownBetween('~~')
-                            }}
-                            style={styles.inputElementsStyle} >
-                            <View>
-                                <Text style={styles.supportMain}>~~</Text>
-                                <Text style={styles.supportSub}>Stri</Text>
-                            </View>
-                        </TouchableHighlight> */}
-                        <TouchableHighlight
-                            onPress={this.pasteContent.bind(this)}
-                            style={styles.inputElementsStyle} >
-                            <Text style={{paddingTop: 6, marginLeft: 3, marginRight: 3, fontSize: 12, color: '#828282'}}>Paste</Text>
-                        </TouchableHighlight>
-                    </View>
+                    <NoteInputSupport
+                      insertMarkdownBetween={this.insertMarkdownBetween.bind(this)}
+                      pasteContent={this.pasteContent.bind(this)}
+                    />
                 </ScrollView>
                 </View>
         } else {
-            return <View style={{margin: 15}}>
-            <Markdown contentContainerStyle={styles.container} markdownStyles={markdownStyles}>
-                {this.state.text}
-            </Markdown>
-            </View>
+            return <NotePreview text={this.state.text}/>
         }
     }
 
     /**
      * Insert markdown characters to the text of selected place.
-     * @param Markdown character
+     * @param character Markdown character
      */
     insertMarkdownBetween(character) {
         const beforeText = this.state.text.substring(0, this.state.endOfSelection)
