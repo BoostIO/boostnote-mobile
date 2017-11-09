@@ -58,31 +58,29 @@ export default class DropboxNoteModal extends React.Component {
 
     this.state = {
       token: '',
-      path: this.props.path,
+      path: props.path,
       note: { content: '' },
       height: 0,
       isLeftSegmentActive: true,
       visibleHeight: 230,
       endOfSelection: 0,
+      isNoteOpen: props.isNoteOpen,
     }
     this.keyboardDidShow = this.keyboardDidShow.bind(this)
     this.keyboardDidHide = this.keyboardDidHide.bind(this)
   }
 
   componentWillReceiveProps(props) {
-    if (props.isNoteOpen && props.path) {
+    if ((this.state.isNoteOpen !== props.isNoteOpen) && props.isNoteOpen && props.path) {
       this.getNoteData(props.path)
-    }
 
-    // if user is opening a same file, do nothing.
-    if (props.path === this.state.path) {
-      return
+      this.setState({
+        isLeftSegmentActive: true,
+        path: props.path,
+      })
     }
-
-    // if user open an another file, set state.
     this.setState({
-      isLeftSegmentActive: true,
-      path: props.path,
+      isNoteOpen: props.isNoteOpen
     })
   }
 
@@ -245,7 +243,7 @@ export default class DropboxNoteModal extends React.Component {
     return (
       <Modal
         coverScreen={true}
-        isOpen={this.props.isNoteOpen}
+        isOpen={this.state.isNoteOpen}
         position={'top'}
         onClosed={() => this.onCloseModal()}>
         <Container>
