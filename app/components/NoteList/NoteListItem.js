@@ -103,9 +103,6 @@ class NoteListItem extends Component {
 				style={styles.noteList}
 				onPress={this.onNotePress}>
 				<View style={styles.noteItemSectionLeft}>
-					{/* <View style={styles.noteListIconWrap}>
-						<Icon name='md-code-working' style={styles.noteListIcon}/>
-					</View> */}
 					<Text style={content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{removeMd(content)}</Text>
 				</View>
 				<View style={styles.noteItemSectionRight}>
