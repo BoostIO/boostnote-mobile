@@ -55,13 +55,13 @@ const styles = {
         marginRight: 30
     },
     headerRightMenuButton: {
-        color: 'rgba(255, 255, 255, 0.4)',
+        color: '#FED530',
         fontSize: 21,
-        marginRight: 20
+        marginRight: 6
     },
     newPostButtonWrap: {
         position: 'absolute',
-        marginLeft: '43%',
+        right: 30,
         bottom: 30,
         width: 60,
         height: 60,
