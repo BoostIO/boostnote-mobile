@@ -100,7 +100,7 @@ const styles = {
     },
     refreshButtonWrap: {
         position: 'absolute',
-        marginLeft: '43%',
+        right: 30,
         bottom: 120,
         width: 60,
         height: 60,
