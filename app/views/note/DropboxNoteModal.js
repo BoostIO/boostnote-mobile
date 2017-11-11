@@ -290,10 +290,10 @@ export default class DropboxNoteModal extends React.Component {
                   // `buttonIndex` is a string in Android, a number in iOS.
                   if (Platform.OS === 'android' && buttonIndex === '0'
                     || Platform.OS === 'ios' && buttonIndex === 0) {
-                    // fs.unlink(`${RNFetchBlob.fs.dirs.DocumentDir}/Boostnote/${this.state.fileName}`)
-                    //   .then(() => {
-                    this.props.setNoteModalClose()
-                    // })
+                    this.setState((prevState, props) => {
+                      prevState.note.isTrashed = true
+                      return { note: prevState.note }
+                    }, this.onCloseModal())
                   }
                 }
               )}>
