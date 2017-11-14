@@ -19,21 +19,25 @@ After you have downloaded or cloned this repository, run `npm install` or `yarn`
 - iOS `react-native run-ios`
 - Android `react-native run-android`
 
-## Dependencies
-[MultilineTextInput.js](https://gist.github.com/catchin/47afe706256604959c13dc25e7bb9383)
-
 ## Authors & Maintainers
 - [Kohei TAKATA](https://github.com/kohei-takata)
-- [asmsuechan](https://github.com/asmsuechan)
-- [Kazu Yokomizo](https://github.com/kazup01)
+- [Kazz](https://github.com/kazup01)
 
 ## Contributors
+Thank you to all the people who already contributed to Boostnote!
 [Great contributors](https://github.com/BoostIO/boostnote-mobile/graphs/contributors) :tada:
 
+## Supporting Boostnote
+Boostnote is an open source project. It's an independent project with its ongoing development made possible entirely thanks to the support by these awesome [backers](https://github.com/BoostIO/Boostnote/blob/master/Backers.md). If you'd like to join them, please consider:
+- [Become a backer or sponsor on Open Collective.](https://opencollective.com/boostnoteio)
+
+## Slack Group
+Let's talk about Boostnote! <br>
+[Join us](https://join.slack.com/t/boostnote-group/shared_invite/enQtMjU5NTUwNjcwMjkyLWI3N2I1YWIzNWRlZDZmZjVlYzRiNDc1YTcxZWNmY2UyZjc3MTQwMDUxMzAxZjg0NjNmZmIwNDFhMDkwZDlmZDc)
+
 ## More Information
-* [Website](https://boostnote.io) : Mac, Windows and Linux apps are available 💻
-* [10hz](https://boostnote.io/team/) : Boostnote for the creative hacker teams. Share your markdown notes and snippets instantly with your team. 👪
-* [Support us via Bountysource](https://salt.bountysource.com/teams/boostnote) : Thank you for your support 🎉
+* [Website](https://boostnote.io)
+* [10hz](https://boostnote.io/team/) : Boostnote for the creative hacker teams. Share your markdown notes and snippets instantly with your team.
 * Copyright (C) 2017 Maisin&Co.
 
 ## License
