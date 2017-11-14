@@ -21,7 +21,7 @@ After you have downloaded or cloned this repository, run `npm install` or `yarn`
 
 ## Authors & Maintainers
 - [Kohei TAKATA](https://github.com/kohei-takata)
-- [Kaz](https://github.com/kazup01)
+- [Kazz](https://github.com/kazup01)
 
 ## Contributors
 Thank you to all the people who already contributed to Boostnote!
@@ -38,7 +38,6 @@ Let's talk about Boostnote! <br>
 ## More Information
 * [Website](https://boostnote.io)
 * [10hz](https://boostnote.io/team/) : Boostnote for the creative hacker teams. Share your markdown notes and snippets instantly with your team.
-* [Development](https://github.com/BoostIO/Boostnote/blob/master/docs/build.md) : Development configurations for Boostnote.
 * Copyright (C) 2017 Maisin&Co.
 
 ## License
