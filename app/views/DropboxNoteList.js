@@ -289,10 +289,8 @@ export default class DropboxNoteList extends Component {
                 return
               }
 
-              let notesOfFolderIndex = 0;
               let notesOfFolder = noteList
-                .filter((folder, index) => {
-                  notesOfFolderIndex = index
+                .filter(folder => {
                   return folder.folderKey === response.folder
                 })[0].notes
 
@@ -305,7 +303,6 @@ export default class DropboxNoteList extends Component {
               notesOfFolder.sort((a, b) => {
                 return a.updatedAt < b.updatedAt ? 1 : -1
               })
-              noteList.splice(notesOfFolderIndex, 1, notesOfFolder)
 
               this.setState({
                 noteList: noteList
