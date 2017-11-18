@@ -449,6 +449,7 @@ export default class DropboxNoteList extends Component {
               : null
           }
           <Card transparent style={styles.noteListWrap}>
+            <View>
             {
               this.state.noteList.map((folder, index, array) => {
                 return <View key={index}>
@@ -477,6 +478,7 @@ export default class DropboxNoteList extends Component {
                 </View>
               })
             }
+            </View>
           </Card>
           <DropboxNoteModal setNoteModalClose={this.setNoteModalClose.bind(this)}
                             isNoteOpen={this.state.isNoteOpen}
