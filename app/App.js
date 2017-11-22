@@ -45,9 +45,9 @@ const styles = {
     },
     appName: {
         color: '#ffffff',
-        fontSize: 24,
-        marginTop: 8,
-        fontWeight: '300'
+        fontSize: 21,
+        marginTop: 12,
+        fontWeight: '300',
     },
     headerMenuButton: {
         color: '#ffffff',
@@ -328,9 +328,17 @@ export default class App extends Component {
                                 <Button transparent onPress={this.openDrawer}>
                                     <Icon name='md-list' style={styles.headerMenuButton}/>
                                 </Button>
-                                <Title style={styles.appName}>Boostnote</Title>
                             </View>
                         </Left>
+
+                        <View><Title style={styles.appName}>
+                        {
+                            mode === 0
+                            ? 'NOTES'
+                            : 'Dropbox'
+                        }
+                        </Title></View>
+
                         <Right style={Platform.OS === 'android' ? {top: 10} : null}>
                             <TouchableOpacity onPress={this.onFilterFavorites}>
                                 <Icon name= {filterFavorites ? 'md-star' : 'md-star-outline'} style={styles.headerRightMenuButton}/>
@@ -339,7 +347,7 @@ export default class App extends Component {
                         </Right>
                     </Header>
                     <Content contentContainerStyle={{ display: 'flex' }}>
-                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
+                        {/* <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
                             <Text style={{backgroundColor: 'transparent', position: 'absolute', left: 10, top:12, color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>
                                 {
                                     mode === 0
@@ -347,10 +355,7 @@ export default class App extends Component {
                                         : 'Dropbox'
                                 }
                             </Text>
-                            {/*<View style={{backgroundColor: 'transparent', position: 'absolute', right: 10, marginTop: 11}}>
-                                <Text style={{color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>Sort by Created  <Icon name='md-flash' style={{color: '#FDC134', fontSize: 14, fontWeight: '600'}} /></Text>
-                            </View>*/}
-                        </View>
+                        </View> */}
                         {
                             mode === 0 ? noteList.map((note) => {
                                 if (filterFavorites &&  !note.isStarred) return null
