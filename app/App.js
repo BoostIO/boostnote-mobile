@@ -354,7 +354,7 @@ export default class App extends Component {
                         {
                             mode === 0 ? noteList.map((note) => {
                                 if (filterFavorites &&  !note.isStarred) return null
-                                return <NoteListItem note={note} onStarPress={this.onStarPress} onNotePress={this.setNoteModalIsOpen} key={note.fileName} />
+                                return <NoteListItem note={note} onStarPress={this.onStarPress} onNotePress={this.setNoteModalIsOpen} key={note.fileName} fileName={note.fileName} />
                             }) : <DropboxNoteList/>
                         }
                     </Content>

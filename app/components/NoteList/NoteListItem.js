@@ -2,11 +2,21 @@ import React, { Component } from 'react';
 import {
 	Text,
 	View,
+	Platform,
 	TouchableOpacity,
 } from 'react-native'
-import { Icon } from 'native-base'
+
+import { 
+	Icon,
+	ActionSheet,
+} from 'native-base'
+
 import moment from 'moment'
 import removeMd from 'remove-markdown-and-html'
+import Swipeout from 'react-native-swipeout';
+
+import RNFetchBlob from 'react-native-fetch-blob'
+const fs = RNFetchBlob.fs
 
 const styles = {
 	noteList: {
@@ -77,9 +87,25 @@ const styles = {
 class NoteListItem extends Component {
 	constructor(props) {
 		super(props)
+
+		this.state = {
+			fileName: this.props.fileName
+		}
 		this.onNotePress = this.onNotePress.bind(this)
 		this.onStarPress = this.onStarPress.bind(this)
 	}
+
+	componentWillReceiveProps(props) {
+		// if user is opening a same file, set state.
+		if (props.fileName === this.state.fileName) {
+				return
+		}
+
+		// if user open an another file, set state.
+		this.setState({
+				fileName: props.fileName,
+		})
+}
 
 	onNotePress() {
 		const { note, onNotePress } = this.props || {}
@@ -95,23 +121,53 @@ class NoteListItem extends Component {
 		onStarPress(fileName)
 	}
 
+	CustomeNote(){ 
+		ActionSheet.show(
+			{
+					options: ["Delete", "Cancel"],
+					cancelButtonIndex: 1,
+					destructiveButtonIndex: 0,
+			},
+		buttonIndex => {
+				// `buttonIndex` is a string in Android, a number in iOS.
+				if (Platform.OS === 'android' && buttonIndex === '0'
+						|| Platform.OS === 'ios' && buttonIndex === 0) {
+						fs.unlink(`${RNFetchBlob.fs.dirs.DocumentDir}/Boostnote/${this.state.fileName}`)
+						.then(() => {
+								this.props.setIsOpen('', false)
+						})
+				}
+		}
+	)}
+
 	render() {
+
+		let swipeBtns = [{
+      text: 'Delete',
+      backgroundColor: 'rgba(205,53,54,0.8);',
+      onPress: () => { this.CustomeNote() }
+    }];
+
 		const { note } = this.props || {}
 		const { content, createdAt, isStarred } = note || {}
 		return (
-			<TouchableOpacity
-				style={styles.noteList}
-				onPress={this.onNotePress}>
-				<View style={styles.noteItemSectionLeft}>
-					<Text style={content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{removeMd(content)}</Text>
-				</View>
-				<View style={styles.noteItemSectionRight}>
-					<Text style={styles.noteListDate}>{moment(createdAt).format('MMM D')}</Text>
-					<TouchableOpacity onPress={this.onStarPress}>
-						<Icon name={isStarred ? "md-star" : "md-star-outline"} style={styles.noteStarIcon}/>
-					</TouchableOpacity>
-				</View>
-			</TouchableOpacity>
+			<Swipeout right={swipeBtns}
+				autoClose= {true}
+				backgroundColor= 'transparent'>
+				<TouchableOpacity
+					style={styles.noteList}
+					onPress={this.onNotePress}>
+					<View style={styles.noteItemSectionLeft}>
+						<Text style={content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{removeMd(content)}</Text>
+					</View>
+					<View style={styles.noteItemSectionRight}>
+						<Text style={styles.noteListDate}>{moment(createdAt).format('MMM D')}</Text>
+						<TouchableOpacity onPress={this.onStarPress}>
+							<Icon name={isStarred ? "md-star" : "md-star-outline"} style={styles.noteStarIcon}/>
+						</TouchableOpacity>
+					</View>
+				</TouchableOpacity>
+			</Swipeout>
 		)
 	}
 
