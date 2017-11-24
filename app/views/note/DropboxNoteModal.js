@@ -245,6 +245,7 @@ export default class DropboxNoteModal extends React.Component {
         coverScreen={true}
         isOpen={this.state.isNoteOpen}
         position={'top'}
+        swipeToClose={false}
         onClosed={() => this.onCloseModal()}>
         <Container>
           <Header style={Platform.OS === 'android' ? {
