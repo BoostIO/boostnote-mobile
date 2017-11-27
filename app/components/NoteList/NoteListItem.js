@@ -26,6 +26,7 @@ const styles = {
 		fontSize: 21,
 		color: 'gold',
 		paddingLeft: 15,
+		right: -3
 	},
 	noteListIconWrap: {
 		backgroundColor: '#eeeeee',
