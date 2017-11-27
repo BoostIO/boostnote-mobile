@@ -14,6 +14,7 @@ import {
     Button,
     Left,
     Right,
+    Body,
     Icon,
     Drawer,
 } from 'native-base'
@@ -43,21 +44,23 @@ const styles = {
         backgroundColor: '#29BB9C',
         height: 70
     },
-    appName: {
+    iOsAppName: {
         color: '#ffffff',
         fontSize: 21,
-        marginTop: 12,
+        fontWeight: '300',
+    },
+    androidAppName: {
+        color: '#ffffff',
+        fontSize: 21,
         fontWeight: '300',
     },
     headerMenuButton: {
         color: '#ffffff',
         fontSize: 24,
-        marginRight: 30
     },
     headerRightMenuButton: {
         color: '#FED530',
         fontSize: 21,
-        marginRight: 6
     },
     newPostButtonWrap: {
         position: 'absolute',
@@ -323,39 +326,35 @@ export default class App extends Component {
                 panOpenMask={.05}>
                 <Container>
                     <Header style={Platform.OS === 'android' ? styles.androidHeader : styles.iosHeader} androidStatusBarColor='#239F85'>
-                        <Left style={Platform.OS === 'android' ? {top: 10} : null}>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
+                        <Left>
+                            <View>
                                 <Button transparent onPress={this.openDrawer}>
                                     <Icon name='md-list' style={styles.headerMenuButton}/>
                                 </Button>
                             </View>
                         </Left>
 
-                        <View><Title style={styles.appName}>
-                        {
-                            mode === 0
-                            ? 'NOTES'
-                            : 'Dropbox'
-                        }
-                        </Title></View>
+                        <Body>
+                            <View>
+                                <Title style={Platform.OS === 'android' ? styles.androidAppName : styles.iOsAppName}>
+                                    {
+                                        mode === 0
+                                        ? 'NOTES'
+                                        : 'Dropbox'
+                                    }
+                                </Title>
+                            </View>
+                        </Body>
 
-                        <Right style={Platform.OS === 'android' ? {top: 10} : null}>
-                            <TouchableOpacity onPress={this.onFilterFavorites}>
-                                <Icon name= {filterFavorites ? 'md-star' : 'md-star-outline'} style={styles.headerRightMenuButton}/>
-                            </TouchableOpacity>
-                            {/* <Icon name='md-search' style={styles.headerRightMenuButton}/> */}
+                        <Right>
+                            <View>
+                                <TouchableOpacity onPress={this.onFilterFavorites}>
+                                    <Icon name= {filterFavorites ? 'md-star' : 'md-star-outline'} style={styles.headerRightMenuButton}/>
+                                </TouchableOpacity>
+                            </View>
                         </Right>
                     </Header>
                     <Content contentContainerStyle={{ display: 'flex' }}>
-                        {/* <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#F3F4F4'}}>
-                            <Text style={{backgroundColor: 'transparent', position: 'absolute', left: 10, top:12, color: 'rgba(40,44,52,0.4)', fontSize: 13, fontWeight: '600'}}>
-                                {
-                                    mode === 0
-                                        ? 'All Notes'
-                                        : 'Dropbox'
-                                }
-                            </Text>
-                        </View> */}
                         {
                             mode === 0 ? noteList.map((note) => {
                                 if (filterFavorites &&  !note.isStarred) return null
