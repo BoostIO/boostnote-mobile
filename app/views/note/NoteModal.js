@@ -19,6 +19,7 @@ import {
     Icon,
     Segment,
     ActionSheet,
+    Root
 } from 'native-base'
 
 import Modal from 'react-native-modalbox'
@@ -192,26 +193,30 @@ export default class NoteModal extends React.Component {
                             </Segment>
                         </Body>
 
-                        <Right style={Platform.OS === 'android' ? {top: 0} : null}>
-                            <Button transparent onPress={() => ActionSheet.show(
-                                {
-                                    options: ["Delete", "Cancel"],
-                                    cancelButtonIndex: 1,
-                                    destructiveButtonIndex: 0,
-                                },
-                                buttonIndex => {
-                                    // `buttonIndex` is a string in Android, a number in iOS.
-                                    if (Platform.OS === 'android' && buttonIndex === '0'
-                                        || Platform.OS === 'ios' && buttonIndex === 0) {
-                                        fs.unlink(`${RNFetchBlob.fs.dirs.DocumentDir}/Boostnote/${this.state.fileName}`)
-                                        .then(() => {
-                                            this.props.setIsOpen('', false)
-                                        })
-                                    }
-                                }
-                            )}>
-                                <Text><Icon name='md-more' style={styles.noteDetailButton}/></Text>
-                            </Button>
+                        <Right style={Platform.OS === 'android' ? {top: 0} : {top: 3}}>
+                            <View>
+                                <Root>
+                                    <Button transparent onPress={() => ActionSheet.show(
+                                        {
+                                            options: ["Delete", "Cancel"],
+                                            cancelButtonIndex: 1,
+                                            destructiveButtonIndex: 0,
+                                        },
+                                        buttonIndex => {
+                                            // `buttonIndex` is a string in Android, a number in iOS.
+                                            if (Platform.OS === 'android' && buttonIndex === '0'
+                                                || Platform.OS === 'ios' && buttonIndex === 0) {
+                                                fs.unlink(`${RNFetchBlob.fs.dirs.DocumentDir}/Boostnote/${this.state.fileName}`)
+                                                .then(() => {
+                                                    this.props.setIsOpen('', false)
+                                                })
+                                            }
+                                        }
+                                    )}>
+                                        <Text><Icon name='md-more' style={styles.noteDetailButton}/></Text>
+                                    </Button>
+                                </Root>
+                            </View>
                         </Right>
                     </Header>
                     <Content keyboardShouldPersistTaps='always'>
