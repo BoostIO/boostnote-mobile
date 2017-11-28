@@ -21,6 +21,7 @@ import {
   Icon,
   Segment,
   ActionSheet,
+  Root
 } from 'native-base'
 
 import Modal from 'react-native-modalbox'
@@ -280,26 +281,30 @@ export default class DropboxNoteModal extends React.Component {
               </Button>
             </Segment>
             </Body>
-            <Right style={Platform.OS === 'android' ? { top: 0 } : null}>
-              <Button transparent onPress={() => ActionSheet.show(
-                {
-                  options: ["Delete", "Cancel"],
-                  cancelButtonIndex: 1,
-                  destructiveButtonIndex: 0,
-                },
-                buttonIndex => {
-                  // `buttonIndex` is a string in Android, a number in iOS.
-                  if (Platform.OS === 'android' && buttonIndex === '0'
-                    || Platform.OS === 'ios' && buttonIndex === 0) {
-                    this.setState((prevState, props) => {
-                      prevState.note.isTrashed = true
-                      return { note: prevState.note }
-                    }, this.onCloseModal())
-                  }
-                }
-              )}>
-                <Text><Icon name='md-more' style={styles.noteDetailButton}/></Text>
-              </Button>
+            <Right style={Platform.OS === 'android' ? {top: 0} : {top: 3}}>
+              <View>
+                <Root>
+                  <Button transparent onPress={() => ActionSheet.show(
+                    {
+                      options: ["Delete", "Cancel"],
+                      cancelButtonIndex: 1,
+                      destructiveButtonIndex: 0,
+                    },
+                    buttonIndex => {
+                      // `buttonIndex` is a string in Android, a number in iOS.
+                      if (Platform.OS === 'android' && buttonIndex === '0'
+                        || Platform.OS === 'ios' && buttonIndex === 0) {
+                        this.setState((prevState, props) => {
+                          prevState.note.isTrashed = true
+                          return { note: prevState.note }
+                        }, this.onCloseModal())
+                      }
+                    }
+                  )}>
+                    <Text><Icon name='md-more' style={styles.noteDetailButton}/></Text>
+                  </Button>
+                </Root>
+              </View>
             </Right>
           </Header>
           <Content keyboardShouldPersistTaps='always'>
