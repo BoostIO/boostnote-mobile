@@ -122,7 +122,7 @@ const styles = {
     height: 60,
     borderRadius: 50,
     overflow: 'hidden',
-    position: 'absolute',
+    position: 'fixed',
   },
   noteListDate: {
     position: 'absolute',
