@@ -121,8 +121,7 @@ const styles = {
     width: 60,
     height: 60,
     borderRadius: 50,
-    overflow: 'hidden',
-    position: 'fixed',
+    overflow: 'hidden'
   },
   noteListDate: {
     position: 'absolute',
