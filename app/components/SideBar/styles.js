@@ -43,10 +43,13 @@ export default StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         marginLeft: 15,
-        paddingBottom: 10
+        paddingBottom: 10,
+        flex: 1,
+        flexDirection: 'row'
     },
     bottomLinkWord: {
         fontSize: 14,
+        flex: 1,
         color: 'rgba(206,207,206,0.8)',
         fontWeight: '600',
     },
