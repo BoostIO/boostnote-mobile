@@ -50,8 +50,17 @@ export default class SideBar extends React.Component {
                     </View>
 
                     <View style={styles.bottomLink}>
+                        <Text onPress={() => Linking.openURL('https://boostnote.io/#subscribe')} style={styles.bottomLinkWord}>
+                            <Icon style={{fontSize: 28,  color: 'rgba(255, 255, 255, 0.6)'}} name='ios-mail'/>
+                        </Text>
                         <Text onPress={() => Linking.openURL('https://github.com/BoostIO/Boostnote-mobile')} style={styles.bottomLinkWord}>
-                            <Icon style={{fontSize: 16,  color: '#89888d'}} name='logo-github'/> Boostnote Mobile is Open Source
+                            <Icon style={{fontSize: 28,  color: 'rgba(255, 255, 255, 0.6)'}} name='logo-github'/>
+                        </Text>
+                        <Text onPress={() => Linking.openURL('https://twitter.com/boostnoteapp')} style={styles.bottomLinkWord}>
+                            <Icon style={{fontSize: 28,  color: 'rgba(255, 255, 255, 0.6)'}} name='logo-twitter'/>
+                        </Text>
+                        <Text onPress={() => Linking.openURL('https://www.facebook.com/groups/boostnote/')} style={styles.bottomLinkWord}>
+                            <Icon style={{fontSize: 28,  color: 'rgba(255, 255, 255, 0.6)'}} name='logo-facebook'/>
                         </Text>
                     </View>
             </Container>
