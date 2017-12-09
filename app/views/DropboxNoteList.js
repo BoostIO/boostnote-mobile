@@ -373,6 +373,9 @@ export default class DropboxNoteList extends Component {
           title: "Choose folder to create note"
         },
         buttonIndex => {
+          if (buttonIndex == this.state.folderList.length) {
+            return
+          }
           const newNotePath = `"/notes/${makeRandomHex()}.cson"`
           const newNoteJson = JSON.stringify({
             type: 'MARKDOWN_NOTE',
