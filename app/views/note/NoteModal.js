@@ -131,7 +131,10 @@ export default class NoteModal extends React.Component {
                 </ScrollView>
                 </View>
         } else {
-            return <NotePreview text={this.state.text}/>
+            return <NotePreview
+              text={this.state.text}
+              onTapCheckBox={this.tapCheckBox.bind(this)}
+            />
         }
     }
 
@@ -158,6 +161,26 @@ export default class NoteModal extends React.Component {
         this.setState({
             text: beforeText + await Clipboard.getString() + '\n' + afterText
         })
+    }
+
+    /**
+     * Toggle checkbox in markdown text
+     * @param line
+     */
+    tapCheckBox(line) {
+      const lines = this.state.text.split('\n');
+
+      const targetLine = lines[line]
+
+      const checkedMatch = /\[x\]/i
+      const uncheckedMatch = /\[ \]/
+      if (targetLine.match(checkedMatch)) {
+        lines[line] = targetLine.replace(checkedMatch, '[ ]')
+      }
+      if (targetLine.match(uncheckedMatch)) {
+        lines[line] = targetLine.replace(uncheckedMatch, '[x]')
+      }
+      this.onChangeText(lines.join('\n'))
     }
 
     render() {
