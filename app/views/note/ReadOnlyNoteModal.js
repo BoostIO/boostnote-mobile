@@ -90,7 +90,10 @@ export default class ReadOnlyNoteModal extends React.Component {
                         </Left>
                     </Header>
                     <Content keyboardShouldPersistTaps='always'>
-                        <NotePreview text={this.state.text}/>
+                        <NotePreview
+                          text={this.state.text}
+                          onTapCheckBox={() => {}}
+                        />
                     </Content>
                 </Container>
             </Modal>

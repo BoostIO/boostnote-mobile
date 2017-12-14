@@ -178,7 +178,10 @@ export default class DropboxNoteModal extends React.Component {
         </ScrollView>
       </View>
     } else {
-      return <NotePreview text={this.state.note.content}/>
+      return <NotePreview
+        text={this.state.note.content}
+        onTapCheckBox={this.tapCheckBox.bind(this)}
+      />
     }
   }
 
@@ -238,6 +241,26 @@ export default class DropboxNoteModal extends React.Component {
     this.saveNoteToDropbox()
     this.props.setNoteModalClose()
 
+  }
+
+  /**
+   * Toggle checkbox in markdown text
+   * @param line
+   */
+  tapCheckBox(line) {
+    const lines = this.state.note.content.split('\n');
+
+    const targetLine = lines[line]
+
+    const checkedMatch = /\[x\]/i
+    const uncheckedMatch = /\[ \]/
+    if (targetLine.match(checkedMatch)) {
+      lines[line] = targetLine.replace(checkedMatch, '[ ]')
+    }
+    if (targetLine.match(uncheckedMatch)) {
+      lines[line] = targetLine.replace(uncheckedMatch, '[x]')
+    }
+    this.updateNoteContent(lines.join('\n'))
   }
 
   render() {
