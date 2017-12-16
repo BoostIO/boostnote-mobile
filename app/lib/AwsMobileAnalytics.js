@@ -1,13 +1,14 @@
-const AWS = require('aws-sdk')
-const AMA = require('aws-sdk-mobile-analytics')
+const AWS = require('aws-sdk/dist/aws-sdk-react-native')
+const AMA = require('react-native-aws-mobile-analytics')
 const DeviceInfo = require('react-native-device-info')
 import settings from '../config/settings'
 
 AWS.config.region = settings.awsRegion
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+  region: settings.awsRegion,
   IdentityPoolId: settings.awsIdentityPoolId,
 })
-const mobileAnalyticsClient = new AMA.Manager({
+const mobileAnalyticsClient = new AMA.default.Manager({
   appId: settings.awsAppId,
   appTitle: settings.awsTitle,
   appVersionName: DeviceInfo.getReadableVersion(),
@@ -18,11 +19,9 @@ const mobileAnalyticsClient = new AMA.Manager({
 })
 
 function initAwsMobileAnalytics() {
-  AWS.config.credentials.get((err) => {
-    if (!err) {
-      console.log('Cognito Identity ID: ' + AWS.config.credentials.identityId)
-      recordDynamicCustomEvent('APP_STARTED')
-    }
+  mobileAnalyticsClient.initialize(() => {
+    console.log('Cognito Identity ID: ' + AWS.config.credentials.params.IdentityPoolId)
+    recordDynamicCustomEvent('APP_STARTED')
   })
 }
 
