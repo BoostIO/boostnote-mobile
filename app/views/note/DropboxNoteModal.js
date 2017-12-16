@@ -143,7 +143,7 @@ export default class DropboxNoteModal extends React.Component {
 
   keyboardDidShow(e) {
     this.setState({
-      visibleHeight: Dimensions.get('window').height - e.endCoordinates.height - 100,
+      visibleHeight: Dimensions.get('window').height - e.endCoordinates.height - 140,
     })
   }
 

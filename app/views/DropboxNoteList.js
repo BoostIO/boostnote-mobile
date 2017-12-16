@@ -412,6 +412,7 @@ export default class DropboxNoteList extends Component {
   render() {
     return (
       <Content
+        keyboardShouldPersistTaps='always'
         refreshControl={
           <RefreshControl
             refreshing={this.state.isLoading}
