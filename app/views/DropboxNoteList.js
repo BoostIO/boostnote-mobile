@@ -127,6 +127,11 @@ const styles = {
     fontWeight: '600',
     fontSize: 14,
     textAlignVertical: 'center'
+  },
+  refreshButton: {
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    right: 10
   }
 }
 
@@ -438,6 +443,11 @@ export default class DropboxNoteList extends Component {
           }}>
             Dropbox
           </Text>
+          <Button style={styles.refreshButton} onPress={() => this.getToken()}>
+              <Text style={{ color: "rgba(40,44,52,0.4)", right: 1, position: 'absolute' }}>
+                <Icon name='md-refresh' style={{color: "rgba(40,44,52,0.4)"}}/>
+              </Text>
+          </Button>
         </View>
         {
           // Show Dropbox connect button when...
