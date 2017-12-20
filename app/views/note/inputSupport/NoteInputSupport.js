@@ -73,6 +73,16 @@ export default class NoteInputSupport extends React.Component {
             </View>
           </TouchableHighlight>
           <TouchableHighlight
+            onPress={() => {
+              this.props.insertMarkdownBetween('- [ ] ')
+            }}
+            style={Styles.inputElementsStyle}>
+            <View>
+              <Text style={Styles.supportMain}>- [ ]</Text>
+              <Text style={Styles.supportSub}>TaskList</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
             onPress={this.props.pasteContent.bind(this)}
             style={Styles.inputElementsStyle}>
             <Text style={Styles.pasteButton}>Paste</Text>
