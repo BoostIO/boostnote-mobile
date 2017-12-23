@@ -45,13 +45,13 @@ const styles = {
     },
     iOsAppName: {
         color: '#1ec38b',
-        fontSize: 21,
-        fontWeight: '300',
+        fontSize: 18,
+        fontWeight: '600',
     },
     androidAppName: {
         color: '#1ec38b',
-        fontSize: 21,
-        fontWeight: '300',
+        fontSize: 18,
+        fontWeight: '600',
     },
     headerMenuButton: {
         color: '#1ec38b',
@@ -347,7 +347,7 @@ export default class App extends Component {
                                 <Title style={Platform.OS === 'android' ? styles.androidAppName : styles.iOsAppName}>
                                     {
                                         mode === 0
-                                        ? 'NOTES'
+                                        ? 'All Notes'
                                         : 'Dropbox'
                                     }
                                 </Title>
