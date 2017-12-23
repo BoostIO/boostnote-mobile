@@ -46,6 +46,11 @@ const styles = {
        color: '#1ec38b',
        fontSize: 23
    },
+   backHomeText: {
+       color: '#1ec38b',
+       fontSize: 17,
+       lineHeight: 17
+   }
 }
 
 export default class NoteModal extends React.Component {
@@ -196,7 +201,8 @@ export default class NoteModal extends React.Component {
                     <Header style={Platform.OS === 'android' ? {height: 47,backgroundColor: '#f9f9f9'} : {backgroundColor: '#f9f9f9'}} androidStatusBarColor='#239F85'>
                         <Left style={Platform.OS === 'android' ? {top: 0} : null}>
                             <Button transparent onPress={() => this.props.setIsOpen('', false)}>
-                                <Text><Icon name='md-close' style={styles.noteDetailButton}/></Text>
+                                <Text><Icon name='ios-arrow-back' style={styles.noteDetailButton}/> </Text>
+                                <Text style={styles.backHomeText}>All Notes</Text>
                             </Button>
                         </Left>
 
