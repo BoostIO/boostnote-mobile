@@ -34,16 +34,16 @@ import NoteInputSupport from './inputSupport/NoteInputSupport'
 const styles = {
    switchButton: {
        backgroundColor: 'transparent',
-       borderColor: '#EFF1F5',
+       borderColor: '#1ec38b',
        borderWidth: 1
    },
    switchButtonActive: {
        backgroundColor: '#EFF1F5',
-       borderColor: '#EFF1F5',
+       borderColor: '#1ec38b',
        borderWidth: 1
    },
    noteDetailButton: {
-       color: '#EFF1F5',
+       color: '#1ec38b',
        fontSize: 23
    },
 }
@@ -193,7 +193,7 @@ export default class NoteModal extends React.Component {
                 swipeToClose={false}
                 onClosed={() => this.props.setIsOpen('', false)}>
                 <Container>
-                    <Header style={Platform.OS === 'android' ? {height: 47,backgroundColor: '#6C81A6'} : {backgroundColor: '#6C81A6'}} androidStatusBarColor='#239F85'>
+                    <Header style={Platform.OS === 'android' ? {height: 47,backgroundColor: '#f9f9f9'} : {backgroundColor: '#f9f9f9'}} androidStatusBarColor='#239F85'>
                         <Left style={Platform.OS === 'android' ? {top: 0} : null}>
                             <Button transparent onPress={() => this.props.setIsOpen('', false)}>
                                 <Text><Icon name='md-close' style={styles.noteDetailButton}/></Text>
@@ -206,13 +206,13 @@ export default class NoteModal extends React.Component {
                                     this.setState({isLeftSegmentActive: true})
                                 }} first active={this.state.isLeftSegmentActive}
                                 style={this.state.isLeftSegmentActive ? styles.switchButtonActive : styles.switchButton}>
-                                    <Text><Icon name='create' style={this.state.isLeftSegmentActive ? {color: '#6C81A6'} : {}}/></Text>
+                                    <Text><Icon name='create' style={{color: '#1ec38b'}} /></Text>
                                 </Button>
                                 <Button onPress={() => {
                                     this.setState({isLeftSegmentActive: false})
                                 }} last active={!this.state.isLeftSegmentActive}
                                 style={this.state.isLeftSegmentActive ? styles.switchButton : styles.switchButtonActive}>
-                                    <Text><Icon name='eye' style={this.state.isLeftSegmentActive ? {color: '#EFF1F5'} : {color: '#6C81A6'}}/></Text>
+                                    <Text><Icon name='eye' style={{color: '#1ec38b'}} /></Text>
                                 </Button>
                             </Segment>
                         </Body>
