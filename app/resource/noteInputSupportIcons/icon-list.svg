@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="18px" viewBox="0 0 22 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-list</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Edit-Page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-219.000000, -563.000000)">
+        <g id="icon-list" transform="translate(211.000000, 554.000000)">
+            <g>
+                <rect id="Rectangle-3" fill="#D8D8D8" opacity="0" x="0" y="0" width="36" height="36"></rect>
+                <g transform="translate(8.000000, 10.000000)">
+                    <path d="M4.70588235,1.14285714 L20,1.14285714" id="Shape" stroke="#717171" stroke-width="2.35294118" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <ellipse id="Oval" fill="#717171" cx="1.17647059" cy="1.14285714" rx="1.17647059" ry="1.14285714"></ellipse>
+                    <ellipse id="Oval" fill="#717171" cx="1.17647059" cy="8" rx="1.17647059" ry="1.14285714"></ellipse>
+                    <ellipse id="Oval" fill="#717171" cx="1.17647059" cy="14.8571429" rx="1.17647059" ry="1.14285714"></ellipse>
+                    <path d="M4.70588235,8 L15.2941176,8" id="Shape" stroke="#717171" stroke-width="2.35294118" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M4.70588235,14.8571429 L17.6470588,14.8571429" id="Shape" stroke="#717171" stroke-width="2.35294118" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
