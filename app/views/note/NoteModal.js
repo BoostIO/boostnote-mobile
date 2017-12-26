@@ -42,6 +42,16 @@ const styles = {
        borderColor: '#1ec38b',
        borderWidth: 1
    },
+   switchEditButton: {
+     position:'absolute',
+     width: 30,
+     right: 10
+   },
+   switchEditText: {
+     color: '#1ec38b',
+     fontSize: 16,
+     lineHeight: 16
+   },
    noteDetailButton: {
        color: '#1ec38b',
        fontSize: 23
@@ -223,9 +233,12 @@ export default class NoteModal extends React.Component {
                             </Segment>
                         </Body>
 
-                        <Right style={Platform.OS === 'android' ? {top: 0} : {top: 3}}>
+                        <Right style={Platform.OS === 'android' ? {top: 0} : {top: 3, flex: 1, flexDirection: 'row'}}>
                             <View>
                                 <Root>
+                                    <Button transparent style={styles.switchEditButton}>
+                                         <Text style={styles.switchEditText}>Edit</Text>
+                                    </Button>
                                     <Button transparent onPress={() => ActionSheet.show(
                                         {
                                             options: ["Delete", "Cancel"],
