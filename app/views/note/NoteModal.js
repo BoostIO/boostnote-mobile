@@ -44,8 +44,8 @@ const styles = {
    },
    switchEditButton: {
      position:'absolute',
-     width: 30,
-     right: 10
+     width: 40,
+     right: 20
    },
    switchEditText: {
      color: '#1ec38b',
@@ -72,7 +72,7 @@ export default class NoteModal extends React.Component {
             fileName: this.props.fileName,
             text: this.props.content,
             height: 0,
-            isLeftSegmentActive: true,
+            isEditting: true,
             visibleHeight: 230,
             endOfSelection: 0,
         }
@@ -88,7 +88,7 @@ export default class NoteModal extends React.Component {
 
         // if user open an another file, set state.
         this.setState({
-            isLeftSegmentActive: true,
+            isEditting: true,
             fileName: props.fileName,
             text: props.content,
         })
@@ -125,7 +125,7 @@ export default class NoteModal extends React.Component {
     }
 
     getNoteComponent() {
-        if (this.state.isLeftSegmentActive) {
+        if (this.state.isEditting) {
             return <View style={{flex: 1}}>
                 <ScrollView keyboardShouldPersistTaps='always'>
                     <TextInput
@@ -199,6 +199,12 @@ export default class NoteModal extends React.Component {
       this.onChangeText(lines.join('\n'))
     }
 
+    handleSwitchEditButtonClick () {
+      this.setState({
+        isEditting: !this.state.isEditting
+      })
+    }
+
     render() {
         return (
             <Modal
@@ -216,28 +222,15 @@ export default class NoteModal extends React.Component {
                             </Button>
                         </Left>
 
-                        <Body style={Platform.OS === 'android' ? {top: 0} : null}>
-                            <Segment style={Platform.OS === 'android' ? {paddingRight: 25, position: 'relative', backgroundColor: 'transparent', borderWidth:1} : {marginLeft: 50, position: 'absolute', top: -22, backgroundColor: 'transparent'}}>
-                                <Button onPress={() => {
-                                    this.setState({isLeftSegmentActive: true})
-                                }} first active={this.state.isLeftSegmentActive}
-                                style={this.state.isLeftSegmentActive ? styles.switchButtonActive : styles.switchButton}>
-                                    <Text><Icon name='create' style={{color: '#1ec38b'}} /></Text>
-                                </Button>
-                                <Button onPress={() => {
-                                    this.setState({isLeftSegmentActive: false})
-                                }} last active={!this.state.isLeftSegmentActive}
-                                style={this.state.isLeftSegmentActive ? styles.switchButton : styles.switchButtonActive}>
-                                    <Text><Icon name='eye' style={{color: '#1ec38b'}} /></Text>
-                                </Button>
-                            </Segment>
-                        </Body>
-
                         <Right style={Platform.OS === 'android' ? {top: 0} : {top: 3, flex: 1, flexDirection: 'row'}}>
                             <View>
                                 <Root>
-                                    <Button transparent style={styles.switchEditButton}>
-                                         <Text style={styles.switchEditText}>Edit</Text>
+                                    <Button transparent
+                                        style={styles.switchEditButton}
+                                        onPress={this.handleSwitchEditButtonClick.bind(this)}>
+                                         <Text style={styles.switchEditText}>
+                                             {this.state.isEditting ? 'Done' : 'Edit'}
+                                         </Text>
                                     </Button>
                                     <Button transparent onPress={() => ActionSheet.show(
                                         {
