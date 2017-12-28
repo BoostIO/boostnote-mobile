@@ -24,22 +24,5 @@ export default Styles = {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%'
-  },
-  supportMain: {
-    fontSize: 12,
-    textAlign: 'center',
-    color: '#333333'
-  },
-  supportSub: {
-    fontSize: 10,
-    textAlign: 'center',
-    color: '#828282'
-  },
-  pasteButton: {
-    paddingTop: 6,
-    marginLeft: 3,
-    marginRight: 3,
-    fontSize: 12,
-    color: '#828282'
   }
 }
