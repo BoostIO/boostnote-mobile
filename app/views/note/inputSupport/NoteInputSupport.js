@@ -31,11 +31,11 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='10'
-                  height='10'
+                  width='17'
+                  height='17'
                   source={headIcon}
+                  style={Styles.supportImage}
               />
-              <Text style={Styles.supportSub}>Head</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -45,11 +45,11 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='10'
-                  height='10'
+                  width='17'
+                  height='17'
                   source={listIcon}
+                  style={Styles.supportImage}
               />
-              <Text style={Styles.supportSub}>List</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -59,11 +59,11 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='10'
-                  height='10'
+                  width='17'
+                  height='17'
                   source={codeIcon}
+                  style={Styles.supportImage}
               />
-              <Text style={Styles.supportSub}>Code</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -73,11 +73,11 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='10'
-                  height='10'
+                  width='17'
+                  height='17'
                   source={boldIcon}
+                  style={Styles.supportImage}
               />
-              <Text style={Styles.supportSub}>Bold</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -87,11 +87,11 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='10'
-                  height='10'
+                  width='17'
+                  height='17'
                   source={italicIcon}
+                  style={Styles.supportImage}
               />
-              <Text style={Styles.supportSub}>italic</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -101,11 +101,11 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='10'
-                  height='10'
+                  width='17'
+                  height='17'
                   source={quoteIcon}
+                  style={Styles.supportImage}
               />
-              <Text style={Styles.supportSub}>Quote</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -115,11 +115,11 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='10'
-                  height='10'
+                  width='17'
+                  height='17'
                   source={checkboxIcon}
+                  style={Styles.supportImage}
               />
-              <Text style={Styles.supportSub}>TaskList</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -127,11 +127,11 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='10'
-                  height='10'
+                  width='17'
+                  height='17'
                   source={pasteIcon}
+                  style={Styles.supportImage}
               />
-              <Text style={Styles.supportSub}>Paste</Text>
             </View>
           </TouchableHighlight>
         </ScrollView>
