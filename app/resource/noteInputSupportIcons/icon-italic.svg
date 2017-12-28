@@ -1,17 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="18px" viewBox="0 0 16 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
-    <title>icon-italic</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Edit-Page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-173.000000, -563.000000)">
-        <g id="icon-italic" transform="translate(163.000000, 554.000000)">
-            <g>
-                <rect id="Rectangle-3" fill="#D8D8D8" opacity="0" x="0" y="0" width="36" height="36"></rect>
-                <g transform="translate(10.000000, 9.000000)" fill="#717171" fill-rule="nonzero" id="Shape">
-                    <path d="M16,0.642851633 L16,0.642851633 C16,0.997888786 15.7121855,1.28570327 15.3571484,1.28570327 L13.33332,1.28570327 L6.66668,16.7142967 L8.69050837,16.7142967 C9.04554552,16.7142967 9.33336,17.0021112 9.33336,17.3571484 L9.33336,17.3571484 C9.33336,17.7121855 9.04554552,18 8.69050837,18 L0.642851633,18 C0.28781448,18 4.34795113e-17,17.7121855 0,17.3571484 L0,17.3571484 C-4.34795113e-17,17.0021112 0.28781448,16.7142967 0.642851633,16.7142967 L2.66668,16.7142967 L9.33336,1.28570327 L7.30953163,1.28570327 C6.95449448,1.28570327 6.66668,0.997888786 6.66668,0.642851633 L6.66668,0.642851633 C6.66668,0.28781448 6.95449448,1.17544229e-15 7.30953163,1.11022302e-15 L15.3571484,-5.55111512e-16 C15.7121855,-6.20330779e-16 16,0.28781448 16,0.642851633 Z"></path>
-                </g>
-            </g>
-        </g>
-    </g>
-</svg>
+<?xml version="1.0" encoding="UTF-8"?><svg version="1.1" viewBox="0 0 16 18" xmlns="http://www.w3.org/2000/svg"><title>icon-italic</title><desc>Created with Sketch.</desc><g transform="translate(-173 -563)" fill="none" fill-rule="evenodd"><g transform="translate(163 554)"><rect width="36" height="36" fill="#D8D8D8" opacity="0"/><g transform="translate(10 9)" fill="#717171" fill-rule="nonzero"><path d="m16 0.64285c0 0.35504-0.28781 0.64285-0.64285 0.64285h-2.0238l-6.6666 15.429h2.0238c0.35504 0 0.64285 0.28781 0.64285 0.64285 0 0.35504-0.28781 0.64285-0.64285 0.64285h-8.0477c-0.35504 0-0.64285-0.28781-0.64285-0.64285-4.348e-17 -0.35504 0.28781-0.64285 0.64285-0.64285h2.0238l6.6667-15.429h-2.0238c-0.35504 0-0.64285-0.28781-0.64285-0.64285s0.28781-0.64285 0.64285-0.64285l8.0476-1.6653e-15c0.35504-6.5219e-17 0.64285 0.28781 0.64285 0.64285z"/></g></g></g></svg>
