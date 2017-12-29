@@ -1,7 +1,7 @@
+import settings from '../config/settings'
 const AWS = require('aws-sdk/dist/aws-sdk-react-native')
 const AMA = require('react-native-aws-mobile-analytics')
 const DeviceInfo = require('react-native-device-info')
-import settings from '../config/settings'
 
 AWS.config.region = settings.awsRegion
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({

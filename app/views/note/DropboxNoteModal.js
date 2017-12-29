@@ -17,21 +17,19 @@ import {
   Content,
   Button,
   Left,
-  Body,
   Right,
   Icon,
-  Segment,
   ActionSheet,
   Root
 } from 'native-base'
 
 import Modal from 'react-native-modalbox'
 import CoffeeScript from '../../lib/CofeeScriptEval'
-
-const js2coffee = require('js2coffee/dist/js2coffee')
 import NotePreview from './preview/NotePreviewComponent'
 import NoteInputSupport from './inputSupport/NoteInputSupport'
 import removeMd from 'remove-markdown-and-html'
+
+const js2coffee = require('js2coffee/dist/js2coffee')
 
 const DROPBOX_ACCESS_TOKEN = 'DROPBOX:ACCESS_TOKEN'
 
@@ -316,8 +314,9 @@ export default class DropboxNoteModal extends React.Component {
                     },
                     buttonIndex => {
                       // `buttonIndex` is a string in Android, a number in iOS.
-                      if (Platform.OS === 'android' && buttonIndex === '0' ||
-                        Platform.OS === 'ios' && buttonIndex === 0) {
+                      const androidCondition = Platform.OS === 'android' && buttonIndex === '0'
+                      const iosCondition = Platform.OS === 'ios' && buttonIndex === 0
+                      if (androidCondition || iosCondition) {
                         this.setState((prevState, props) => {
                           prevState.note.isTrashed = true
                           return { note: prevState.note }

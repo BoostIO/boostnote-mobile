@@ -106,9 +106,9 @@ export default class NotePreview extends React.Component {
                 isChecked={!!node.attributes.checked}
                 isIndeterminate={false} />
             }
-          }}
-          children={this.state.text}
-        />
+          }}>
+          {this.state.text}
+        </Markdown>
       </View>
     )
   }

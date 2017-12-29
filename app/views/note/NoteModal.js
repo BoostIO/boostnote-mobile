@@ -16,20 +16,16 @@ import {
   Button,
   Left,
   Right,
-  Body,
   Icon,
-  Segment,
   ActionSheet,
   Root
 } from 'native-base'
 
 import Modal from 'react-native-modalbox'
-
-import RNFetchBlob from 'react-native-fetch-blob'
-const fs = RNFetchBlob.fs
-
 import NotePreview from './preview/NotePreviewComponent'
 import NoteInputSupport from './inputSupport/NoteInputSupport'
+import RNFetchBlob from 'react-native-fetch-blob'
+const fs = RNFetchBlob.fs
 
 const styles = {
   switchButton: {
@@ -131,7 +127,9 @@ export default class NoteModal extends React.Component {
           <TextInput
             ref='TextInput'
             multiline
-            style={Platform.OS === 'android' ? { margin: 8, height: this.state.visibleHeight - 30} : { margin: 8, height: this.state.visibleHeight - 20}}
+            style={Platform.OS === 'android'
+              ? { margin: 8, height: this.state.visibleHeight - 30 }
+              : { margin: 8, height: this.state.visibleHeight - 20 }}
             onChangeText={(e) => this.onChangeText(e)}
             value={this.state.text}
             onSelectionChange={(e) => {
@@ -239,8 +237,9 @@ export default class NoteModal extends React.Component {
                     },
                     buttonIndex => {
                       // `buttonIndex` is a string in Android, a number in iOS.
-                      if (Platform.OS === 'android' && buttonIndex === '0' ||
-                                                Platform.OS === 'ios' && buttonIndex === 0) {
+                      const androidCondition = Platform.OS === 'android' && buttonIndex === '0'
+                      const iosCondition = Platform.OS === 'ios' && buttonIndex === 0
+                      if (androidCondition || iosCondition) {
                         fs.unlink(`${RNFetchBlob.fs.dirs.DocumentDir}/Boostnote/${this.state.fileName}`)
                           .then(() => {
                             this.props.setIsOpen('', false)

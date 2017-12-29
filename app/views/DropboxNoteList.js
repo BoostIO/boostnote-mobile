@@ -1,16 +1,13 @@
 import React, {Component} from 'react'
-
 import {
   Text,
   TextInput,
   View,
   Alert,
-  Platform,
   AsyncStorage,
   RefreshControl,
   Linking
 } from 'react-native'
-
 import {
   Body,
   Card,
@@ -20,19 +17,13 @@ import {
   Content,
   ActionSheet
 } from 'native-base'
-
 import moment from 'moment'
-
 import CoffeeScript from '../lib/CofeeScriptEval'
-
-const js2coffee = require('js2coffee/dist/js2coffee')
-
 import settings from '../config/settings'
-
 import {makeRandomHex} from '../lib/Strings'
-
 import DropboxNoteModal from './note/DropboxNoteModal'
 
+const js2coffee = require('js2coffee/dist/js2coffee')
 const DROPBOX_ACCESS_TOKEN = 'DROPBOX:ACCESS_TOKEN'
 
 const styles = {
@@ -362,7 +353,7 @@ export default class DropboxNoteList extends Component {
           title: 'Choose folder to create note'
         },
         buttonIndex => {
-          if (buttonIndex == this.state.folderList.length) {
+          if (buttonIndex === this.state.folderList.length) {
             return
           }
           const newNotePath = `"/notes/${makeRandomHex()}.cson"`
@@ -530,7 +521,7 @@ export default class DropboxNoteList extends Component {
         <DropboxNoteModal setNoteModalClose={this.setNoteModalClose.bind(this)}
           isNoteOpen={this.state.isNoteOpen}
           path={this.state.path} />
-        <ActionSheet ref={c => this.actionSheet = c} />
+        <ActionSheet ref={c => (this.actionSheet = c)} />
       </Content>
     )
   }
