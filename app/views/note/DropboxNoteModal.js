@@ -37,19 +37,35 @@ const DROPBOX_ACCESS_TOKEN = 'DROPBOX:ACCESS_TOKEN'
 
 const styles = {
   switchButton: {
-    backgroundColor: 'transparent',
-    borderColor: '#EFF1F5',
-    borderWidth: 1
+      backgroundColor: 'transparent',
+      borderColor: '#1ec38b',
+      borderWidth: 1
   },
   switchButtonActive: {
-    backgroundColor: '#EFF1F5',
-    borderColor: '#EFF1F5',
-    borderWidth: 1
+      backgroundColor: '#EFF1F5',
+      borderColor: '#1ec38b',
+      borderWidth: 1
+  },
+  switchEditButton: {
+    position:'absolute',
+    width: 40,
+    right: 20
+  },
+  switchEditText: {
+    color: '#1ec38b',
+    fontSize: 16,
+    lineHeight: 16
   },
   noteDetailButton: {
-    color: '#EFF1F5',
-    fontSize: 23
+      color: '#1ec38b',
+      fontSize: 23
   },
+  backHomeText: {
+      color: '#1ec38b',
+      fontSize: 17,
+      lineHeight: 17,
+      paddingLeft: 10
+  }
 }
 
 export default class DropboxNoteModal extends React.Component {
@@ -62,7 +78,7 @@ export default class DropboxNoteModal extends React.Component {
       path: props.path,
       note: { content: '' },
       height: 0,
-      isLeftSegmentActive: true,
+      isEditting: true,
       visibleHeight: 230,
       endOfSelection: 0,
       isNoteOpen: props.isNoteOpen,
@@ -76,7 +92,7 @@ export default class DropboxNoteModal extends React.Component {
       this.getNoteData(props.path)
 
       this.setState({
-        isLeftSegmentActive: true,
+        isEditting: true,
         path: props.path,
       })
     }
@@ -154,7 +170,7 @@ export default class DropboxNoteModal extends React.Component {
   }
 
   getNoteComponent() {
-    if (this.state.isLeftSegmentActive) {
+    if (this.state.isEditting) {
       return <View style={{ flex: 1 }}>
         <ScrollView keyboardShouldPersistTaps='always'>
           <TextInput
@@ -261,6 +277,12 @@ export default class DropboxNoteModal extends React.Component {
     this.updateNoteContent(lines.join('\n'))
   }
 
+  handleSwitchEditButtonClick () {
+    this.setState({
+      isEditting: !this.state.isEditting
+    })
+  }
+
   render() {
     return (
       <Modal
@@ -272,39 +294,25 @@ export default class DropboxNoteModal extends React.Component {
         <Container>
           <Header style={Platform.OS === 'android' ? {
             height: 47,
-            backgroundColor: '#6C81A6'
-          } : { backgroundColor: '#6C81A6' }} androidStatusBarColor='#239F85'>
+            backgroundColor: '#f9f9f9'
+          } : { backgroundColor: '#f9f9f9' }} androidStatusBarColor='#239F85'>
             <Left style={Platform.OS === 'android' ? { top: 0 } : null}>
               <Button transparent onPress={() => this.props.setNoteModalClose()} disable={this.state.isLoading}>
-                <Text><Icon name='md-close' style={styles.noteDetailButton}/></Text>
+                <Text><Icon name='ios-arrow-back' style={styles.noteDetailButton}/></Text>
+                <Text style={styles.backHomeText}>Dropbox</Text>
               </Button>
             </Left>
 
-            <Body style={Platform.OS === 'android' ? { top: 0 } : null}>
-            <Segment style={Platform.OS === 'android' ? {
-              paddingRight: 25,
-              position: 'relative',
-              backgroundColor: 'transparent',
-              borderWidth: 1
-            } : { marginLeft: 50, position: 'absolute', top: -22, backgroundColor: 'transparent' }}>
-              <Button onPress={() => {
-                this.setState({ isLeftSegmentActive: true })
-              }} first active={this.state.isLeftSegmentActive}
-                      style={this.state.isLeftSegmentActive ? styles.switchButtonActive : styles.switchButton}>
-                <Text><Icon name='create' style={this.state.isLeftSegmentActive ? { color: '#6C81A6' } : {}}/></Text>
-              </Button>
-              <Button onPress={() => {
-                this.setState({ isLeftSegmentActive: false })
-              }} last active={!this.state.isLeftSegmentActive}
-                      style={this.state.isLeftSegmentActive ? styles.switchButton : styles.switchButtonActive}>
-                <Text><Icon name='eye'
-                            style={this.state.isLeftSegmentActive ? { color: '#EFF1F5' } : { color: '#6C81A6' }}/></Text>
-              </Button>
-            </Segment>
-            </Body>
             <Right style={Platform.OS === 'android' ? {top: 0} : {top: 3}}>
               <View>
                 <Root>
+                  <Button transparent
+                    style={styles.switchEditButton}
+                    onPress={this.handleSwitchEditButtonClick.bind(this)}>
+                     <Text style={styles.switchEditText}>
+                         {this.state.isEditting ? 'Done' : 'Edit'}
+                     </Text>
+                  </Button>
                   <Button transparent onPress={() => ActionSheet.show(
                     {
                       options: ["Delete", "Cancel"],
