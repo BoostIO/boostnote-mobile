@@ -277,6 +277,12 @@ export default class DropboxNoteModal extends React.Component {
     this.updateNoteContent(lines.join('\n'))
   }
 
+  handleSwitchEditButtonClick () {
+    this.setState({
+      isEditting: !this.state.isEditting
+    })
+  }
+
   render() {
     return (
       <Modal
@@ -288,39 +294,25 @@ export default class DropboxNoteModal extends React.Component {
         <Container>
           <Header style={Platform.OS === 'android' ? {
             height: 47,
-            backgroundColor: '#6C81A6'
-          } : { backgroundColor: '#6C81A6' }} androidStatusBarColor='#239F85'>
+            backgroundColor: '#f9f9f9'
+          } : { backgroundColor: '#f9f9f9' }} androidStatusBarColor='#239F85'>
             <Left style={Platform.OS === 'android' ? { top: 0 } : null}>
               <Button transparent onPress={() => this.props.setNoteModalClose()} disable={this.state.isLoading}>
-                <Text><Icon name='md-close' style={styles.noteDetailButton}/></Text>
+                <Text><Icon name='ios-arrow-back' style={styles.noteDetailButton}/></Text>
+                <Text style={styles.backHomeText}>Dropbox</Text>
               </Button>
             </Left>
 
-            <Body style={Platform.OS === 'android' ? { top: 0 } : null}>
-            <Segment style={Platform.OS === 'android' ? {
-              paddingRight: 25,
-              position: 'relative',
-              backgroundColor: 'transparent',
-              borderWidth: 1
-            } : { marginLeft: 50, position: 'absolute', top: -22, backgroundColor: 'transparent' }}>
-              <Button onPress={() => {
-                this.setState({ isEditting: true })
-              }} first active={this.state.isEditting}
-                      style={this.state.isEditting ? styles.switchButtonActive : styles.switchButton}>
-                <Text><Icon name='create' style={this.state.isEditting ? { color: '#6C81A6' } : {}}/></Text>
-              </Button>
-              <Button onPress={() => {
-                this.setState({ isEditting: false })
-              }} last active={!this.state.isEditting}
-                      style={this.state.isEditting ? styles.switchButton : styles.switchButtonActive}>
-                <Text><Icon name='eye'
-                            style={this.state.isEditting ? { color: '#EFF1F5' } : { color: '#6C81A6' }}/></Text>
-              </Button>
-            </Segment>
-            </Body>
             <Right style={Platform.OS === 'android' ? {top: 0} : {top: 3}}>
               <View>
                 <Root>
+                  <Button transparent
+                    style={styles.switchEditButton}
+                    onPress={this.handleSwitchEditButtonClick.bind(this)}>
+                     <Text style={styles.switchEditText}>
+                         {this.state.isEditting ? 'Done' : 'Edit'}
+                     </Text>
+                  </Button>
                   <Button transparent onPress={() => ActionSheet.show(
                     {
                       options: ["Delete", "Cancel"],

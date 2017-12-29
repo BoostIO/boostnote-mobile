@@ -223,7 +223,7 @@ export default class NoteModal extends React.Component {
                             </Button>
                         </Left>
 
-                        <Right style={Platform.OS === 'android' ? {top: 0} : {top: 3, flex: 1, flexDirection: 'row'}}>
+                        <Right style={Platform.OS === 'android' ? {top: 0} : {top: 3}}>
                             <View>
                                 <Root>
                                     <Button transparent
