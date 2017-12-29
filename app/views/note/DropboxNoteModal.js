@@ -78,7 +78,7 @@ export default class DropboxNoteModal extends React.Component {
       path: props.path,
       note: { content: '' },
       height: 0,
-      isLeftSegmentActive: true,
+      isEditting: true,
       visibleHeight: 230,
       endOfSelection: 0,
       isNoteOpen: props.isNoteOpen,
@@ -92,7 +92,7 @@ export default class DropboxNoteModal extends React.Component {
       this.getNoteData(props.path)
 
       this.setState({
-        isLeftSegmentActive: true,
+        isEditting: true,
         path: props.path,
       })
     }
@@ -170,7 +170,7 @@ export default class DropboxNoteModal extends React.Component {
   }
 
   getNoteComponent() {
-    if (this.state.isLeftSegmentActive) {
+    if (this.state.isEditting) {
       return <View style={{ flex: 1 }}>
         <ScrollView keyboardShouldPersistTaps='always'>
           <TextInput
@@ -304,17 +304,17 @@ export default class DropboxNoteModal extends React.Component {
               borderWidth: 1
             } : { marginLeft: 50, position: 'absolute', top: -22, backgroundColor: 'transparent' }}>
               <Button onPress={() => {
-                this.setState({ isLeftSegmentActive: true })
-              }} first active={this.state.isLeftSegmentActive}
-                      style={this.state.isLeftSegmentActive ? styles.switchButtonActive : styles.switchButton}>
-                <Text><Icon name='create' style={this.state.isLeftSegmentActive ? { color: '#6C81A6' } : {}}/></Text>
+                this.setState({ isEditting: true })
+              }} first active={this.state.isEditting}
+                      style={this.state.isEditting ? styles.switchButtonActive : styles.switchButton}>
+                <Text><Icon name='create' style={this.state.isEditting ? { color: '#6C81A6' } : {}}/></Text>
               </Button>
               <Button onPress={() => {
-                this.setState({ isLeftSegmentActive: false })
-              }} last active={!this.state.isLeftSegmentActive}
-                      style={this.state.isLeftSegmentActive ? styles.switchButton : styles.switchButtonActive}>
+                this.setState({ isEditting: false })
+              }} last active={!this.state.isEditting}
+                      style={this.state.isEditting ? styles.switchButton : styles.switchButtonActive}>
                 <Text><Icon name='eye'
-                            style={this.state.isLeftSegmentActive ? { color: '#EFF1F5' } : { color: '#6C81A6' }}/></Text>
+                            style={this.state.isEditting ? { color: '#EFF1F5' } : { color: '#6C81A6' }}/></Text>
               </Button>
             </Segment>
             </Body>
