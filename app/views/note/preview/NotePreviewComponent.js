@@ -10,8 +10,7 @@ import Markdown, {PluginContainer, stringToTokens, MarkdownIt} from 'react-nativ
 import markdownItCheckbox from 'markdown-it-checkbox'
 
 export default class NotePreview extends React.Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -21,7 +20,7 @@ export default class NotePreview extends React.Component {
     }
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps (props) {
     this.setState({
       text: props.text,
       taskListLinesFromMarkdown: this.createTaskListLine(props.text),
@@ -29,18 +28,18 @@ export default class NotePreview extends React.Component {
     })
   }
 
-  hasParents(parents, type) {
-    return parents.findIndex(el => el.type === type) > -1;
+  hasParents (parents, type) {
+    return parents.findIndex(el => el.type === type) > -1
   }
 
-  createTaskListLine(text) {
+  createTaskListLine (text) {
     return stringToTokens(text, MarkdownIt().use(markdownItCheckbox))
       .filter(token => token.type === 'inline')
       .filter(token => token.children[0] && token.children[0].type === 'checkbox_input')
       .map(token => token.map[0])
   }
 
-  render() {
+  render () {
     return (
       <View style={{ margin: 15 }}>
         <Markdown
@@ -48,7 +47,6 @@ export default class NotePreview extends React.Component {
           rules={{
             li: (node, children, parent, styles) => {
               if (this.hasParents(parent, 'ul')) {
-
                 // For tasklist
                 if (node.children[0] && node.children[0].type === 'p' && node.children[0].children[0] && node.children[0].children[0].type === 'input') {
                   return (
@@ -57,7 +55,7 @@ export default class NotePreview extends React.Component {
                         {children}
                       </View>
                     </View>
-                  );
+                  )
                 }
 
                 return (
@@ -69,7 +67,7 @@ export default class NotePreview extends React.Component {
                       {children}
                     </View>
                   </View>
-                );
+                )
               }
 
               if (this.hasParents(parent, 'ol')) {
@@ -82,14 +80,14 @@ export default class NotePreview extends React.Component {
                       {children}
                     </View>
                   </View>
-                );
+                )
               }
 
               return (
                 <View key={node.key} style={[styles.listItem]}>
                   {children}
                 </View>
-              );
+              )
             },
             label: (node, children, parents) => {
               return children
@@ -106,7 +104,7 @@ export default class NotePreview extends React.Component {
                   this.props.onTapCheckBox(this.state.taskListLinesFromMarkdown[i])
                 }}
                 isChecked={!!node.attributes.checked}
-                isIndeterminate={false}/>
+                isIndeterminate={false} />
             }
           }}
           children={this.state.text}
