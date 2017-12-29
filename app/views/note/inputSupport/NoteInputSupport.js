@@ -68,48 +68,6 @@ export default class NoteInputSupport extends React.Component {
           </TouchableHighlight>
           <TouchableHighlight
             onPress={() => {
-              this.props.insertMarkdownBetween('**')
-            }}
-            style={Styles.inputElementsStyle}>
-            <View>
-              <SvgUri
-                  width='17'
-                  height='17'
-                  source={boldIcon}
-                  style={Styles.supportImage}
-              />
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={() => {
-              this.props.insertMarkdownBetween('_')
-            }}
-            style={Styles.inputElementsStyle}>
-            <View>
-              <SvgUri
-                  width='17'
-                  height='17'
-                  source={italicIcon}
-                  style={Styles.supportImage}
-              />
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={() => {
-              this.props.insertMarkdownBetween('> ')
-            }}
-            style={Styles.inputElementsStyle}>
-            <View>
-              <SvgUri
-                  width='17'
-                  height='17'
-                  source={quoteIcon}
-                  style={Styles.supportImage}
-              />
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={() => {
               this.props.insertMarkdownBetween('- [ ] ')
             }}
             style={Styles.inputElementsStyle}>
@@ -130,6 +88,48 @@ export default class NoteInputSupport extends React.Component {
                   width='17'
                   height='17'
                   source={pasteIcon}
+                  style={Styles.supportImage}
+              />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => {
+              this.props.insertMarkdownBetween('**')
+            }}
+            style={Styles.inputElementsStyle}>
+            <View>
+              <SvgUri
+                  width='17'
+                  height='17'
+                  source={boldIcon}
+                  style={Styles.supportImage}
+              />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => {
+              this.props.insertMarkdownBetween('> ')
+            }}
+            style={Styles.inputElementsStyle}>
+            <View>
+              <SvgUri
+                  width='17'
+                  height='17'
+                  source={quoteIcon}
+                  style={Styles.supportImage}
+              />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => {
+              this.props.insertMarkdownBetween('_')
+            }}
+            style={Styles.inputElementsStyle}>
+            <View>
+              <SvgUri
+                  width='17'
+                  height='17'
+                  source={italicIcon}
                   style={Styles.supportImage}
               />
             </View>

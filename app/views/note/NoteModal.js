@@ -250,7 +250,7 @@ export default class NoteModal extends React.Component {
                                             }
                                         }
                                     )}>
-                                        <Text><Icon name='md-more' style={styles.noteDetailButton}/></Text>
+                                        <Text><Icon name='ios-more' style={styles.noteDetailButton}/></Text>
                                     </Button>
                                 </Root>
                             </View>
