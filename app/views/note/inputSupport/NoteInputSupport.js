@@ -7,6 +7,18 @@ import {
 } from 'react-native'
 import Styles from './NoteInputSupportStyles'
 
+import SvgUri from 'react-native-svg-uri'
+
+import headIcon from '../../../resource/noteInputSupportIcons/icon-head.svg'
+import listIcon from '../../../resource/noteInputSupportIcons/icon-list.svg'
+import codeIcon from '../../../resource/noteInputSupportIcons/icon-code.svg'
+import boldIcon from '../../../resource/noteInputSupportIcons/icon-bold.svg'
+import italicIcon from '../../../resource/noteInputSupportIcons/icon-italic.svg'
+import quoteIcon from '../../../resource/noteInputSupportIcons/icon-quote.svg'
+import checkboxIcon from '../../../resource/noteInputSupportIcons/icon-checkbox.svg'
+import pasteIcon from '../../../resource/noteInputSupportIcons/icon-paste.svg'
+
+
 export default class NoteInputSupport extends React.Component {
   render() {
     return (
@@ -18,8 +30,12 @@ export default class NoteInputSupport extends React.Component {
             }}
             style={Styles.inputElementsStyle}>
             <View>
-              <Text style={Styles.supportMain}>#</Text>
-              <Text style={Styles.supportSub}>Head</Text>
+              <SvgUri
+                  width='17'
+                  height='17'
+                  source={headIcon}
+                  style={Styles.supportImage}
+              />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -28,8 +44,12 @@ export default class NoteInputSupport extends React.Component {
             }}
             style={Styles.inputElementsStyle}>
             <View>
-              <Text style={Styles.supportMain}>-</Text>
-              <Text style={Styles.supportSub}>List</Text>
+              <SvgUri
+                  width='17'
+                  height='17'
+                  source={listIcon}
+                  style={Styles.supportImage}
+              />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -38,8 +58,12 @@ export default class NoteInputSupport extends React.Component {
             }}
             style={Styles.inputElementsStyle}>
             <View>
-              <Text style={Styles.supportMain}>```</Text>
-              <Text style={Styles.supportSub}>Code</Text>
+              <SvgUri
+                  width='17'
+                  height='17'
+                  source={codeIcon}
+                  style={Styles.supportImage}
+              />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -48,8 +72,12 @@ export default class NoteInputSupport extends React.Component {
             }}
             style={Styles.inputElementsStyle}>
             <View>
-              <Text style={Styles.supportMain}>**</Text>
-              <Text style={Styles.supportSub}>Bold</Text>
+              <SvgUri
+                  width='17'
+                  height='17'
+                  source={boldIcon}
+                  style={Styles.supportImage}
+              />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -58,8 +86,12 @@ export default class NoteInputSupport extends React.Component {
             }}
             style={Styles.inputElementsStyle}>
             <View>
-              <Text style={Styles.supportMain}>_</Text>
-              <Text style={Styles.supportSub}>italic</Text>
+              <SvgUri
+                  width='17'
+                  height='17'
+                  source={italicIcon}
+                  style={Styles.supportImage}
+              />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -68,8 +100,12 @@ export default class NoteInputSupport extends React.Component {
             }}
             style={Styles.inputElementsStyle}>
             <View>
-              <Text style={Styles.supportMain}>&gt;</Text>
-              <Text style={Styles.supportSub}>Quote</Text>
+              <SvgUri
+                  width='17'
+                  height='17'
+                  source={quoteIcon}
+                  style={Styles.supportImage}
+              />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -78,14 +114,25 @@ export default class NoteInputSupport extends React.Component {
             }}
             style={Styles.inputElementsStyle}>
             <View>
-              <Text style={Styles.supportMain}>- [ ]</Text>
-              <Text style={Styles.supportSub}>TaskList</Text>
+              <SvgUri
+                  width='17'
+                  height='17'
+                  source={checkboxIcon}
+                  style={Styles.supportImage}
+              />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
             onPress={this.props.pasteContent.bind(this)}
             style={Styles.inputElementsStyle}>
-            <Text style={Styles.pasteButton}>Paste</Text>
+            <View>
+              <SvgUri
+                  width='17'
+                  height='17'
+                  source={pasteIcon}
+                  style={Styles.supportImage}
+              />
+            </View>
           </TouchableHighlight>
         </ScrollView>
       </View>

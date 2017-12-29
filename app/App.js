@@ -37,24 +37,24 @@ const DEFAULT_FOLDER = "DEFAULT_FOLDER"
 
 const styles = {
     iosHeader: {
-        backgroundColor: '#239F85',
+        backgroundColor: '#f9f9f9',
     },
     androidHeader: {
-        backgroundColor: '#29BB9C',
+        backgroundColor: '#f9f9f9',
         height: 70
     },
     iOsAppName: {
-        color: '#ffffff',
-        fontSize: 21,
-        fontWeight: '300',
+        color: '#1ec38b',
+        fontSize: 18,
+        fontWeight: '600',
     },
     androidAppName: {
-        color: '#ffffff',
-        fontSize: 21,
-        fontWeight: '300',
+        color: '#1ec38b',
+        fontSize: 18,
+        fontWeight: '600',
     },
     headerMenuButton: {
-        color: '#ffffff',
+        color: '#1ec38b',
         fontSize: 24,
     },
     headerRightMenuButton: {
@@ -80,7 +80,7 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#D15419',
+        backgroundColor: '#1ec38b',
         width: 60,
         height: 60,
         borderRadius: 50,
@@ -337,7 +337,7 @@ export default class App extends Component {
                         <Left>
                             <View>
                                 <Button transparent onPress={this.openDrawer}>
-                                    <Icon name='md-list' style={styles.headerMenuButton}/>
+                                    <Icon name='md-reorder' style={styles.headerMenuButton}/>
                                 </Button>
                             </View>
                         </Left>
@@ -347,7 +347,7 @@ export default class App extends Component {
                                 <Title style={Platform.OS === 'android' ? styles.androidAppName : styles.iOsAppName}>
                                     {
                                         mode === 0
-                                        ? 'NOTES'
+                                        ? 'All Notes'
                                         : 'Dropbox'
                                     }
                                 </Title>
@@ -380,7 +380,7 @@ export default class App extends Component {
                       onPress={() => this.onPressActionButton()}
                       style={styles.newPostButtonWrap}>
                         <View style={styles.newPostButton}>
-                            <Icon name='md-create' style={{color: "#fff"}}/>
+                            <Icon name='md-add' style={{color: "#fff"}}/>
                         </View>
                     </Button>
                     <NoteModal setIsOpen={this.setNoteModalIsOpen}

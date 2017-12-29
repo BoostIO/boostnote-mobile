@@ -34,18 +34,34 @@ import NoteInputSupport from './inputSupport/NoteInputSupport'
 const styles = {
    switchButton: {
        backgroundColor: 'transparent',
-       borderColor: '#EFF1F5',
+       borderColor: '#1ec38b',
        borderWidth: 1
    },
    switchButtonActive: {
        backgroundColor: '#EFF1F5',
-       borderColor: '#EFF1F5',
+       borderColor: '#1ec38b',
        borderWidth: 1
    },
+   switchEditButton: {
+     position:'absolute',
+     width: 40,
+     right: 20
+   },
+   switchEditText: {
+     color: '#1ec38b',
+     fontSize: 16,
+     lineHeight: 16
+   },
    noteDetailButton: {
-       color: '#EFF1F5',
+       color: '#1ec38b',
        fontSize: 23
    },
+   backHomeText: {
+       color: '#1ec38b',
+       fontSize: 17,
+       lineHeight: 17,
+       paddingLeft: 10
+   }
 }
 
 export default class NoteModal extends React.Component {
@@ -57,7 +73,7 @@ export default class NoteModal extends React.Component {
             fileName: this.props.fileName,
             text: this.props.content,
             height: 0,
-            isLeftSegmentActive: true,
+            isEditting: true,
             visibleHeight: 230,
             endOfSelection: 0,
         }
@@ -73,7 +89,7 @@ export default class NoteModal extends React.Component {
 
         // if user open an another file, set state.
         this.setState({
-            isLeftSegmentActive: true,
+            isEditting: true,
             fileName: props.fileName,
             text: props.content,
         })
@@ -110,7 +126,7 @@ export default class NoteModal extends React.Component {
     }
 
     getNoteComponent() {
-        if (this.state.isLeftSegmentActive) {
+        if (this.state.isEditting) {
             return <View style={{flex: 1}}>
                 <ScrollView keyboardShouldPersistTaps='always'>
                     <TextInput
@@ -184,6 +200,12 @@ export default class NoteModal extends React.Component {
       this.onChangeText(lines.join('\n'))
     }
 
+    handleSwitchEditButtonClick () {
+      this.setState({
+        isEditting: !this.state.isEditting
+      })
+    }
+
     render() {
         return (
             <Modal
@@ -193,33 +215,24 @@ export default class NoteModal extends React.Component {
                 swipeToClose={false}
                 onClosed={() => this.props.setIsOpen('', false)}>
                 <Container>
-                    <Header style={Platform.OS === 'android' ? {height: 47,backgroundColor: '#6C81A6'} : {backgroundColor: '#6C81A6'}} androidStatusBarColor='#239F85'>
+                    <Header style={Platform.OS === 'android' ? {height: 47,backgroundColor: '#f9f9f9'} : {backgroundColor: '#f9f9f9'}} androidStatusBarColor='#239F85'>
                         <Left style={Platform.OS === 'android' ? {top: 0} : null}>
                             <Button transparent onPress={() => this.props.setIsOpen('', false)}>
-                                <Text><Icon name='md-close' style={styles.noteDetailButton}/></Text>
+                                <Text><Icon name='ios-arrow-back' style={styles.noteDetailButton}/></Text>
+                                <Text style={styles.backHomeText}>All Notes</Text>
                             </Button>
                         </Left>
 
-                        <Body style={Platform.OS === 'android' ? {top: 0} : null}>
-                            <Segment style={Platform.OS === 'android' ? {paddingRight: 25, position: 'relative', backgroundColor: 'transparent', borderWidth:1} : {marginLeft: 50, position: 'absolute', top: -22, backgroundColor: 'transparent'}}>
-                                <Button onPress={() => {
-                                    this.setState({isLeftSegmentActive: true})
-                                }} first active={this.state.isLeftSegmentActive}
-                                style={this.state.isLeftSegmentActive ? styles.switchButtonActive : styles.switchButton}>
-                                    <Text><Icon name='create' style={this.state.isLeftSegmentActive ? {color: '#6C81A6'} : {}}/></Text>
-                                </Button>
-                                <Button onPress={() => {
-                                    this.setState({isLeftSegmentActive: false})
-                                }} last active={!this.state.isLeftSegmentActive}
-                                style={this.state.isLeftSegmentActive ? styles.switchButton : styles.switchButtonActive}>
-                                    <Text><Icon name='eye' style={this.state.isLeftSegmentActive ? {color: '#EFF1F5'} : {color: '#6C81A6'}}/></Text>
-                                </Button>
-                            </Segment>
-                        </Body>
-
-                        <Right style={Platform.OS === 'android' ? {top: 0} : {top: 3}}>
+                        <Right style={Platform.OS === 'android' ? {top: 0} : {top: 3, flex: 1, flexDirection: 'row'}}>
                             <View>
                                 <Root>
+                                    <Button transparent
+                                        style={styles.switchEditButton}
+                                        onPress={this.handleSwitchEditButtonClick.bind(this)}>
+                                         <Text style={styles.switchEditText}>
+                                             {this.state.isEditting ? 'Done' : 'Edit'}
+                                         </Text>
+                                    </Button>
                                     <Button transparent onPress={() => ActionSheet.show(
                                         {
                                             options: ["Delete", "Cancel"],
