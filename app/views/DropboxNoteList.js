@@ -304,7 +304,7 @@ export default class DropboxNoteList extends Component {
       .then((response) => {
         AsyncStorage.setItem(DROPBOX_ACCESS_TOKEN, response.access_token)
           .then((value) => {
-            this.getDropboxNoteData(value)
+            this.getToken()
           })
           .catch((e) => {
             Alert.alert(
@@ -320,7 +320,7 @@ export default class DropboxNoteList extends Component {
       .catch((e) => {
         Alert.alert(
           'Cannot authorize',
-          'Please input a valid token',
+          'Please restart this app and input a valid token',
           [
             { text: 'OK' }
           ],
