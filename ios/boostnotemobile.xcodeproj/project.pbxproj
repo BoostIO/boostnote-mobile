@@ -329,18 +329,18 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		940B174C1FF713F7002CB71C /* PBXContainerItemProxy */ = {
+		940B18F71FF71EBB002CB71C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7C0E058A934D4FE4A6E92FD1 /* RNSVG.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 0CF68AC11AF0540F00FF9E5C;
 			remoteInfo = RNSVG;
 		};
-		940B174E1FF713F7002CB71C /* PBXContainerItemProxy */ = {
+		940B18F91FF71EBB002CB71C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7C0E058A934D4FE4A6E92FD1 /* RNSVG.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 940B17471FF713F7002CB71C;
+			remoteGlobalIDString = 940B18CC1FF71EB9002CB71C;
 			remoteInfo = "RNSVG-tvOS";
 		};
 		948CC5A51FC7DDAB006E1E9A /* PBXContainerItemProxy */ = {
@@ -747,11 +747,11 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		940B17481FF713F7002CB71C /* Products */ = {
+		940B18F31FF71EBB002CB71C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				940B174D1FF713F7002CB71C /* libRNSVG.a */,
-				940B174F1FF713F7002CB71C /* libRNSVG-tvOS.a */,
+				940B18F81FF71EBB002CB71C /* libRNSVG.a */,
+				940B18FA1FF71EBB002CB71C /* libRNSVG-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -939,7 +939,7 @@
 					ProjectRef = 9AC4E96805824F738A14A329 /* RNFetchBlob.xcodeproj */;
 				},
 				{
-					ProductGroup = 940B17481FF713F7002CB71C /* Products */;
+					ProductGroup = 940B18F31FF71EBB002CB71C /* Products */;
 					ProjectRef = 7C0E058A934D4FE4A6E92FD1 /* RNSVG.xcodeproj */;
 				},
 			);
@@ -1213,18 +1213,18 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		940B174D1FF713F7002CB71C /* libRNSVG.a */ = {
+		940B18F81FF71EBB002CB71C /* libRNSVG.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNSVG.a;
-			remoteRef = 940B174C1FF713F7002CB71C /* PBXContainerItemProxy */;
+			remoteRef = 940B18F71FF71EBB002CB71C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		940B174F1FF713F7002CB71C /* libRNSVG-tvOS.a */ = {
+		940B18FA1FF71EBB002CB71C /* libRNSVG-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libRNSVG-tvOS.a";
-			remoteRef = 940B174E1FF713F7002CB71C /* PBXContainerItemProxy */;
+			remoteRef = 940B18F91FF71EBB002CB71C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		948CC5A61FC7DDAB006E1E9A /* libCodePush.a */ = {
