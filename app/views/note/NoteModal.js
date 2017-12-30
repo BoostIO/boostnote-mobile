@@ -18,7 +18,6 @@ import Modal from 'react-native-modalbox'
 import NotePreview from './preview/NotePreviewComponent'
 import NoteInputSupport from './inputSupport/NoteInputSupport'
 import RNFetchBlob from 'react-native-fetch-blob'
-import styles from './NoteModalStyle'
 import HeaderComponent from './HeaderComponent'
 const fs = RNFetchBlob.fs
 

@@ -21,7 +21,6 @@ import CoffeeScript from '../../lib/CofeeScriptEval'
 import NotePreview from './preview/NotePreviewComponent'
 import NoteInputSupport from './inputSupport/NoteInputSupport'
 import removeMd from 'remove-markdown-and-html'
-import styles from './NoteModalStyle'
 import HeaderComponent from './HeaderComponent'
 
 const js2coffee = require('js2coffee/dist/js2coffee')
