@@ -79,12 +79,35 @@ export default class NoteModal extends React.Component {
         })
     }
 
-    onChangeText(text) {
-        this.setState({
-            text: text
+    async onChangeText(text) {
+      // set note state
+      this.setState({
+        text: text
+      })
+
+      // save to file
+      const dirs = RNFetchBlob.fs.dirs
+      fs.writeFile(`${dirs.DocumentDir}/Boostnote/${this.state.fileName}`, text, 'utf8')
+
+      // update note list data
+      const settingJsonFile = await fs.readFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, 'utf8')
+      const parsedSetting = JSON.parse(settingJsonFile);
+      let filteredSettingFile = parsedSetting.note.filter(setting => {
+        return setting.name === this.state.fileName
+      })[0]
+      filteredSettingFile.updatedAt = new Date()
+
+      let newJsonFile = parsedSetting.note
+        .filter(setting => {
+          return setting.name !== this.state.fileName
         })
-        const dirs = RNFetchBlob.fs.dirs
-        fs.writeFile(`${dirs.DocumentDir}/Boostnote/${this.state.fileName}`, text, 'utf8')
+
+      newJsonFile.push(filteredSettingFile)
+      parsedSetting.note = newJsonFile
+
+      fs.writeFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, JSON.stringify(parsedSetting), 'utf8')
+        .catch(err => console.log(err))
+
     }
 
     componentWillMount () {
