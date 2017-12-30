@@ -230,7 +230,7 @@ export default class NoteModal extends React.Component {
                                         style={styles.switchEditButton}
                                         onPress={this.handleSwitchEditButtonClick.bind(this)}>
                                          <Text style={styles.switchEditText}>
-                                             {this.state.isEditting ? 'Done' : 'Edit'}
+                                             {this.state.isEditting ? 'Save' : 'Edit'}
                                          </Text>
                                     </Button>
                                     <Button transparent onPress={() => ActionSheet.show(
