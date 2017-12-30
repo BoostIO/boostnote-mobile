@@ -72,7 +72,7 @@ const styles = {
             width: 0,
             height: 3,
         },
-        shadowColor: '#CF5425',
+        shadowColor: '#282C34',
         shadowOpacity: 0.4,
         shadowRadius: 6,
     },

@@ -70,21 +70,6 @@ const styles = {
     fontSize: 21,
     marginRight: 20
   },
-  noteListIconWrap: {
-    backgroundColor: '#eeeeee',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 30,
-    height: 30,
-    borderRadius: 50,
-    overflow: 'hidden',
-    marginTop: 9
-  },
-  noteListIcon: {
-    fontSize: 14,
-    color: '#adadad'
-  },
   noteListText: {
     position: 'absolute',
     color: '#3a3941',
@@ -92,7 +77,7 @@ const styles = {
     top: 15,
     fontSize: 14,
     width: '73%',
-    marginLeft: 40
+    marginLeft: 10
   },
   noteListTextNone: {
     position: 'absolute',
@@ -531,9 +516,6 @@ export default class DropboxNoteList extends Component {
                         key={note.fileName}
                         button onPress={() => this.setNoteModalOpen(note.path)}>
                         <Body>
-                        <View style={styles.noteListIconWrap}>
-                          <Icon name='md-code-working' style={styles.noteListIcon}/>
-                        </View>
                         <Text numberOfLines={1}
                               style={styles.noteListText}>{note.content}</Text>
                         <Text style={styles.noteListDate}>{moment(note.updatedAt).format('MMM D')}</Text>

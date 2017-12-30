@@ -310,7 +310,7 @@ export default class DropboxNoteModal extends React.Component {
                     style={styles.switchEditButton}
                     onPress={this.handleSwitchEditButtonClick.bind(this)}>
                      <Text style={styles.switchEditText}>
-                         {this.state.isEditting ? 'Done' : 'Edit'}
+                         {this.state.isEditting ? 'Save' : 'Edit'}
                      </Text>
                   </Button>
                   <Button transparent onPress={() => ActionSheet.show(
@@ -330,7 +330,7 @@ export default class DropboxNoteModal extends React.Component {
                       }
                     }
                   )}>
-                    <Text><Icon name='md-more' style={styles.noteDetailButton}/></Text>
+                    <Text><Icon name='ios-more' style={styles.noteDetailButton}/></Text>
                   </Button>
                 </Root>
               </View>
