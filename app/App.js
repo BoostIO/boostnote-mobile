@@ -70,15 +70,15 @@ const HeaderRight = ({onFilterFavorites, filterFavorites}) => (
   </Right>
 )
 
-const NoteList = ({noteList, filterFavorites}) => (
+const NoteList = ({noteList, filterFavorites, onStarPress, setNoteModalIsOpen}) => (
   <Content contentContainerStyle={{ display: 'flex' }}>
     {
       noteList.map((note) => {
         if (filterFavorites && !note.isStarred) return null
         return <NoteListItem
           note={note}
-          onStarPress={this.onStarPress}
-          onNotePress={this.setNoteModalIsOpen}
+          onStarPress={onStarPress}
+          onNotePress={setNoteModalIsOpen}
           key={note.fileName} />
       })
     }
@@ -347,7 +347,10 @@ export default class App extends Component {
           </Header>
           {
             mode === 0
-              ? <NoteList noteList={noteList} filterFavorite={filterFavorites} />
+              ? <NoteList noteList={noteList}
+                filterFavorite={filterFavorites}
+                onStarPress={this.onStarPress}
+                setNoteModalIsOpen={this.setNoteModalIsOpen} />
               : <DropboxNoteList ref='dropboxNoteList' />
           }
         </Container>
