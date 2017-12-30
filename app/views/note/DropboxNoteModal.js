@@ -2,7 +2,6 @@ import React from 'react'
 import {
   Keyboard,
   Dimensions,
-  Text,
   Platform,
   AsyncStorage,
   View,
@@ -13,14 +12,8 @@ import {
 } from 'react-native'
 import {
   Container,
-  Header,
   Content,
-  Button,
-  Left,
-  Right,
-  Icon,
-  ActionSheet,
-  Root
+  ActionSheet
 } from 'native-base'
 
 import Modal from 'react-native-modalbox'
@@ -29,6 +22,7 @@ import NotePreview from './preview/NotePreviewComponent'
 import NoteInputSupport from './inputSupport/NoteInputSupport'
 import removeMd from 'remove-markdown-and-html'
 import styles from './NoteModalStyle'
+import HeaderComponent from './HeaderComponent'
 
 const js2coffee = require('js2coffee/dist/js2coffee')
 
@@ -244,6 +238,27 @@ export default class DropboxNoteModal extends React.Component {
     })
   }
 
+  handlePressDetailButton () {
+    ActionSheet.show(
+      {
+        options: ['Delete', 'Cancel'],
+        cancelButtonIndex: 1,
+        destructiveButtonIndex: 0
+      },
+      buttonIndex => {
+        // `buttonIndex` is a string in Android, a number in iOS.
+        const androidCondition = Platform.OS === 'android' && buttonIndex === '0'
+        const iosCondition = Platform.OS === 'ios' && buttonIndex === 0
+        if (androidCondition || iosCondition) {
+          this.setState((prevState, props) => {
+            prevState.note.isTrashed = true
+            return { note: prevState.note }
+          }, this.onCloseModal())
+        }
+      }
+    )
+  }
+
   render () {
     return (
       <Modal
@@ -253,51 +268,12 @@ export default class DropboxNoteModal extends React.Component {
         swipeToClose={false}
         onClosed={() => this.onCloseModal()}>
         <Container>
-          <Header style={Platform.OS === 'android' ? {
-            height: 47,
-            backgroundColor: '#f9f9f9'
-          } : { backgroundColor: '#f9f9f9' }} androidStatusBarColor='#239F85'>
-            <Left style={Platform.OS === 'android' ? { top: 0 } : null}>
-              <Button transparent onPress={() => this.props.setNoteModalClose()} disable={this.state.isLoading}>
-                <Text><Icon name='ios-arrow-back' style={styles.noteDetailButton} /></Text>
-                <Text style={styles.backHomeText}>Dropbox</Text>
-              </Button>
-            </Left>
-
-            <Right style={Platform.OS === 'android' ? {top: 0} : {top: 3}}>
-              <View>
-                <Root>
-                  <Button transparent
-                    style={styles.switchEditButton}
-                    onPress={this.handleSwitchEditButtonClick.bind(this)}>
-                    <Text style={styles.switchEditText}>
-                      {this.state.isEditting ? 'Save' : 'Edit'}
-                    </Text>
-                  </Button>
-                  <Button transparent onPress={() => ActionSheet.show(
-                    {
-                      options: ['Delete', 'Cancel'],
-                      cancelButtonIndex: 1,
-                      destructiveButtonIndex: 0
-                    },
-                    buttonIndex => {
-                      // `buttonIndex` is a string in Android, a number in iOS.
-                      const androidCondition = Platform.OS === 'android' && buttonIndex === '0'
-                      const iosCondition = Platform.OS === 'ios' && buttonIndex === 0
-                      if (androidCondition || iosCondition) {
-                        this.setState((prevState, props) => {
-                          prevState.note.isTrashed = true
-                          return { note: prevState.note }
-                        }, this.onCloseModal())
-                      }
-                    }
-                  )}>
-                    <Text><Icon name='ios-more' style={styles.noteDetailButton} /></Text>
-                  </Button>
-                </Root>
-              </View>
-            </Right>
-          </Header>
+          <HeaderComponent
+            setIsOpen={this.props.setIsOpen}
+            folderName='Dropbox'
+            handleSwitchEditButtonClick={this.handleSwitchEditButtonClick.bind(this)}
+            isEditting={this.state.isEditting}
+            handlePressDetailButton={this.handlePressDetailButton.bind(this)} />
           <Content keyboardShouldPersistTaps='always'>
             <ActivityIndicator animating={this.state.isLoading} />
             {this.state.isLoading
