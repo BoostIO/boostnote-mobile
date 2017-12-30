@@ -17,37 +17,35 @@ import {
   Content,
   Button,
   Left,
-  Body,
   Right,
   Icon,
-  Segment,
   ActionSheet,
   Root
 } from 'native-base'
 
 import Modal from 'react-native-modalbox'
 import CoffeeScript from '../../lib/CofeeScriptEval'
-
-const js2coffee = require('js2coffee/dist/js2coffee');
 import NotePreview from './preview/NotePreviewComponent'
 import NoteInputSupport from './inputSupport/NoteInputSupport'
 import removeMd from 'remove-markdown-and-html'
+
+const js2coffee = require('js2coffee/dist/js2coffee')
 
 const DROPBOX_ACCESS_TOKEN = 'DROPBOX:ACCESS_TOKEN'
 
 const styles = {
   switchButton: {
-      backgroundColor: 'transparent',
-      borderColor: '#1ec38b',
-      borderWidth: 1
+    backgroundColor: 'transparent',
+    borderColor: '#1ec38b',
+    borderWidth: 1
   },
   switchButtonActive: {
-      backgroundColor: '#EFF1F5',
-      borderColor: '#1ec38b',
-      borderWidth: 1
+    backgroundColor: '#EFF1F5',
+    borderColor: '#1ec38b',
+    borderWidth: 1
   },
   switchEditButton: {
-    position:'absolute',
+    position: 'absolute',
     width: 40,
     right: 20
   },
@@ -57,20 +55,19 @@ const styles = {
     lineHeight: 16
   },
   noteDetailButton: {
-      color: '#1ec38b',
-      fontSize: 23
+    color: '#1ec38b',
+    fontSize: 23
   },
   backHomeText: {
-      color: '#1ec38b',
-      fontSize: 17,
-      lineHeight: 17,
-      paddingLeft: 10
+    color: '#1ec38b',
+    fontSize: 17,
+    lineHeight: 17,
+    paddingLeft: 10
   }
 }
 
 export default class DropboxNoteModal extends React.Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -81,19 +78,19 @@ export default class DropboxNoteModal extends React.Component {
       isEditting: true,
       visibleHeight: 230,
       endOfSelection: 0,
-      isNoteOpen: props.isNoteOpen,
+      isNoteOpen: props.isNoteOpen
     }
     this.keyboardDidShow = this.keyboardDidShow.bind(this)
     this.keyboardDidHide = this.keyboardDidHide.bind(this)
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps (props) {
     if ((this.state.isNoteOpen !== props.isNoteOpen) && props.isNoteOpen && props.path) {
       this.getNoteData(props.path)
 
       this.setState({
         isEditting: true,
-        path: props.path,
+        path: props.path
       })
     }
     this.setState({
@@ -101,7 +98,7 @@ export default class DropboxNoteModal extends React.Component {
     })
   }
 
-  getNoteData(path) {
+  getNoteData (path) {
     this.setState({
       isLoading: true
     })
@@ -117,7 +114,7 @@ export default class DropboxNoteModal extends React.Component {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Dropbox-API-Arg': `{"path":  "${path}"}`,
+            'Dropbox-API-Arg': `{"path":  "${path}"}`
           }
         })
           .then((response) => {
@@ -134,57 +131,55 @@ export default class DropboxNoteModal extends React.Component {
 
             this.setState({
               note: response,
-              isLoading: false,
+              isLoading: false
             })
           })
           .catch((error) => {
             this.setState({
-              isLoading: false,
+              isLoading: false
             })
             console.log(error)
           })
       })
-
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.keyboardDidShowListener.remove()
     this.keyboardDidHideListener.remove()
   }
 
-  keyboardDidShow(e) {
+  keyboardDidShow (e) {
     this.setState({
-      visibleHeight: Dimensions.get('window').height - e.endCoordinates.height - 140,
+      visibleHeight: Dimensions.get('window').height - e.endCoordinates.height - 140
     })
   }
 
-  keyboardDidHide(e) {
+  keyboardDidHide (e) {
     this.setState({
-      visibleHeight: Dimensions.get('window').height - 100,
+      visibleHeight: Dimensions.get('window').height - 100
     })
   }
 
-  getNoteComponent() {
+  getNoteComponent () {
     if (this.state.isEditting) {
       return <View style={{ flex: 1 }}>
         <ScrollView keyboardShouldPersistTaps='always'>
           <TextInput
-            ref="TextInput"
-            multiline={true}
+            ref='TextInput'
+            multiline
             style={{ margin: 8, height: this.state.visibleHeight - 55 }}
             onChangeText={(e) => this.onChangeText(e)}
             value={this.state.note.content}
             onSelectionChange={(e) => {
               this.setState({ endOfSelection: e.nativeEvent.selection.end })
             }}
-            autoFocus={true}
-            textAlignVertical={'top'}>
-          </TextInput>
+            autoFocus
+            textAlignVertical={'top'} />
           <NoteInputSupport
             insertMarkdownBetween={this.insertMarkdownBetween.bind(this)}
             pasteContent={this.pasteContent.bind(this)}
@@ -199,7 +194,7 @@ export default class DropboxNoteModal extends React.Component {
     }
   }
 
-  onChangeText(text) {
+  onChangeText (text) {
     this.updateNoteContent(text)
   }
 
@@ -207,7 +202,7 @@ export default class DropboxNoteModal extends React.Component {
    * Insert markdown characters to the text of selected place.
    * @param character Markdown character
    */
-  insertMarkdownBetween(character) {
+  insertMarkdownBetween (character) {
     const beforeText = this.state.note.content.substring(0, this.state.endOfSelection)
     const afterText = this.state.note.content.substring(this.state.endOfSelection, this.state.note.content.length)
 
@@ -217,7 +212,7 @@ export default class DropboxNoteModal extends React.Component {
   /**
    * Paste from clipboard to the text
    */
-  async pasteContent() {
+  async pasteContent () {
     const beforeText = this.state.note.content.substring(0, this.state.endOfSelection)
     const afterText = this.state.note.content.substring(this.state.endOfSelection, this.state.note.content.length)
 
@@ -225,23 +220,22 @@ export default class DropboxNoteModal extends React.Component {
     this.updateNoteContent(newText)
   }
 
-  updateNoteContent(text) {
+  updateNoteContent (text) {
     this.setState((prevState, props) => {
       prevState.note.content = text
       prevState.note.title = removeMd(text.split('\n')[0])
       prevState.note.updatedAt = new Date()
       return { note: prevState.note }
     })
-
   }
 
-  saveNoteToDropbox() {
+  saveNoteToDropbox () {
     fetch('https://content.dropboxapi.com/2/files/upload', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${this.state.token}`,
         'Dropbox-API-Arg': `{"path":  "${this.state.path}", "mode": "overwrite", "autorename": false, "mute": false }`,
-        'Content-Type': 'application/octet-stream',
+        'Content-Type': 'application/octet-stream'
       },
       body: js2coffee.build('(' + JSON.stringify(this.state.note) + ');').code
     })
@@ -251,18 +245,17 @@ export default class DropboxNoteModal extends React.Component {
       })
   }
 
-  onCloseModal() {
+  onCloseModal () {
     this.saveNoteToDropbox()
     this.props.setNoteModalClose()
-
   }
 
   /**
    * Toggle checkbox in markdown text
    * @param line
    */
-  tapCheckBox(line) {
-    const lines = this.state.note.content.split('\n');
+  tapCheckBox (line) {
+    const lines = this.state.note.content.split('\n')
 
     const targetLine = lines[line]
 
@@ -283,10 +276,10 @@ export default class DropboxNoteModal extends React.Component {
     })
   }
 
-  render() {
+  render () {
     return (
       <Modal
-        coverScreen={true}
+        coverScreen
         isOpen={this.state.isNoteOpen}
         position={'top'}
         swipeToClose={false}
@@ -298,7 +291,7 @@ export default class DropboxNoteModal extends React.Component {
           } : { backgroundColor: '#f9f9f9' }} androidStatusBarColor='#239F85'>
             <Left style={Platform.OS === 'android' ? { top: 0 } : null}>
               <Button transparent onPress={() => this.props.setNoteModalClose()} disable={this.state.isLoading}>
-                <Text><Icon name='ios-arrow-back' style={styles.noteDetailButton}/></Text>
+                <Text><Icon name='ios-arrow-back' style={styles.noteDetailButton} /></Text>
                 <Text style={styles.backHomeText}>Dropbox</Text>
               </Button>
             </Left>
@@ -309,20 +302,21 @@ export default class DropboxNoteModal extends React.Component {
                   <Button transparent
                     style={styles.switchEditButton}
                     onPress={this.handleSwitchEditButtonClick.bind(this)}>
-                     <Text style={styles.switchEditText}>
-                         {this.state.isEditting ? 'Save' : 'Edit'}
-                     </Text>
+                    <Text style={styles.switchEditText}>
+                      {this.state.isEditting ? 'Save' : 'Edit'}
+                    </Text>
                   </Button>
                   <Button transparent onPress={() => ActionSheet.show(
                     {
-                      options: ["Delete", "Cancel"],
+                      options: ['Delete', 'Cancel'],
                       cancelButtonIndex: 1,
-                      destructiveButtonIndex: 0,
+                      destructiveButtonIndex: 0
                     },
                     buttonIndex => {
                       // `buttonIndex` is a string in Android, a number in iOS.
-                      if (Platform.OS === 'android' && buttonIndex === '0'
-                        || Platform.OS === 'ios' && buttonIndex === 0) {
+                      const androidCondition = Platform.OS === 'android' && buttonIndex === '0'
+                      const iosCondition = Platform.OS === 'ios' && buttonIndex === 0
+                      if (androidCondition || iosCondition) {
                         this.setState((prevState, props) => {
                           prevState.note.isTrashed = true
                           return { note: prevState.note }
@@ -330,17 +324,17 @@ export default class DropboxNoteModal extends React.Component {
                       }
                     }
                   )}>
-                    <Text><Icon name='ios-more' style={styles.noteDetailButton}/></Text>
+                    <Text><Icon name='ios-more' style={styles.noteDetailButton} /></Text>
                   </Button>
                 </Root>
               </View>
             </Right>
           </Header>
           <Content keyboardShouldPersistTaps='always'>
-            <ActivityIndicator animating={this.state.isLoading}/>
-            {this.state.isLoading ?
-              null :
-              this.getNoteComponent()}
+            <ActivityIndicator animating={this.state.isLoading} />
+            {this.state.isLoading
+              ? null
+              : this.getNoteComponent()}
           </Content>
         </Container>
       </Modal>

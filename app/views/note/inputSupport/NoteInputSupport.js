@@ -1,9 +1,8 @@
 import React from 'react'
 import {
-  Text,
   View,
   TouchableHighlight,
-  ScrollView,
+  ScrollView
 } from 'react-native'
 import Styles from './NoteInputSupportStyles'
 
@@ -18,12 +17,11 @@ import quoteIcon from '../../../resource/noteInputSupportIcons/icon-quote.svg'
 import checkboxIcon from '../../../resource/noteInputSupportIcons/icon-checkbox.svg'
 import pasteIcon from '../../../resource/noteInputSupportIcons/icon-paste.svg'
 
-
 export default class NoteInputSupport extends React.Component {
-  render() {
+  render () {
     return (
       <View style={Styles.inputSupportWrap} >
-        <ScrollView horizontal={true} keyboardShouldPersistTaps='always'>
+        <ScrollView horizontal keyboardShouldPersistTaps='always'>
           <TouchableHighlight
             onPress={() => {
               this.props.insertMarkdownBetween('#')
@@ -31,10 +29,10 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='17'
-                  height='17'
-                  source={headIcon}
-                  style={Styles.supportImage}
+                width='17'
+                height='17'
+                source={headIcon}
+                style={Styles.supportImage}
               />
             </View>
           </TouchableHighlight>
@@ -45,10 +43,10 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='17'
-                  height='17'
-                  source={listIcon}
-                  style={Styles.supportImage}
+                width='17'
+                height='17'
+                source={listIcon}
+                style={Styles.supportImage}
               />
             </View>
           </TouchableHighlight>
@@ -59,10 +57,10 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='17'
-                  height='17'
-                  source={codeIcon}
-                  style={Styles.supportImage}
+                width='17'
+                height='17'
+                source={codeIcon}
+                style={Styles.supportImage}
               />
             </View>
           </TouchableHighlight>
@@ -73,10 +71,10 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='17'
-                  height='17'
-                  source={checkboxIcon}
-                  style={Styles.supportImage}
+                width='17'
+                height='17'
+                source={checkboxIcon}
+                style={Styles.supportImage}
               />
             </View>
           </TouchableHighlight>
@@ -85,10 +83,10 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='17'
-                  height='17'
-                  source={pasteIcon}
-                  style={Styles.supportImage}
+                width='17'
+                height='17'
+                source={pasteIcon}
+                style={Styles.supportImage}
               />
             </View>
           </TouchableHighlight>
@@ -99,10 +97,10 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='17'
-                  height='17'
-                  source={boldIcon}
-                  style={Styles.supportImage}
+                width='17'
+                height='17'
+                source={boldIcon}
+                style={Styles.supportImage}
               />
             </View>
           </TouchableHighlight>
@@ -113,10 +111,10 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='17'
-                  height='17'
-                  source={quoteIcon}
-                  style={Styles.supportImage}
+                width='17'
+                height='17'
+                source={quoteIcon}
+                style={Styles.supportImage}
               />
             </View>
           </TouchableHighlight>
@@ -127,10 +125,10 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                  width='17'
-                  height='17'
-                  source={italicIcon}
-                  style={Styles.supportImage}
+                width='17'
+                height='17'
+                source={italicIcon}
+                style={Styles.supportImage}
               />
             </View>
           </TouchableHighlight>
