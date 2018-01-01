@@ -11,7 +11,8 @@ import {
 import {
   Container,
   Content,
-  ActionSheet
+  ActionSheet,
+  Root
 } from 'native-base'
 
 import Modal from 'react-native-modalbox'
@@ -186,24 +187,26 @@ export default class NoteModal extends React.Component {
 
   render () {
     return (
-      <Modal
-        coverScreen
-        isOpen={this.props.isNoteOpen}
-        position={'top'}
-        swipeToClose={false}
-        onClosed={() => this.props.setIsOpen('', false)}>
-        <Container>
-          <HeaderComponent
-            setIsOpen={this.props.setIsOpen}
-            folderName='All Note'
-            handleSwitchEditButtonClick={this.handleSwitchEditButtonClick.bind(this)}
-            isEditting={this.state.isEditting}
-            handlePressDetailButton={this.handlePressDetailButton.bind(this)} />
-          <Content keyboardShouldPersistTaps='always'>
-            {this.getNoteComponent()}
-          </Content>
-        </Container>
-      </Modal>
+      <Root>
+        <Modal
+          coverScreen
+          isOpen={this.props.isNoteOpen}
+          position={'top'}
+          swipeToClose={false}
+          onClosed={() => this.props.setIsOpen('', false)}>
+          <Container>
+            <HeaderComponent
+              setIsOpen={this.props.setIsOpen}
+              folderName='All Note'
+              handleSwitchEditButtonClick={this.handleSwitchEditButtonClick.bind(this)}
+              isEditting={this.state.isEditting}
+              handlePressDetailButton={this.handlePressDetailButton.bind(this)} />
+            <Content keyboardShouldPersistTaps='always'>
+              {this.getNoteComponent()}
+            </Content>
+          </Container>
+        </Modal>
+      </Root>
     )
   }
 }
