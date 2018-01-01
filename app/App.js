@@ -22,6 +22,7 @@ import DropboxNoteList from './views/DropboxNoteList'
 import SideBar from './components/SideBar'
 import NoteModal from './views/note/NoteModal'
 import NoteListItem from './components/NoteList/NoteListItem'
+import styles from './AppStyle'
 
 import AwsMobileAnalyticsConfig from './lib/AwsMobileAnalytics'
 import { makeRandomHex } from './lib/Strings'
@@ -34,59 +35,66 @@ const MARKDOWN_NOTE = 'MARKDOWN_NOTE'
 // const SNIPPET_NOTE = 'SNIPPET_NOTE'
 const DEFAULT_FOLDER = 'DEFAULT_FOLDER'
 
-const styles = {
-  iosHeader: {
-    backgroundColor: '#f9f9f9'
-  },
-  androidHeader: {
-    backgroundColor: '#f9f9f9',
-    height: 70
-  },
-  iOsAppName: {
-    color: '#1ec38b',
-    fontSize: 18,
-    fontWeight: '600'
-  },
-  androidAppName: {
-    color: '#1ec38b',
-    fontSize: 18,
-    fontWeight: '600'
-  },
-  headerMenuButton: {
-    color: '#1ec38b',
-    fontSize: 24
-  },
-  headerRightMenuButton: {
-    color: '#FED530',
-    fontSize: 21
-  },
-  newPostButtonWrap: {
-    position: 'absolute',
-    right: 30,
-    bottom: 30,
-    width: 60,
-    height: 60,
-    borderRadius: 50,
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowColor: '#282C34',
-    shadowOpacity: 0.4,
-    shadowRadius: 6
-  },
-  newPostButton: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#1ec38b',
-    width: 60,
-    height: 60,
-    borderRadius: 50,
-    overflow: 'hidden',
-    position: 'absolute'
-  }
-}
+const HeaderLeft = ({openDrawer}) => (
+  <Left>
+    <View>
+      <Button transparent onPress={openDrawer}>
+        <Icon name='md-reorder' style={styles.headerMenuButton} />
+      </Button>
+    </View>
+  </Left>
+)
+
+const HeaderBody = ({mode}) => (
+  <Body>
+    <View>
+      <Title style={Platform.OS === 'android' ? styles.androidAppName : styles.iOsAppName}>
+        {
+          mode === 0
+            ? 'All Notes'
+            : 'Dropbox'
+        }
+      </Title>
+    </View>
+  </Body>
+)
+
+const HeaderRight = ({onFilterFavorites, filterFavorites}) => (
+  <Right>
+    <View>
+      <TouchableOpacity onPress={onFilterFavorites}>
+        <Icon name={filterFavorites ? 'md-star' : 'md-star-outline'}
+          style={styles.headerRightMenuButton} />
+      </TouchableOpacity>
+    </View>
+  </Right>
+)
+
+const NoteList = ({noteList, filterFavorites, onStarPress, setNoteModalIsOpen}) => (
+  <Content contentContainerStyle={{ display: 'flex' }}>
+    {
+      noteList.map((note) => {
+        if (filterFavorites && !note.isStarred) return null
+        return <NoteListItem
+          note={note}
+          onStarPress={onStarPress}
+          onNotePress={setNoteModalIsOpen}
+          key={note.fileName} />
+      })
+    }
+  </Content>
+)
+
+const CreateNewNoteButton = ({onPressActionButton}) => (
+  <Button
+    transparent
+    onPress={() => onPressActionButton()}
+    style={styles.newPostButtonWrap}>
+    <View style={styles.newPostButton}>
+      <Icon name='md-add' style={{color: '#fff'}} />
+    </View>
+  </Button>
+)
 
 export default class App extends Component {
   constructor () {
@@ -332,55 +340,22 @@ export default class App extends Component {
         panOpenMask={0.05}>
         <Container>
           <Header style={Platform.OS === 'android' ? styles.androidHeader : styles.iosHeader} androidStatusBarColor='#239F85'>
-            <Left>
-              <View>
-                <Button transparent onPress={this.openDrawer}>
-                  <Icon name='md-reorder' style={styles.headerMenuButton} />
-                </Button>
-              </View>
-            </Left>
-
-            <Body>
-              <View>
-                <Title style={Platform.OS === 'android' ? styles.androidAppName : styles.iOsAppName}>
-                  {
-                    mode === 0
-                      ? 'All Notes'
-                      : 'Dropbox'
-                  }
-                </Title>
-              </View>
-            </Body>
-
-            <Right>
-              <View>
-                <TouchableOpacity onPress={this.onFilterFavorites}>
-                  <Icon name={filterFavorites ? 'md-star' : 'md-star-outline'} style={styles.headerRightMenuButton} />
-                </TouchableOpacity>
-              </View>
-            </Right>
+            <HeaderLeft openDrawer={this.openDrawer} />
+            <HeaderBody mode={mode} />
+            <HeaderRight onFilterFavorites={this.onFilterFavorites}
+              filterFavorites={filterFavorites} />
           </Header>
           {
             mode === 0
-              ? <Content contentContainerStyle={{ display: 'flex' }}>
-                {
-                  noteList.map((note) => {
-                    if (filterFavorites && !note.isStarred) return null
-                    return <NoteListItem note={note} onStarPress={this.onStarPress} onNotePress={this.setNoteModalIsOpen} key={note.fileName} />
-                  })
-                }
-              </Content> : <DropboxNoteList ref='dropboxNoteList' />
+              ? <NoteList noteList={noteList}
+                filterFavorite={filterFavorites}
+                onStarPress={this.onStarPress}
+                setNoteModalIsOpen={this.setNoteModalIsOpen} />
+              : <DropboxNoteList ref='dropboxNoteList' />
           }
         </Container>
         <View>
-          <Button
-            transparent
-            onPress={() => this.onPressActionButton()}
-            style={styles.newPostButtonWrap}>
-            <View style={styles.newPostButton}>
-              <Icon name='md-add' style={{color: '#fff'}} />
-            </View>
-          </Button>
+          <CreateNewNoteButton onPressActionButton={this.onPressActionButton} />
           <NoteModal setIsOpen={this.setNoteModalIsOpen}
             isNoteOpen={isNoteOpen}
             fileName={fileName}
