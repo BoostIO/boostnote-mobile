@@ -8,14 +8,14 @@ import Styles from './NoteInputSupportStyles'
 
 import SvgUri from 'react-native-svg-uri'
 
-import headIcon from '../../../resource/noteInputSupportIcons/icon-head.svg'
-import listIcon from '../../../resource/noteInputSupportIcons/icon-list.svg'
-import codeIcon from '../../../resource/noteInputSupportIcons/icon-code.svg'
-import boldIcon from '../../../resource/noteInputSupportIcons/icon-bold.svg'
-import italicIcon from '../../../resource/noteInputSupportIcons/icon-italic.svg'
-import quoteIcon from '../../../resource/noteInputSupportIcons/icon-quote.svg'
-import checkboxIcon from '../../../resource/noteInputSupportIcons/icon-checkbox.svg'
-import pasteIcon from '../../../resource/noteInputSupportIcons/icon-paste.svg'
+import headIcon from '../../../resource/noteInputSupportIcons/icon-head'
+import listIcon from '../../../resource/noteInputSupportIcons/icon-list'
+import codeIcon from '../../../resource/noteInputSupportIcons/icon-code'
+import boldIcon from '../../../resource/noteInputSupportIcons/icon-bold'
+import italicIcon from '../../../resource/noteInputSupportIcons/icon-italic'
+import quoteIcon from '../../../resource/noteInputSupportIcons/icon-quote'
+import checkboxIcon from '../../../resource/noteInputSupportIcons/icon-checkbox'
+import pasteIcon from '../../../resource/noteInputSupportIcons/icon-paste'
 
 export default class NoteInputSupport extends React.Component {
   render () {
@@ -31,7 +31,7 @@ export default class NoteInputSupport extends React.Component {
               <SvgUri
                 width='17'
                 height='17'
-                source={headIcon}
+                svgXmlData={headIcon}
                 style={Styles.supportImage}
               />
             </View>
@@ -45,7 +45,7 @@ export default class NoteInputSupport extends React.Component {
               <SvgUri
                 width='17'
                 height='17'
-                source={listIcon}
+                svgXmlData={listIcon}
                 style={Styles.supportImage}
               />
             </View>
@@ -59,7 +59,7 @@ export default class NoteInputSupport extends React.Component {
               <SvgUri
                 width='17'
                 height='17'
-                source={codeIcon}
+                svgXmlData={codeIcon}
                 style={Styles.supportImage}
               />
             </View>
@@ -73,7 +73,7 @@ export default class NoteInputSupport extends React.Component {
               <SvgUri
                 width='17'
                 height='17'
-                source={checkboxIcon}
+                svgXmlData={checkboxIcon}
                 style={Styles.supportImage}
               />
             </View>
@@ -85,7 +85,7 @@ export default class NoteInputSupport extends React.Component {
               <SvgUri
                 width='17'
                 height='17'
-                source={pasteIcon}
+                svgXmlData={pasteIcon}
                 style={Styles.supportImage}
               />
             </View>
@@ -99,7 +99,7 @@ export default class NoteInputSupport extends React.Component {
               <SvgUri
                 width='17'
                 height='17'
-                source={boldIcon}
+                svgXmlData={boldIcon}
                 style={Styles.supportImage}
               />
             </View>
@@ -113,7 +113,7 @@ export default class NoteInputSupport extends React.Component {
               <SvgUri
                 width='17'
                 height='17'
-                source={quoteIcon}
+                svgXmlData={quoteIcon}
                 style={Styles.supportImage}
               />
             </View>
@@ -127,7 +127,7 @@ export default class NoteInputSupport extends React.Component {
               <SvgUri
                 width='17'
                 height='17'
-                source={italicIcon}
+                svgXmlData={italicIcon}
                 style={Styles.supportImage}
               />
             </View>
