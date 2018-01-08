@@ -24,5 +24,10 @@ export default Styles = {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%'
+  },
+  checkboxImage: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '90%'
   }
 }
