@@ -71,10 +71,10 @@ export default class NoteInputSupport extends React.Component {
             style={Styles.inputElementsStyle}>
             <View>
               <SvgUri
-                width='17'
-                height='17'
+                width='20'
+                height='30'
                 svgXmlData={checkboxIcon}
-                style={Styles.supportImage}
+                style={Styles.checkboxImage}
               />
             </View>
           </TouchableHighlight>
