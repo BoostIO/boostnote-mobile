@@ -518,7 +518,7 @@ export default class DropboxNoteList extends Component {
             }
           </View>
         </Card>
-        <DropboxNoteModal setNoteModalClose={this.setNoteModalClose.bind(this)}
+        <DropboxNoteModal setIsOpen={this.setNoteModalClose.bind(this)}
           isNoteOpen={this.state.isNoteOpen}
           path={this.state.path} />
         <ActionSheet ref={c => (this.actionSheet = c)} />
