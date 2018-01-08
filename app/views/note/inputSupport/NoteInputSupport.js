@@ -1,25 +1,39 @@
 import React from 'react'
 import {
-  Text,
   View,
   TouchableHighlight,
-  ScrollView,
+  ScrollView
 } from 'react-native'
 import Styles from './NoteInputSupportStyles'
 
+import SvgUri from 'react-native-svg-uri'
+
+import headIcon from '../../../resource/noteInputSupportIcons/icon-head'
+import listIcon from '../../../resource/noteInputSupportIcons/icon-list'
+import codeIcon from '../../../resource/noteInputSupportIcons/icon-code'
+import boldIcon from '../../../resource/noteInputSupportIcons/icon-bold'
+import italicIcon from '../../../resource/noteInputSupportIcons/icon-italic'
+import quoteIcon from '../../../resource/noteInputSupportIcons/icon-quote'
+import checkboxIcon from '../../../resource/noteInputSupportIcons/icon-checkbox'
+import pasteIcon from '../../../resource/noteInputSupportIcons/icon-paste'
+
 export default class NoteInputSupport extends React.Component {
-  render() {
+  render () {
     return (
       <View style={Styles.inputSupportWrap} >
-        <ScrollView horizontal={true} keyboardShouldPersistTaps='always'>
+        <ScrollView horizontal keyboardShouldPersistTaps='always'>
           <TouchableHighlight
             onPress={() => {
               this.props.insertMarkdownBetween('#')
             }}
             style={Styles.inputElementsStyle}>
             <View>
-              <Text style={Styles.supportMain}>#</Text>
-              <Text style={Styles.supportSub}>Head</Text>
+              <SvgUri
+                width='17'
+                height='17'
+                svgXmlData={headIcon}
+                style={Styles.supportImage}
+              />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -28,8 +42,12 @@ export default class NoteInputSupport extends React.Component {
             }}
             style={Styles.inputElementsStyle}>
             <View>
-              <Text style={Styles.supportMain}>-</Text>
-              <Text style={Styles.supportSub}>List</Text>
+              <SvgUri
+                width='17'
+                height='17'
+                svgXmlData={listIcon}
+                style={Styles.supportImage}
+              />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -38,38 +56,12 @@ export default class NoteInputSupport extends React.Component {
             }}
             style={Styles.inputElementsStyle}>
             <View>
-              <Text style={Styles.supportMain}>```</Text>
-              <Text style={Styles.supportSub}>Code</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={() => {
-              this.props.insertMarkdownBetween('**')
-            }}
-            style={Styles.inputElementsStyle}>
-            <View>
-              <Text style={Styles.supportMain}>**</Text>
-              <Text style={Styles.supportSub}>Bold</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={() => {
-              this.props.insertMarkdownBetween('_')
-            }}
-            style={Styles.inputElementsStyle}>
-            <View>
-              <Text style={Styles.supportMain}>_</Text>
-              <Text style={Styles.supportSub}>italic</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={() => {
-              this.props.insertMarkdownBetween('> ')
-            }}
-            style={Styles.inputElementsStyle}>
-            <View>
-              <Text style={Styles.supportMain}>&gt;</Text>
-              <Text style={Styles.supportSub}>Quote</Text>
+              <SvgUri
+                width='17'
+                height='17'
+                svgXmlData={codeIcon}
+                style={Styles.supportImage}
+              />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -78,14 +70,67 @@ export default class NoteInputSupport extends React.Component {
             }}
             style={Styles.inputElementsStyle}>
             <View>
-              <Text style={Styles.supportMain}>- [ ]</Text>
-              <Text style={Styles.supportSub}>TaskList</Text>
+              <SvgUri
+                width='20'
+                height='30'
+                svgXmlData={checkboxIcon}
+                style={Styles.checkboxImage}
+              />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
             onPress={this.props.pasteContent.bind(this)}
             style={Styles.inputElementsStyle}>
-            <Text style={Styles.pasteButton}>Paste</Text>
+            <View>
+              <SvgUri
+                width='17'
+                height='17'
+                svgXmlData={pasteIcon}
+                style={Styles.supportImage}
+              />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => {
+              this.props.insertMarkdownBetween('**')
+            }}
+            style={Styles.inputElementsStyle}>
+            <View>
+              <SvgUri
+                width='17'
+                height='17'
+                svgXmlData={boldIcon}
+                style={Styles.supportImage}
+              />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => {
+              this.props.insertMarkdownBetween('> ')
+            }}
+            style={Styles.inputElementsStyle}>
+            <View>
+              <SvgUri
+                width='17'
+                height='17'
+                svgXmlData={quoteIcon}
+                style={Styles.supportImage}
+              />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => {
+              this.props.insertMarkdownBetween('_')
+            }}
+            style={Styles.inputElementsStyle}>
+            <View>
+              <SvgUri
+                width='17'
+                height='17'
+                svgXmlData={italicIcon}
+                style={Styles.supportImage}
+              />
+            </View>
           </TouchableHighlight>
         </ScrollView>
       </View>

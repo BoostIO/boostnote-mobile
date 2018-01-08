@@ -91,8 +91,8 @@ android {
         applicationId "io.boostnote"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 20
-        versionName "1.1.7"
+        versionCode 25
+        versionName "1.2.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -138,6 +138,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-svg')
     compile project(':react-native-device-info')
     compile project(':react-native-code-push')
     compile project(':react-native-fetch-blob')

@@ -3,7 +3,7 @@ export default Styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F5FCFF'
   },
   markdownStyles: {
     container: {
@@ -12,16 +12,16 @@ export default Styles = {
     heading1: {
       fontSize: 24,
       fontWeight: '600',
-      color: '#222222',
+      color: '#222222'
     },
     link: {
-      color: 'red',
+      color: 'red'
     },
     mail_to: {
-      color: 'orange',
+      color: 'orange'
     },
     text: {
-      color: '#555555',
+      color: '#555555'
     },
     code: {
       backgroundColor: '#f0f0f0',
@@ -32,5 +32,5 @@ export default Styles = {
       backgroundColor: '#f8f8f8',
       padding: 5
     }
-  },
+  }
 }

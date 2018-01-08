@@ -1,16 +1,13 @@
 import React, {Component} from 'react'
-
 import {
   Text,
   TextInput,
   View,
   Alert,
-  Platform,
   AsyncStorage,
   RefreshControl,
-  Linking,
+  Linking
 } from 'react-native'
-
 import {
   Body,
   Card,
@@ -18,21 +15,15 @@ import {
   CardItem,
   Button,
   Content,
-  ActionSheet,
+  ActionSheet
 } from 'native-base'
-
 import moment from 'moment'
-
 import CoffeeScript from '../lib/CofeeScriptEval'
-
-const js2coffee = require('js2coffee/dist/js2coffee');
-
 import settings from '../config/settings'
-
 import {makeRandomHex} from '../lib/Strings'
-
 import DropboxNoteModal from './note/DropboxNoteModal'
 
+const js2coffee = require('js2coffee/dist/js2coffee')
 const DROPBOX_ACCESS_TOKEN = 'DROPBOX:ACCESS_TOKEN'
 
 const styles = {
@@ -45,10 +36,10 @@ const styles = {
   noteList: {
     width: '100%',
     height: 65,
-    backgroundColor: 'rgba(244,244,244,0.1)',
+    backgroundColor: 'rgba(244,244,244,0.1)'
   },
   iosHeader: {
-    backgroundColor: '#239F85',
+    backgroundColor: '#239F85'
   },
   androidHeader: {
     backgroundColor: '#29BB9C',
@@ -70,21 +61,6 @@ const styles = {
     fontSize: 21,
     marginRight: 20
   },
-  noteListIconWrap: {
-    backgroundColor: '#eeeeee',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 30,
-    height: 30,
-    borderRadius: 50,
-    overflow: 'hidden',
-    marginTop: 9
-  },
-  noteListIcon: {
-    fontSize: 14,
-    color: '#adadad'
-  },
   noteListText: {
     position: 'absolute',
     color: '#3a3941',
@@ -92,7 +68,7 @@ const styles = {
     top: 15,
     fontSize: 14,
     width: '73%',
-    marginLeft: 40
+    marginLeft: 10
   },
   noteListTextNone: {
     position: 'absolute',
@@ -120,7 +96,7 @@ const styles = {
   dropboxLinkButton: {
     backgroundColor: '#F3F4F4',
     height: 40,
-    width: 300,
+    width: 300
   },
   dropboxLinkButtonText: {
     color: '#262626',
@@ -136,8 +112,7 @@ const styles = {
 }
 
 export default class DropboxNoteList extends Component {
-
-  constructor() {
+  constructor () {
     super()
     this.state = {
       token: '',
@@ -148,16 +123,16 @@ export default class DropboxNoteList extends Component {
       isLoading: false,
       isConnectedToDropbox: false,
       isNotConnectedToBoostnote: false,
-      code: '',
+      code: ''
     }
-    this.actionSheet = null;
+    this.actionSheet = null
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.getToken()
   }
 
-  getToken() {
+  getToken () {
     AsyncStorage.getItem(DROPBOX_ACCESS_TOKEN)
       .then((value) => {
         if (value === null) {
@@ -178,7 +153,7 @@ export default class DropboxNoteList extends Component {
       })
   }
 
-  getDropboxNoteData(token) {
+  getDropboxNoteData (token) {
     this.setState({
       noteList: [],
       isLoading: true
@@ -189,7 +164,7 @@ export default class DropboxNoteList extends Component {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Dropbox-API-Arg': `{"path":  "/boostnote.json"}`,
+        'Dropbox-API-Arg': `{"path":  "/boostnote.json"}`
       }
     })
       .then((response) => {
@@ -207,7 +182,7 @@ export default class DropboxNoteList extends Component {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             path: '/notes',
@@ -215,13 +190,13 @@ export default class DropboxNoteList extends Component {
             include_media_info: false,
             include_deleted: false,
             include_has_explicit_shared_members: false,
-            include_mounted_folders: false,
+            include_mounted_folders: false
           })
         })
       })
       .then((response) => response.json())
       .then((responseJson) => {
-        let noteList = [];
+        const noteList = []
 
         if (responseJson.error_summary && responseJson.error_summary.startsWith('path/not_found/')) {
           this.setState({
@@ -230,7 +205,7 @@ export default class DropboxNoteList extends Component {
         }
         if (!responseJson.entries || responseJson.entries.length === 0) {
           this.setState({
-            isLoading: false,
+            isLoading: false
           })
           return
         }
@@ -250,7 +225,7 @@ export default class DropboxNoteList extends Component {
             // Do nothing
             // Parse cson file only now
             this.setState({
-              isLoading: false,
+              isLoading: false
             })
             return
           }
@@ -260,7 +235,7 @@ export default class DropboxNoteList extends Component {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${token}`,
-              'Dropbox-API-Arg': `{"path":  "${entry.path_display}"}`,
+              'Dropbox-API-Arg': `{"path":  "${entry.path_display}"}`
             }
           })
             .then((response) => {
@@ -268,7 +243,7 @@ export default class DropboxNoteList extends Component {
             })
             .then((responseCson) => {
               this.setState({
-                isLoading: false,
+                isLoading: false
               })
 
               const response = CoffeeScript.eval(responseCson)
@@ -278,7 +253,7 @@ export default class DropboxNoteList extends Component {
                 return
               }
 
-              let notesOfFolder = noteList
+              const notesOfFolder = noteList
                 .filter(folder => {
                   return folder.folderKey === response.folder
                 })[0].notes
@@ -287,7 +262,7 @@ export default class DropboxNoteList extends Component {
                 fileName: entry.name,
                 content: response.content,
                 path: entry.path_display,
-                updatedAt: response.updatedAt,
+                updatedAt: response.updatedAt
               })
               notesOfFolder.sort((a, b) => {
                 return a.updatedAt < b.updatedAt ? 1 : -1
@@ -299,7 +274,7 @@ export default class DropboxNoteList extends Component {
             })
             .catch((error) => {
               this.setState({
-                isLoading: false,
+                isLoading: false
               })
               console.log(error)
             })
@@ -307,17 +282,17 @@ export default class DropboxNoteList extends Component {
       })
       .catch((error) => {
         this.setState({
-          isLoading: false,
+          isLoading: false
         })
         console.log(error)
       })
   }
 
-  getAccessToken() {
+  getAccessToken () {
     fetch(`https://api.dropboxapi.com/oauth2/token?code=${this.state.code}&grant_type=authorization_code&client_id=${settings.dropboxClientId}&client_secret=${settings.dropboxClientSecret}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
       .then((response) => {
@@ -329,14 +304,14 @@ export default class DropboxNoteList extends Component {
       .then((response) => {
         AsyncStorage.setItem(DROPBOX_ACCESS_TOKEN, response.access_token)
           .then((value) => {
-            this.getDropboxNoteData(value)
+            this.getToken()
           })
           .catch((e) => {
             Alert.alert(
               'Something wrong',
               'Please retry',
               [
-                { text: 'OK' },
+                { text: 'OK' }
               ],
               { cancelable: false }
             )
@@ -345,40 +320,40 @@ export default class DropboxNoteList extends Component {
       .catch((e) => {
         Alert.alert(
           'Cannot authorize',
-          'Please input a valid token',
+          'Please restart this app and input a valid token',
           [
-            { text: 'OK' },
+            { text: 'OK' }
           ],
           { cancelable: false }
         )
       })
   }
 
-  setNoteModalOpen(path) {
+  setNoteModalOpen (path) {
     this.setState({
       path: path,
-      isNoteOpen: true,
+      isNoteOpen: true
     })
   }
 
-  setNoteModalClose() {
+  setNoteModalClose () {
     this.setState({
-      isNoteOpen: false,
+      isNoteOpen: false
     })
   }
 
-  createNewNote() {
-    let folderChooseMenu = this.state.folderList.map(folder => folder.name)
+  createNewNote () {
+    const folderChooseMenu = this.state.folderList.map(folder => folder.name)
     folderChooseMenu.push('Cancel')
     if (this.actionSheet !== null) {
       this.actionSheet._root.showActionSheet(
         {
           options: folderChooseMenu,
           cancelButtonIndex: this.state.folderList.length,
-          title: "Choose folder to create note"
+          title: 'Choose folder to create note'
         },
         buttonIndex => {
-          if (buttonIndex == this.state.folderList.length) {
+          if (buttonIndex === this.state.folderList.length) {
             return
           }
           const newNotePath = `"/notes/${makeRandomHex()}.cson"`
@@ -398,7 +373,7 @@ export default class DropboxNoteList extends Component {
             headers: {
               'Authorization': `Bearer ${this.state.token}`,
               'Dropbox-API-Arg': `{"path": ${newNotePath}, "mode": "overwrite", "autorename": false, "mute": false }`,
-              'Content-Type': 'application/octet-stream',
+              'Content-Type': 'application/octet-stream'
             },
             body: js2coffee.build('(' + newNoteJson + ');').code
           })
@@ -410,11 +385,11 @@ export default class DropboxNoteList extends Component {
               console.log(error)
             })
         }
-      );
+      )
     }
   }
 
-  render() {
+  render () {
     return (
       <Content
         keyboardShouldPersistTaps='always'
@@ -444,26 +419,26 @@ export default class DropboxNoteList extends Component {
             Dropbox
           </Text>
           <Button style={styles.refreshButton} onPress={() => this.getToken()}>
-              <Text style={{ color: "rgba(40,44,52,0.4)", right: 1, position: 'absolute' }}>
-                <Icon name='md-refresh' style={{color: "rgba(40,44,52,0.4)"}}/>
-              </Text>
+            <Text style={{ color: 'rgba(40,44,52,0.4)', right: 1, position: 'absolute' }}>
+              <Icon name='md-refresh' style={{color: 'rgba(40,44,52,0.4)'}} />
+            </Text>
           </Button>
         </View>
         {
           // Show Dropbox connect button when...
           // 1. Not connected to Dropbox.
           // 2. Not loading.
-          !this.state.isConnectedToDropbox && !this.state.isLoading ?
-            <View>
+          !this.state.isConnectedToDropbox && !this.state.isLoading
+            ? <View>
               <View style={styles.dropboxLinkButtonWrap}>
                 <Button style={styles.dropboxLinkButton}
-                        onPress={() => Linking.openURL(`https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=${settings.dropboxClientId}`)}>
+                  onPress={() => Linking.openURL(`https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=${settings.dropboxClientId}`)}>
                   <Text style={styles.dropboxLinkButtonText}>
                     <Icon name='logo-dropbox' style={{
                       color: '#2BA6FA',
                       fontSize: 16,
                       textAlignVertical: 'center'
-                    }}/> Tap here to sign in to Dropbox!
+                    }} /> Tap here to sign in to Dropbox!
                   </Text>
                 </Button>
               </View>
@@ -481,7 +456,7 @@ export default class DropboxNoteList extends Component {
                   onChangeText={(text) => this.setState({ code: text })}
                 />
                 <Button
-                  style={{ flex: 1, backgroundColor: '#F3F4F4', height: 35, width: 35, }}
+                  style={{ flex: 1, backgroundColor: '#F3F4F4', height: 35, width: 35 }}
                   onPress={this.getAccessToken.bind(this)}>
                   <Text>Send!</Text>
                 </Button>
@@ -494,8 +469,8 @@ export default class DropboxNoteList extends Component {
           // 1. Connected to Dropbox.
           // 2. Not connected to Boostnote.
           // 3. Not loading.
-          this.state.isConnectedToDropbox && this.state.isNotConnectedToBoostnote && !this.state.isLoading ?
-            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          this.state.isConnectedToDropbox && this.state.isNotConnectedToBoostnote && !this.state.isLoading
+            ? <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={styles.bottomLinkWord}>Connect with Desktop app and create a note!</Text>
               <View style={{
                 marginTop: 20,
@@ -507,7 +482,7 @@ export default class DropboxNoteList extends Component {
               }}>
                 <Text
                   onPress={() => Linking.openURL('https://medium.com/boostnote/boostnote-mobile-how-to-synchronize-with-dropbox-95d845581eea')}>
-                  <Icon style={{ fontSize: 16, color: '#89888d', paddingLeft: 20 }} name='link'/>
+                  <Icon style={{ fontSize: 16, color: '#89888d', paddingLeft: 20 }} name='link' />
                   How to connect?
                 </Text>
               </View>
@@ -531,12 +506,9 @@ export default class DropboxNoteList extends Component {
                         key={note.fileName}
                         button onPress={() => this.setNoteModalOpen(note.path)}>
                         <Body>
-                        <View style={styles.noteListIconWrap}>
-                          <Icon name='md-code-working' style={styles.noteListIcon}/>
-                        </View>
-                        <Text numberOfLines={1}
-                              style={styles.noteListText}>{note.content}</Text>
-                        <Text style={styles.noteListDate}>{moment(note.updatedAt).format('MMM D')}</Text>
+                          <Text numberOfLines={1}
+                            style={styles.noteListText}>{note.content}</Text>
+                          <Text style={styles.noteListDate}>{moment(note.updatedAt).format('MMM D')}</Text>
                         </Body>
                       </CardItem>
                     })
@@ -547,9 +519,9 @@ export default class DropboxNoteList extends Component {
           </View>
         </Card>
         <DropboxNoteModal setNoteModalClose={this.setNoteModalClose.bind(this)}
-                          isNoteOpen={this.state.isNoteOpen}
-                          path={this.state.path}/>
-        <ActionSheet ref={c => this.actionSheet = c}/>
+          isNoteOpen={this.state.isNoteOpen}
+          path={this.state.path} />
+        <ActionSheet ref={c => (this.actionSheet = c)} />
       </Content>
     )
   }

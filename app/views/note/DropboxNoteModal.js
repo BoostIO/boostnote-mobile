@@ -2,7 +2,6 @@ import React from 'react'
 import {
   Keyboard,
   Dimensions,
-  Text,
   Platform,
   AsyncStorage,
   View,
@@ -13,48 +12,24 @@ import {
 } from 'react-native'
 import {
   Container,
-  Header,
   Content,
-  Button,
-  Left,
-  Body,
-  Right,
-  Icon,
-  Segment,
   ActionSheet,
   Root
 } from 'native-base'
 
 import Modal from 'react-native-modalbox'
 import CoffeeScript from '../../lib/CofeeScriptEval'
-
-const js2coffee = require('js2coffee/dist/js2coffee');
 import NotePreview from './preview/NotePreviewComponent'
 import NoteInputSupport from './inputSupport/NoteInputSupport'
 import removeMd from 'remove-markdown-and-html'
+import HeaderComponent from './HeaderComponent'
+
+const js2coffee = require('js2coffee/dist/js2coffee')
 
 const DROPBOX_ACCESS_TOKEN = 'DROPBOX:ACCESS_TOKEN'
 
-const styles = {
-  switchButton: {
-    backgroundColor: 'transparent',
-    borderColor: '#EFF1F5',
-    borderWidth: 1
-  },
-  switchButtonActive: {
-    backgroundColor: '#EFF1F5',
-    borderColor: '#EFF1F5',
-    borderWidth: 1
-  },
-  noteDetailButton: {
-    color: '#EFF1F5',
-    fontSize: 23
-  },
-}
-
 export default class DropboxNoteModal extends React.Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -62,22 +37,22 @@ export default class DropboxNoteModal extends React.Component {
       path: props.path,
       note: { content: '' },
       height: 0,
-      isLeftSegmentActive: true,
+      isEditting: true,
       visibleHeight: 230,
       endOfSelection: 0,
-      isNoteOpen: props.isNoteOpen,
+      isNoteOpen: props.isNoteOpen
     }
     this.keyboardDidShow = this.keyboardDidShow.bind(this)
     this.keyboardDidHide = this.keyboardDidHide.bind(this)
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps (props) {
     if ((this.state.isNoteOpen !== props.isNoteOpen) && props.isNoteOpen && props.path) {
       this.getNoteData(props.path)
 
       this.setState({
-        isLeftSegmentActive: true,
-        path: props.path,
+        isEditting: true,
+        path: props.path
       })
     }
     this.setState({
@@ -85,7 +60,7 @@ export default class DropboxNoteModal extends React.Component {
     })
   }
 
-  getNoteData(path) {
+  getNoteData (path) {
     this.setState({
       isLoading: true
     })
@@ -101,7 +76,7 @@ export default class DropboxNoteModal extends React.Component {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Dropbox-API-Arg': `{"path":  "${path}"}`,
+            'Dropbox-API-Arg': `{"path":  "${path}"}`
           }
         })
           .then((response) => {
@@ -118,57 +93,55 @@ export default class DropboxNoteModal extends React.Component {
 
             this.setState({
               note: response,
-              isLoading: false,
+              isLoading: false
             })
           })
           .catch((error) => {
             this.setState({
-              isLoading: false,
+              isLoading: false
             })
             console.log(error)
           })
       })
-
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.keyboardDidShowListener.remove()
     this.keyboardDidHideListener.remove()
   }
 
-  keyboardDidShow(e) {
+  keyboardDidShow (e) {
     this.setState({
-      visibleHeight: Dimensions.get('window').height - e.endCoordinates.height - 140,
+      visibleHeight: Dimensions.get('window').height - e.endCoordinates.height - 140
     })
   }
 
-  keyboardDidHide(e) {
+  keyboardDidHide (e) {
     this.setState({
-      visibleHeight: Dimensions.get('window').height - 100,
+      visibleHeight: Dimensions.get('window').height - 100
     })
   }
 
-  getNoteComponent() {
-    if (this.state.isLeftSegmentActive) {
+  getNoteComponent () {
+    if (this.state.isEditting) {
       return <View style={{ flex: 1 }}>
         <ScrollView keyboardShouldPersistTaps='always'>
           <TextInput
-            ref="TextInput"
-            multiline={true}
+            ref='TextInput'
+            multiline
             style={{ margin: 8, height: this.state.visibleHeight - 55 }}
             onChangeText={(e) => this.onChangeText(e)}
             value={this.state.note.content}
             onSelectionChange={(e) => {
               this.setState({ endOfSelection: e.nativeEvent.selection.end })
             }}
-            autoFocus={true}
-            textAlignVertical={'top'}>
-          </TextInput>
+            autoFocus
+            textAlignVertical={'top'} />
           <NoteInputSupport
             insertMarkdownBetween={this.insertMarkdownBetween.bind(this)}
             pasteContent={this.pasteContent.bind(this)}
@@ -183,7 +156,7 @@ export default class DropboxNoteModal extends React.Component {
     }
   }
 
-  onChangeText(text) {
+  onChangeText (text) {
     this.updateNoteContent(text)
   }
 
@@ -191,7 +164,7 @@ export default class DropboxNoteModal extends React.Component {
    * Insert markdown characters to the text of selected place.
    * @param character Markdown character
    */
-  insertMarkdownBetween(character) {
+  insertMarkdownBetween (character) {
     const beforeText = this.state.note.content.substring(0, this.state.endOfSelection)
     const afterText = this.state.note.content.substring(this.state.endOfSelection, this.state.note.content.length)
 
@@ -201,7 +174,7 @@ export default class DropboxNoteModal extends React.Component {
   /**
    * Paste from clipboard to the text
    */
-  async pasteContent() {
+  async pasteContent () {
     const beforeText = this.state.note.content.substring(0, this.state.endOfSelection)
     const afterText = this.state.note.content.substring(this.state.endOfSelection, this.state.note.content.length)
 
@@ -209,23 +182,22 @@ export default class DropboxNoteModal extends React.Component {
     this.updateNoteContent(newText)
   }
 
-  updateNoteContent(text) {
+  updateNoteContent (text) {
     this.setState((prevState, props) => {
       prevState.note.content = text
       prevState.note.title = removeMd(text.split('\n')[0])
       prevState.note.updatedAt = new Date()
       return { note: prevState.note }
     })
-
   }
 
-  saveNoteToDropbox() {
+  saveNoteToDropbox () {
     fetch('https://content.dropboxapi.com/2/files/upload', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${this.state.token}`,
         'Dropbox-API-Arg': `{"path":  "${this.state.path}", "mode": "overwrite", "autorename": false, "mute": false }`,
-        'Content-Type': 'application/octet-stream',
+        'Content-Type': 'application/octet-stream'
       },
       body: js2coffee.build('(' + JSON.stringify(this.state.note) + ');').code
     })
@@ -235,18 +207,17 @@ export default class DropboxNoteModal extends React.Component {
       })
   }
 
-  onCloseModal() {
+  onCloseModal () {
     this.saveNoteToDropbox()
     this.props.setNoteModalClose()
-
   }
 
   /**
    * Toggle checkbox in markdown text
    * @param line
    */
-  tapCheckBox(line) {
-    const lines = this.state.note.content.split('\n');
+  tapCheckBox (line) {
+    const lines = this.state.note.content.split('\n')
 
     const targetLine = lines[line]
 
@@ -261,81 +232,58 @@ export default class DropboxNoteModal extends React.Component {
     this.updateNoteContent(lines.join('\n'))
   }
 
-  render() {
-    return (
-      <Modal
-        coverScreen={true}
-        isOpen={this.state.isNoteOpen}
-        position={'top'}
-        swipeToClose={false}
-        onClosed={() => this.onCloseModal()}>
-        <Container>
-          <Header style={Platform.OS === 'android' ? {
-            height: 47,
-            backgroundColor: '#6C81A6'
-          } : { backgroundColor: '#6C81A6' }} androidStatusBarColor='#239F85'>
-            <Left style={Platform.OS === 'android' ? { top: 0 } : null}>
-              <Button transparent onPress={() => this.props.setNoteModalClose()} disable={this.state.isLoading}>
-                <Text><Icon name='md-close' style={styles.noteDetailButton}/></Text>
-              </Button>
-            </Left>
+  handleSwitchEditButtonClick () {
+    this.setState({
+      isEditting: !this.state.isEditting
+    })
+  }
 
-            <Body style={Platform.OS === 'android' ? { top: 0 } : null}>
-            <Segment style={Platform.OS === 'android' ? {
-              paddingRight: 25,
-              position: 'relative',
-              backgroundColor: 'transparent',
-              borderWidth: 1
-            } : { marginLeft: 50, position: 'absolute', top: -22, backgroundColor: 'transparent' }}>
-              <Button onPress={() => {
-                this.setState({ isLeftSegmentActive: true })
-              }} first active={this.state.isLeftSegmentActive}
-                      style={this.state.isLeftSegmentActive ? styles.switchButtonActive : styles.switchButton}>
-                <Text><Icon name='create' style={this.state.isLeftSegmentActive ? { color: '#6C81A6' } : {}}/></Text>
-              </Button>
-              <Button onPress={() => {
-                this.setState({ isLeftSegmentActive: false })
-              }} last active={!this.state.isLeftSegmentActive}
-                      style={this.state.isLeftSegmentActive ? styles.switchButton : styles.switchButtonActive}>
-                <Text><Icon name='eye'
-                            style={this.state.isLeftSegmentActive ? { color: '#EFF1F5' } : { color: '#6C81A6' }}/></Text>
-              </Button>
-            </Segment>
-            </Body>
-            <Right style={Platform.OS === 'android' ? {top: 0} : {top: 3}}>
-              <View>
-                <Root>
-                  <Button transparent onPress={() => ActionSheet.show(
-                    {
-                      options: ["Delete", "Cancel"],
-                      cancelButtonIndex: 1,
-                      destructiveButtonIndex: 0,
-                    },
-                    buttonIndex => {
-                      // `buttonIndex` is a string in Android, a number in iOS.
-                      if (Platform.OS === 'android' && buttonIndex === '0'
-                        || Platform.OS === 'ios' && buttonIndex === 0) {
-                        this.setState((prevState, props) => {
-                          prevState.note.isTrashed = true
-                          return { note: prevState.note }
-                        }, this.onCloseModal())
-                      }
-                    }
-                  )}>
-                    <Text><Icon name='md-more' style={styles.noteDetailButton}/></Text>
-                  </Button>
-                </Root>
-              </View>
-            </Right>
-          </Header>
-          <Content keyboardShouldPersistTaps='always'>
-            <ActivityIndicator animating={this.state.isLoading}/>
-            {this.state.isLoading ?
-              null :
-              this.getNoteComponent()}
-          </Content>
-        </Container>
-      </Modal>
+  handlePressDetailButton () {
+    ActionSheet.show(
+      {
+        options: ['Delete', 'Cancel'],
+        cancelButtonIndex: 1,
+        destructiveButtonIndex: 0
+      },
+      buttonIndex => {
+        // `buttonIndex` is a string in Android, a number in iOS.
+        const androidCondition = Platform.OS === 'android' && buttonIndex === '0'
+        const iosCondition = Platform.OS === 'ios' && buttonIndex === 0
+        if (androidCondition || iosCondition) {
+          this.setState((prevState, props) => {
+            prevState.note.isTrashed = true
+            return { note: prevState.note }
+          }, this.onCloseModal())
+        }
+      }
+    )
+  }
+
+  render () {
+    return (
+      <Root>
+        <Modal
+          coverScreen
+          isOpen={this.state.isNoteOpen}
+          position={'top'}
+          swipeToClose={false}
+          onClosed={() => this.onCloseModal()}>
+          <Container>
+            <HeaderComponent
+              setIsOpen={this.props.setIsOpen}
+              folderName='Dropbox'
+              handleSwitchEditButtonClick={this.handleSwitchEditButtonClick.bind(this)}
+              isEditting={this.state.isEditting}
+              handlePressDetailButton={this.handlePressDetailButton.bind(this)} />
+            <Content keyboardShouldPersistTaps='always'>
+              <ActivityIndicator animating={this.state.isLoading} />
+              {this.state.isLoading
+                ? null
+                : this.getNoteComponent()}
+            </Content>
+          </Container>
+        </Modal>
+      </Root>
     )
   }
 }

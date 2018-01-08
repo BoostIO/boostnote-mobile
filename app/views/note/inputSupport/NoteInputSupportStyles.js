@@ -10,29 +10,24 @@ export default Styles = {
     paddingRight: 10,
     paddingTop: 1,
     paddingBottom: 1,
-    marginLeft: 2,
-    marginRight: 2,
+    marginLeft: 4,
+    marginRight: 4,
     marginTop: 4,
     marginBottom: 4,
     borderRadius: 3,
     borderWidth: 0,
     backgroundColor: 'rgba(255, 255, 255, 1)',
+    width: 50,
+    height: 30
   },
-  supportMain: {
-    fontSize: 12,
-    textAlign: 'center',
-    color: '#333333'
+  supportImage: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%'
   },
-  supportSub: {
-    fontSize: 10,
-    textAlign: 'center',
-    color: '#828282'
-  },
-  pasteButton: {
-    paddingTop: 6,
-    marginLeft: 3,
-    marginRight: 3,
-    fontSize: 12,
-    color: '#828282'
+  checkboxImage: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '90%'
   }
 }
