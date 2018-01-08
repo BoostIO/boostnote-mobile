@@ -104,10 +104,11 @@ class NoteListItem extends Component {
         style={styles.noteList}
         onPress={this.onNotePress}>
         <View style={styles.noteItemSectionLeft}>
-        <Text numberOfLines={2} ellipsizeMode="tail" style={content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{removeMd(content)}</Text>
+          <Text numberOfLines={2} ellipsizeMode="tail" style={content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{removeMd(content)}</Text>
         </View>
         <View style={styles.noteItemSectionRight}>
-        <Text style={styles.noteListDate}>{moment(updatedAt).format('MMM D') + '\n' + moment(createdAt).format('MMM D')}</Text>
+        {/* <Text style={styles.noteListDate}>{moment(updatedAt).format('MMM D') + '\n' + moment(createdAt).format('MMM D')}</Text> */}
+        <Text style={styles.noteListDate}>{moment(updatedAt).format('MMM D')}</Text>
           <TouchableOpacity onPress={this.onStarPress}>
             <Icon name={isStarred ? 'md-star' : 'md-star-outline'} style={styles.noteStarIcon} />
           </TouchableOpacity>
