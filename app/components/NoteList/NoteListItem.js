@@ -65,7 +65,7 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    flex: 2
+    flex: 3
   },
   noteItemSectionRight: {
     flex: 1,
@@ -98,16 +98,16 @@ class NoteListItem extends Component {
 
   render () {
     const { note } = this.props || {}
-    const { content, createdAt, isStarred } = note || {}
+    const { content, createdAt, isStarred, updatedAt } = note || {}
     return (
       <TouchableOpacity
         style={styles.noteList}
         onPress={this.onNotePress}>
         <View style={styles.noteItemSectionLeft}>
-          <Text style={content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{removeMd(content)}</Text>
+        <Text numberOfLines={2} ellipsizeMode="tail" style={content !== 'Tap here and write something!' ? styles.noteListText : styles.noteListTextNone}>{removeMd(content)}</Text>
         </View>
         <View style={styles.noteItemSectionRight}>
-          <Text style={styles.noteListDate}>{moment(createdAt).format('MMM D')}</Text>
+        <Text style={styles.noteListDate}>{moment(updatedAt).format('MMM D') + '\n' + moment(createdAt).format('MMM D')}</Text>
           <TouchableOpacity onPress={this.onStarPress}>
             <Icon name={isStarred ? 'md-star' : 'md-star-outline'} style={styles.noteStarIcon} />
           </TouchableOpacity>

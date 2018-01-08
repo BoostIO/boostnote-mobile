@@ -252,7 +252,8 @@ export default class App extends Component {
         fileName: fileName,
         content: content === '' ? 'Tap here and write something!' : content.split(/\r\n|\r|\n/)[0],
         createdAt: filteredSettingFile.createdAt,
-        isStarred: filteredSettingFile.isStarred
+        isStarred: filteredSettingFile.isStarred,
+        updatedAt: filteredSettingFile.updatedAt,
       })
     }
     fileList.sort((a, b) => {
@@ -301,7 +302,6 @@ export default class App extends Component {
           'updatedAt': date
         }
         contentObject.note.push(thisNote)
-        console.table(contentObject.note)
         fs.writeFile(`${dirs.DocumentDir}/Boostnote/boostnote.json`, JSON.stringify(contentObject), 'utf8')
           .catch(err => console.log(err))
         AwsMobileAnalyticsConfig.recordDynamicCustomEvent('CREATE_NOTE')
