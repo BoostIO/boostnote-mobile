@@ -209,7 +209,7 @@ export default class DropboxNoteModal extends React.Component {
 
   onCloseModal () {
     this.saveNoteToDropbox()
-    this.props.setNoteModalClose()
+    this.props.setIsOpen()
   }
 
   /**
