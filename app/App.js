@@ -105,7 +105,8 @@ export default class App extends Component {
       noteList: [],
       fileName: '',
       content: '',
-      filterFavorites: false
+      filterFavorites: false,
+      isConnectedToDropbox: false
     }
 
     // Init AwsMobileAnalytics
@@ -325,8 +326,14 @@ export default class App extends Component {
     }
   }
 
+  setIsConnectedToDropbox (value) {
+    this.setState({
+      isConnectedToDropbox: value
+    })
+  }
+
   render () {
-    const { noteList, mode, filterFavorites, isNoteOpen, fileName, content } = this.state
+    const { noteList, mode, filterFavorites, isNoteOpen, fileName, content, isConnectedToDropbox } = this.state
     return (
       <Drawer
         ref={(ref) => {
@@ -351,11 +358,17 @@ export default class App extends Component {
                 filterFavorite={filterFavorites}
                 onStarPress={this.onStarPress}
                 setNoteModalIsOpen={this.setNoteModalIsOpen} />
-              : <DropboxNoteList ref='dropboxNoteList' />
+              : <DropboxNoteList ref='dropboxNoteList'
+                isConnectedToDropbox={isConnectedToDropbox}
+                setIsConnectedToDropbox={this.setIsConnectedToDropbox.bind(this)} />
           }
         </Container>
         <View>
-          <CreateNewNoteButton onPressActionButton={this.onPressActionButton} />
+          {
+            mode === 1 && !isConnectedToDropbox
+              ? null
+              : <CreateNewNoteButton onPressActionButton={this.onPressActionButton} />
+          }
           <NoteModal setIsOpen={this.setNoteModalIsOpen}
             isNoteOpen={isNoteOpen}
             fileName={fileName}
