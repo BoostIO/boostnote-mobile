@@ -121,7 +121,6 @@ export default class DropboxNoteList extends Component {
       note: '',
       isNoteOpen: false,
       isLoading: false,
-      isConnectedToDropbox: false,
       isNotConnectedToBoostnote: false,
       code: ''
     }
@@ -136,20 +135,16 @@ export default class DropboxNoteList extends Component {
     AsyncStorage.getItem(DROPBOX_ACCESS_TOKEN)
       .then((value) => {
         if (value === null) {
-          this.setState({
-            isConnectedToDropbox: false
-          })
+          this.props.setIsConnectedToDropbox(false)
         } else {
+          this.props.setIsConnectedToDropbox(true)
           this.setState({
-            isConnectedToDropbox: true,
             token: value
           }, this.getDropboxNoteData(value))
         }
       })
       .catch((e) => {
-        this.setState({
-          isConnectedToDropbox: false
-        })
+        this.props.setIsConnectedToDropbox(false)
       })
   }
 
@@ -199,9 +194,7 @@ export default class DropboxNoteList extends Component {
         const noteList = []
 
         if (responseJson.error_summary && responseJson.error_summary.startsWith('path/not_found/')) {
-          this.setState({
-            isNotConnectedToBoostnote: true
-          })
+          this.props.setIsConnectedToDropbox(true)
         }
         if (!responseJson.entries || responseJson.entries.length === 0) {
           this.setState({
@@ -428,7 +421,7 @@ export default class DropboxNoteList extends Component {
           // Show Dropbox connect button when...
           // 1. Not connected to Dropbox.
           // 2. Not loading.
-          !this.state.isConnectedToDropbox && !this.state.isLoading
+          !this.props.isConnectedToDropbox && !this.state.isLoading
             ? <View>
               <View style={styles.dropboxLinkButtonWrap}>
                 <Button style={styles.dropboxLinkButton}
@@ -469,7 +462,7 @@ export default class DropboxNoteList extends Component {
           // 1. Connected to Dropbox.
           // 2. Not connected to Boostnote.
           // 3. Not loading.
-          this.state.isConnectedToDropbox && this.state.isNotConnectedToBoostnote && !this.state.isLoading
+          this.props.isConnectedToDropbox && this.state.isNotConnectedToBoostnote && !this.state.isLoading
             ? <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={styles.bottomLinkWord}>Connect with Desktop app and create a note!</Text>
               <View style={{
