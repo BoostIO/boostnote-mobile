@@ -34,7 +34,7 @@ Boostnote is an open source project. It's an independent project with its ongoin
 ## Community
 - [Facebook Group](https://www.facebook.com/groups/boostnote/)
 - [Twitter](https://twitter.com/boostnoteapp)
-- [Slack Group](https://join.slack.com/t/boostnote-group/shared_invite/enQtMzAzMjI1MTIyNTQ3LTc2MjNiYWU3NTc1YjZlMTk3NzFmOWE1ZWU1MGRhMzBkMGIwMWFjOWMxMDRiM2I2NzkzYzc4OGZhNmVhZjYzZTM)
+- [Slack Group](https://join.slack.com/t/boostnote-group/shared_invite/enQtMzcwNDU3NDU3ODI0LTU1ZDgwZDNiZTNmN2RhOTY4OTM5ODY0ODUzMTRiNmQ0ZDMzZDRiYzg2YmQ5ZDYzZTQxYjMxYzBlNTM4NjcyYjM)
 - [Blog](https://medium.com/boostnote)
 - [Reddit](https://www.reddit.com/r/Boostnote/)
 
