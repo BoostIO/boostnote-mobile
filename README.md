@@ -1,3 +1,18 @@
+# Temporary Stop
+
+We're going to close this project for a while because the code quality is too bad and the original maintainer left this project quite ago.
+
+But, it doesn't mean that we give up this project. We'll be back after we finish renewing of Boostnote. The renewed app will use CouchDB(or other comptible db to it). So, lots of changes should be required. And, we write whole stuff in native languages, Swift and Kotlin.
+
+Anyway, if you're interested in the renewing, please join our slack and ping me. 😄 😄
+
+Thanks.
+Junyoung Choi, @Rokt33r of BoostIO.
+
+https://github.com/BoostIO/boostnote-mobile/issues/201
+
+---
+
 ## [Boostnote](https://github.com/BoostIO/Boostnote) for iOS and Android that build with React Native.
 
 [![App Store](http://imgur.com/y8PTxr9.png "App Store")](https://itunes.apple.com/us/app/boostnote/id1273066636?mt=8)　
