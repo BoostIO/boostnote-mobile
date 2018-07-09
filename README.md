@@ -4,7 +4,7 @@ We're going to close this project for a while because the code quality is too ba
 
 But, it doesn't mean that we give up this project. We'll be back after we finish renewing of Boostnote. The renewed app will use CouchDB(or other comptible db to it). So, lots of changes should be required. And, we write whole stuff in native languages, Swift and Kotlin.
 
-Anyway, if you're interested in the renewing, please join our slack and ping me. 😄 😄
+Anyway, if you're interested in the renewing, please join [our slack](https://join.slack.com/t/boostnote-group/shared_invite/enQtMzkxOTk4ODkyNzc0LThkNmMzY2VlZjVhYTNiYjE5YjQyZGVjNTJlYTY1OGMyZTFjNGU5YTUyYjUzOWZhYTU4OTVlNDYyNDFjYWMzNDM) and ping me. 😄 😄
 
 Thanks.
 Junyoung Choi, @Rokt33r of BoostIO.
@@ -34,10 +34,6 @@ After you have downloaded or cloned this repository, run `npm install` or `yarn`
 - iOS `react-native run-ios`
 - Android `react-native run-android`
 
-## Authors & Maintainers
-- [Kohei TAKATA](https://github.com/kohei-takata)
-- [Kazz](https://github.com/kazup01)
-
 ## Contributors
 Thank you to all the people who already contributed to Boostnote!
 [Great contributors](https://github.com/BoostIO/boostnote-mobile/graphs/contributors) :tada:
@@ -49,13 +45,9 @@ Boostnote is an open source project. It's an independent project with its ongoin
 ## Community
 - [Facebook Group](https://www.facebook.com/groups/boostnote/)
 - [Twitter](https://twitter.com/boostnoteapp)
-- [Slack Group](https://join.slack.com/t/boostnote-group/shared_invite/enQtMzcwNDU3NDU3ODI0LTU1ZDgwZDNiZTNmN2RhOTY4OTM5ODY0ODUzMTRiNmQ0ZDMzZDRiYzg2YmQ5ZDYzZTQxYjMxYzBlNTM4NjcyYjM)
-- [Blog](https://medium.com/boostnote)
+- [Slack Group](https://join.slack.com/t/boostnote-group/shared_invite/enQtMzkxOTk4ODkyNzc0LThkNmMzY2VlZjVhYTNiYjE5YjQyZGVjNTJlYTY1OGMyZTFjNGU5YTUyYjUzOWZhYTU4OTVlNDYyNDFjYWMzNDM)
+- [Blog](https://boostlog.io/tags/boostnote)
 - [Reddit](https://www.reddit.com/r/Boostnote/)
-
-## Slack Group
-Let's talk about Boostnote! <br>
-[Join us](https://join.slack.com/t/boostnote-group/shared_invite/enQtMjU5NTUwNjcwMjkyLWI3N2I1YWIzNWRlZDZmZjVlYzRiNDc1YTcxZWNmY2UyZjc3MTQwMDUxMzAxZjg0NjNmZmIwNDFhMDkwZDlmZDc)
 
 ## More Information
 * Website: https://boostnote.io
@@ -64,7 +56,3 @@ Let's talk about Boostnote! <br>
 
 ## License
 [MIT](https://github.com/BoostIO/boostnote-mobile/blob/master/LICENSE).
-
-
-### Want to contribute or need to see some improvements?
-We would love that, please create an issue or send a PR.
