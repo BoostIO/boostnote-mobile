@@ -1,6 +1,6 @@
 # Boostnote mobile (Archived)
 
-The mobile app is available now and actively developing in [BoostNote.next repository](https://github.com/BoostIO/BoostNote.next).
+The mobile app is available now and actively being developed in [BoostNote.next repository](https://github.com/BoostIO/BoostNote.next).
 
 [![App Store](http://imgur.com/y8PTxr9.png "App Store")](https://apps.apple.com/us/app/boostnote-mobile/id1498182749)　
 [![Play Store](http://imgur.com/utWa1co.png "Play Store")](https://play.google.com/store/apps/details?id=com.boostio.boostnote)
