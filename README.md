@@ -1,22 +1,13 @@
-# Temporary Stop
+# Archived
 
-We're going to close this project for a while because the code quality is too bad and the original maintainer left this project quite ago.
+The mobile app is available now and actively developing in [BoostNote.next repository](https://github.com/BoostIO/BoostNote.next).
 
-But, it doesn't mean that we give up this project. We'll be back after we finish renewing of Boostnote. The renewed app will use CouchDB(or other comptible db to it). So, lots of changes should be required. And, we write whole stuff in native languages, Swift and Kotlin.
-
-Anyway, if you're interested in the renewing, please join [our slack](https://join.slack.com/t/boostnote-group/shared_invite/enQtMzkxOTk4ODkyNzc0LThkNmMzY2VlZjVhYTNiYjE5YjQyZGVjNTJlYTY1OGMyZTFjNGU5YTUyYjUzOWZhYTU4OTVlNDYyNDFjYWMzNDM) and ping me. 😄 😄
-
-Thanks.
-Junyoung Choi, @Rokt33r of BoostIO.
-
-https://github.com/BoostIO/boostnote-mobile/issues/201
+[![App Store](http://imgur.com/y8PTxr9.png "App Store")](https://apps.apple.com/us/app/boostnote-mobile/id1498182749)　
+[![Play Store](http://imgur.com/utWa1co.png "Play Store")](https://play.google.com/store/apps/details?id=com.boostio.boostnote)
 
 ---
 
 ## [Boostnote](https://github.com/BoostIO/Boostnote) for iOS and Android that build with React Native.
-
-[![App Store](http://imgur.com/y8PTxr9.png "App Store")](https://itunes.apple.com/us/app/boostnote/id1273066636?mt=8)　
-[![Play Store](http://imgur.com/utWa1co.png "Play Store")](https://play.google.com/store/apps/details?id=io.boostnote)
 
 ![Boostnote app screenshot](./resources/repository/app_image.png)
 
